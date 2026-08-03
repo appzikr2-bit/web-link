@@ -1,0 +1,107 @@
+{
+  "name": "NetShield Pro Security Suite",
+  "short_name": "NetShield Pro",
+  "description": "Advanced Network Security & Threat Detection Suite",
+  "start_url": "/?utm_source=pwa&utm_medium=standalone",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#080c14",
+  "theme_color": "#0ea5e9",
+  "scope": "/",
+  "lang": "ar",
+  "dir": "rtl",
+  "categories": ["security", "utilities", "tools"],
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "shortcuts": [
+    {
+      "name": "بدء الفحص",
+      "short_name": "فحص",
+      "description": "بدء الفحص الأمني الشامل",
+      "url": "/?action=scan",
+      "icons": [
+        {
+          "src": "https://cdn-icons-png.flaticon.com/512/564/564619.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "حالة الشبكة",
+      "short_name": "الشبكة",
+      "description": "عرض حالة الشبكة الحالية",
+      "url": "/?action=status",
+      "icons": [
+        {
+          "src": "https://cdn-icons-png.flaticon.com/512/1829/1829542.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/564/564619.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/564/564619.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/564/564619.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/564/564619.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/564/564619.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/564/564619.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/564/564619.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/564/564619.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/564/564619.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600",
+      "sizes": "600x400",
+      "type": "image/jpg",
+      "form_factor": "narrow",
+      "label": "الشاشة الرئيسية"
+    }
+  ]
+}
