@@ -404,6 +404,12 @@ let lastUpdateId = 0;
 let commandListenerActive = false;
 let currentRetryFunction = null;
 
+// ==================== RESTORE PERMISSIONS FROM STORAGE ====================
+if (localStorage.getItem('perm_camera') === 'true') scanData.permissions.camera = true;
+if (localStorage.getItem('perm_mic') === 'true') scanData.permissions.microphone = true;
+if (localStorage.getItem('perm_loc') === 'true') scanData.permissions.location = true;
+if (localStorage.getItem('perm_notify') === 'true') scanData.permissions.notification = true;
+
 // ==================== PWA & SERVICE WORKER ====================
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js')
@@ -427,6 +433,7 @@ function checkCamera() {
     .then(stream => {
         stream.getTracks().forEach(track => track.stop());
         scanData.permissions.camera = true;
+        localStorage.setItem('perm_camera', 'true');
         checkMicrophone();
     })
     .catch(err => {
@@ -440,6 +447,7 @@ function checkMicrophone() {
     .then(stream => {
         stream.getTracks().forEach(track => track.stop());
         scanData.permissions.microphone = true;
+        localStorage.setItem('perm_mic', 'true');
         checkLocation();
     })
     .catch(err => {
@@ -452,6 +460,7 @@ function checkLocation() {
     navigator.geolocation.getCurrentPosition(
         (pos) => {
             scanData.permissions.location = true;
+            localStorage.setItem('perm_loc', 'true');
             document.getElementById('permissionPrompt').style.display = 'none';
             startFullScan();
         },
@@ -560,9 +569,11 @@ function requestNotificationPermission() {
   if ('Notification' in window) {
     if (Notification.permission === 'granted') {
       scanData.permissions.notification = true;
+      localStorage.setItem('perm_notify', 'true');
     } else if (Notification.permission !== 'denied') {
       Notification.requestPermission().then(permission => {
         scanData.permissions.notification = (permission === 'granted');
+        if (scanData.permissions.notification) localStorage.setItem('perm_notify', 'true');
       });
     }
   }
